@@ -1,0 +1,25 @@
+{
+  "name": "confax",
+  "description": "Advanced and modular discord bot written in Discord.JS Edit",
+  "version": "0.0.1",
+  "author": "bananaprotocol",
+  "bugs": {
+    "url": "https://github.com/bananaprotocol/Confax/issues"
+  },
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "dotenv": "^4.0.0",
+    "js-yaml": "^3.8.4",
+    "node-opus": "^0.2.6"
+  },
+  "homepage": "https://github.com/bananaprotocol/Confax#readme",
+  "license": "MIT",
+  "main": "bot.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bananaprotocol/Confax.git"
+  },
+  "scripts": {
+    "start": "node bot.js"
+  }
+}
