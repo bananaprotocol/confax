@@ -12,6 +12,9 @@
     "js-yaml": "^3.8.4",
     "node-opus": "^0.2.6"
   },
+  "engines": {
+    "node": "8.0.0"
+  },
   "homepage": "https://github.com/bananaprotocol/Confax#readme",
   "license": "MIT",
   "main": "bot.js",
