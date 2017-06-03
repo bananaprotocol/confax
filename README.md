@@ -2,6 +2,13 @@
 
 Advanced and modular discord bot written in Discord.JS
 
+[![standard][standard-image]][standard-url]
+
+[standard-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
+[standard-url]: https://github.com/feross/standard
+[semistandard-image]: https://cdn.rawgit.com/flet/semistandard/master/badge.svg
+[semistandard-url]: https://github.com/Flet/semistandard
+
 ## Install
 
 ### Hosted by me
@@ -10,14 +17,27 @@ Invite to your Server using [Discord Invite Link](https://discordapp.com/oauth2/
 
 ### Self hosted
 
-*TODO*
+Make sure, that you have git, node and npm installed
 
-[![standard][standard-image]][standard-url]
+1. Clone the repo using
 
-[standard-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
-[standard-url]: https://github.com/feross/standard
-[semistandard-image]: https://cdn.rawgit.com/flet/semistandard/master/badge.svg
-[semistandard-url]: https://github.com/Flet/semistandard
+    git clone https://github.com/bananaprotocol/confax.git
+
+2. Install all dependencies using
+
+    npm install
+
+3. Start the bot using
+
+    npm start
+
+You can keep your bot up to date by using
+
+    git pull && npm install
+
+## Known Bugs
+
+- Help command formatting not correct.
 
 ## Contributing
 

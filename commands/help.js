@@ -29,9 +29,10 @@ Confax.registerCommand('help', 'default', (message, bot) => {
   var defaultcmds = Object.keys(cmds['default']).length
   var dmcmds = Object.keys(cmds['dm']).length
 
-  return '**All commands are prefixed with ' + config.prefix + ' and suffixed with ' + config.suffix + '**' +
-  '\n\nDefault Commands **(' + defaultcmds + ')** `' + cmds['default'].join('`**,** `') +
+  return '\n\nDefault Commands **(' + defaultcmds + ')** `' + cmds['default'].join('`**,** `') +
   '`\nDM Commands **(' + dmcmds + ')** `' + cmds['dm'].join('`**,** `') +
   '`\nModerator Commands **(' + modcmds + ')** `' + cmds['moderator'].join('`**,** `') +
-  '\nMaster Commands **(' + mastercmds + ')** `' + cmds['master'].join('`**,** `')
+  '\nMaster Commands **(' + mastercmds + ')** `' + cmds['master'].join('`**,** `') +
+  '\nAll Commands - **' + (defaultcmds + dmcmds + modcmds + mastercmds) + '**' +
+  '\nUse `advancedhelp` to get an advanced list of all commands or `cmdhelp` to get a detailed description of one.'
 }, ['cmds', 'commands', 'commandlist'], 'List all commands', '[]')

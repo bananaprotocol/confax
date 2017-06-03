@@ -1,7 +1,7 @@
 {
   "name": "confax",
   "description": "Advanced and modular discord bot written in Discord.JS Edit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "bananaprotocol",
   "bugs": {
     "url": "https://github.com/bananaprotocol/Confax/issues"
@@ -10,6 +10,7 @@
     "discord.js": "^11.1.0",
     "dotenv": "^4.0.0",
     "js-yaml": "^3.8.4",
+    "mathjs": "^3.13.3",
     "node-opus": "^0.2.6"
   },
   "engines": {

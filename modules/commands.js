@@ -39,7 +39,7 @@ bot.on('message', (message) => {
     if (cmd !== null) {
       if (cmdType === 'master') {
         if (!(config.masters).includes(message.author.id)) {
-          message.reply("You don't have enough permissions to execute this command. You have to be a Bot Master to use these commands.")
+          message.reply("You don't have enough permissions to execute this command.")
           return
         }
       } else if (cmdType === 'moderator') {
@@ -53,7 +53,7 @@ bot.on('message', (message) => {
           }
         }
         if (!isMod) {
-          message.reply("You don't have enough permissions to execute this command. You have to be a Moderator or Bot Commander to use these commands.")
+          message.reply("You don't have enough permissions to execute this command.")
           return
         }
       } else if (cmdType === 'dm') {
