@@ -11,10 +11,11 @@
     "dotenv": "^4.0.0",
     "js-yaml": "^3.8.4",
     "mathjs": "^3.13.3",
-    "node-opus": "^0.2.6"
+    "node-opus": "^0.2.6",
+    "unirest": "^0.5.1"
   },
   "engines": {
-    "node": "8.0.0"
+    "node": "8.1.2"
   },
   "homepage": "https://github.com/bananaprotocol/Confax#readme",
   "license": "MIT",

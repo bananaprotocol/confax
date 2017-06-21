@@ -19,15 +19,15 @@ Invite to your Server using [Discord Invite Link](https://discordapp.com/oauth2/
 
 Make sure, that you have git, node and npm installed
 
-1. Clone the repo using
+Clone the repo using
 
     git clone https://github.com/bananaprotocol/confax.git
 
-2. Install all dependencies using
+Install all dependencies using
 
     npm install
 
-3. Start the bot using
+Start the bot using
 
     npm start
 
