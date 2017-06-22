@@ -3,6 +3,7 @@ const bot = new Discord.Client()
 const fs = require('fs')
 const yaml = require('js-yaml')
 const config = require('./config')
+const http = require('http')
 const dotenv = require('dotenv')
 dotenv.load()
 
@@ -64,3 +65,24 @@ modules.forEach(script => {
     loadScript('./modules/' + script)
   }
 })
+
+exports.getHTTP = (link) => {
+  if (!link) return undefined
+  return new Promise((resolve, reject) => {
+    let data = ''
+    let request = http.request(link, res => {
+      res.on('data', chunk => {
+        data += chunk
+      })
+
+      res.on('end', () => {
+        resolve(data)
+      })
+
+      res.on('error', err => {
+        reject(err)
+      })
+    })
+    request.end()
+  })
+}

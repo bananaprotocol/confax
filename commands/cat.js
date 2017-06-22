@@ -1,14 +1,14 @@
 const Discord = require('discord.js')
 const Confax = require('../bot.js')
-const unirest = require('unirest')
 
 Confax.registerCommand('cat', 'default', (message) => {
-  unirest.get('http://random.cat/meow')
-         .end(function (result) {
-           var image = 'https://i.imgur.com/Bai6JTL.jpg'
-           if (result.status === 200) {
-             image = result.body.file
-           }
-           message.channel.send(image).catch(error => console.log(error.stack))
-         })
+  let options = {
+    host: 'random.cat',
+    path: '/meow'
+  }
+
+  Confax.getHTTP(options).then(body => {
+    body = JSON.parse(body)
+    message.channel.send(body.file).catch(err => console.log(err.stack))
+  })
 }, ['kitty'], 'Get a random cat picture', '[]')

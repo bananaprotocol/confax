@@ -12,7 +12,7 @@
     "js-yaml": "^3.8.4",
     "mathjs": "^3.13.3",
     "node-opus": "^0.2.6",
-    "unirest": "^0.5.1"
+    "request": "^2.81.0"
   },
   "engines": {
     "node": "8.1.2"
