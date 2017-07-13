@@ -55,7 +55,7 @@ var lines = [];
 var codeLines = [];
 
 // Create an event listener for messages to parse
-client.on('message', message => {
+bot.on('message', message => {
   // If the message is "ping"
    
     
