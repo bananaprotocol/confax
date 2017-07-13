@@ -64,19 +64,16 @@ client.on('message', message => {
     this.checkMessageForCode(lines);
     
     if(this.isBadCode && !this.isFormatted){
-        var firstLine = Math.min(...this.codeLines);
-        var lastLine = Math.max(...this.codeLines);
+        //var firstLine = Math.min(...this.codeLines);
+        var firstLine = Math.min.apply(Math, codeLines); 
+        var lastLine = Math.max.apply(Math, codeLines); 
         
         this.lines.splice(firstLine, 0, '```\n');
         this.lines.splice(lastLine, 0, '\n```\n');
-        message = this.lines;
-        message.channel.send(message); # idk abou this really.
+        message.content = this.lines;
+        message.channel.send(message); // idk abou this really.
     }
-        
-    if (message.content === 'ping') {
-    // Send "pong" to the same channel
-    message.channel.send('pong');
-  }
+
 });
 
 function checkMessageForCode(inputLines){
