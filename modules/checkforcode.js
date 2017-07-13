@@ -49,38 +49,35 @@ const bot = Confax.bot
 // Prob dont need config
 const config = Confax.config
 
-var isFormatted = false;
-var totalLinesOfCode = 0;    
-var lines = [];
-var codeLines = [];
+var isFormatted = false
+var totalLinesOfCode = 0;   
+var lines = []
+var codeLines = []
 
 // Create an event listener for messages to parse
 bot.on('message', message => {
-  // If the message is "ping"
-   
+    lines = message.content.split('\n')
     
-    this.lines = message.content.split('\n')
+    checkMessageForCode(lines)
     
-    this.checkMessageForCode(lines);
-    
-    if(this.isBadCode && !this.isFormatted){
+    if(isBadCode() && !isFormatted){
         //var firstLine = Math.min(...this.codeLines);
-        var firstLine = Math.min.apply(Math, codeLines); 
-        var lastLine = Math.max.apply(Math, codeLines); 
+        var firstLine = Math.min.apply(Math, codeLines)
+        var lastLine = Math.max.apply(Math, codeLines)
         
-        this.lines.splice(firstLine, 0, '```\n');
-        this.lines.splice(lastLine, 0, '\n```\n');
-        message.content = this.lines;
-        message.channel.send(message); // idk abou this really.
+        lines.splice(firstLine, 0, '```\n')
+        lines.splice(lastLine, 0, '\n```\n')
+        message.content = lines;
+        message.channel.send(message); // idk about this really.
     }
 
 });
 
 function checkMessageForCode(inputLines){
     for(var i = 0; i < inputLines.length; i++){
-        var line = inputLines[i].replace('\s','');
+        var line = inputLines[i].replace('\s','')
         if(line.search('```') >= 0){
-            this.isFormatted = true;
+            isFormatted = true
             return;
         }
         else{
@@ -94,15 +91,14 @@ function checkMessageForCode(inputLines){
 
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
-        this.codeLines.push(index);
-        this.totalLinesOfCode += 1;
+        codeLines.push(index)
+        totalLinesOfCode += 1
     }    
 }
 
-
-
-
-
-
-
-
+function isBadCode(){
+    if (totalLinesOfCode >= 5)
+        return true
+    else
+        return false
+}
