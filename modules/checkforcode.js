@@ -67,8 +67,8 @@ bot.on('message', message => {
         
         lines.splice(firstLine, 0, '```\n')
         lines.splice(lastLine, 0, '\n```\n')
-        message.content = "Your code is bad and you should feel bad!"
-        message.channel.send(message) // idk about this really.
+        var strmessage = "Your code is bad and you should feel bad!"
+        message.channel.send(strmessage) // idk about this really.
     }
 
 });
