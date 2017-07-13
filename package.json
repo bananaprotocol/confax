@@ -15,7 +15,7 @@
     "request": "^2.81.0"
   },
   "engines": {
-    "node": "8.1.2"
+    "node": "8.1.4"
   },
   "homepage": "https://github.com/bananaprotocol/Confax#readme",
   "license": "MIT",
