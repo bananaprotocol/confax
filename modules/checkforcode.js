@@ -81,7 +81,7 @@ bot.on('message', message => {
 function checkMessageForCode(inputLines){
     console.log("Starting to check for code")
     for(let i = 0; i < inputLines.length; i++){
-        let line = inputLines[i].replace('\s','')
+        let line = inputLines[i].replace(/\s"/,'')
         if(line.search("```") >= 0){
             console.log("This code is A Okay!")
             isFormatted = true
@@ -101,6 +101,7 @@ function checkLastCharacter(index, inLine, inChar){
         codeLines.push(index)
         console.log(inLine)
         totalLinesOfCode += 1
+        console.log("Total Lines of Code: " + totalLinesOfCode)
     }    
 }
 
