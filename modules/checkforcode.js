@@ -15,20 +15,20 @@
     using UnityEngine;
 
     /// <summary>
-    /// Class for holding Navigation variables. Used for the main game
-    /// logic by PlayerNavigate to
+    /// Class summary
     /// </summary>
-    public class ChangeDirection
+    public class MyClass
     {
-        /// <summary>   The angle by which we should rotate. </summary>
-        public float newAngle;
-        /// <summary>   The time at which we should change direction.</summary>
-        public float changeTime;
+        /// <summary>   Summary of myFloat. </summary>
+        public float myFloat;
+        /// <summary>   Summary of myOtherFloat.</summary>
+        public float myOtherFLoat;
 
-        public ChangeDirection(float _newAngle, float _changeTime)
+        // Default constructor
+        public MyClass(float _myFloat, float _myOtherFLoat)
         {
-            this.newAngle = _newAngle;
-            this.changeTime = _changeTime;
+            this.myFloat = _newAngle;
+            this.myOtherFLoat = _changeTime;
         }
     }
     ```
@@ -76,44 +76,48 @@ bot.on('message', message => {
     if(isBadCode() && !isFormatted){
 
         let firstLine = Math.min.apply(Math, codeLines)
-        console.log(firstLine)
-        let lastLine = Math.max.apply(Math, codeLines) + 2
-        console.log(lastLine)
+        let lastLine  = Math.max.apply(Math, codeLines) + 2
           
         originalLines.splice(firstLine, 0, '```csharp\n')
-        originalLines.splice(lastLine, 0, '\n```\n')
+        originalLines.splice(lastLine,  0, '\n```\n'    )
 
         let strmessage = ""
 
         for (let j = 0; j < originalLines.length; j++){
-           strmessage += originalLines[j]+'\n'
+           strmessage += originalLines[j] + '\n'
         }
 
+        // TODO: Check if channel name contains help, if so just paste the new code here
+        // else paste it in programing_help
         let channel = message.guild.channels.find("name", "programing_help")
 
         if(channel != null && channel != message.channel){
-            message.channel.send('`Your unformatted code has been formatted and moved to` ' + '#'+ channel.name + '.\n`Which makes sense...`')
-            channel.send('`I have formated your code and placed it here. Good Luck!.`')
+            // TODO: Would like to add alink to #programming help for user friendliness :D
+            // TODO: Would like to add some color to this message also
+            // Maybe make it bold
+            message.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
+            channel.send('**`I have formated your code and placed it here. Good Luck!.`**')
             channel.send(strmessage);
         }
         else{
-                message.channel.send('`I see you forgot to format your code... Let me help you.`')
-                //message.channel.send('```csharp\n' + message.content + '\n```')
+                message.channel.send('**`I see you forgot to format your code... Let me help you.`**')
                 message.channel.send(strmessage)
             }
-
         return
     }
     return
 
 });
 
+
+// Loop through each line in message and check for 
+// code-like characters. If code formaatting is found
+// return else keep checking.
 function checkMessageForCode(inputLines){
-    //console.log("Starting to check for code")
     for(let i = 0; i < inputLines.length; i++){
-        let line = inputLines[i].replace(/\s"/,'')
+        //let line = inputLines[i].replace(/\s"/,'')
+        let line = inputLines
         if(line.search("```") >= 0){
-            //console.log("This code is A Okay!")
             isFormatted = true
             return
         }
@@ -127,6 +131,8 @@ function checkMessageForCode(inputLines){
     return
 }
 
+
+// Checks the last character in a string to see of it machess a code-like character (inChar)
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
@@ -138,6 +144,8 @@ function checkLastCharacter(index, inLine, inChar){
     return  
 }
 
+// Checks the total number of code like elements in an unformatted
+// code block. If greater than 5 than this is bad code lol, return true
 function isBadCode(){
     if (totalLinesOfCode >= 5){
         //console.log("Bad code")
