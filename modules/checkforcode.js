@@ -72,10 +72,11 @@ bot.on('message', message => {
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine = Math.max.apply(Math, codeLines)
         
-        lines.splice(firstLine, 0, '```\n')
+        lines.splice(firstLine, 0, '```csharp\n')
         lines.splice(lastLine, 0, '\n```\n')
         let strmessage = "Your code is bad and you should feel bad!"
-        message.channel.send(strmessage) // idk about this really.
+        message.edit(message.content, lines)
+        message.channel.send(message.constent) // idk about this really.
         return
     }
     return
