@@ -74,9 +74,11 @@ bot.on('message', message => {
         
         lines.splice(firstLine, 0, '```csharp\n')
         lines.splice(lastLine, 0, '\n```\n')
-        let strmessage = "Your code is bad and you should feel bad!"
-        message.edit(message.content, lines)
-        message.channel.send(message.constent) // idk about this really.
+        let strmessage = ""
+        for (let j = 0; j < lines.length; j++){
+            strmessage += lines[j]
+        }
+        message.channel.send(strmessage) // idk about this really.
         return
     }
     return
