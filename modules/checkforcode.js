@@ -69,15 +69,7 @@ bot.on('message', message => {
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
-        //var firstLine = Math.min(...this.codeLines);
-        //let firstLine = Math.min.apply(Math, codeLines)
-        //let lastLine = Math.max.apply(Math, codeLines) + 2
-        
-        //lines.splice(firstLine, 0, '```csharp\n')
-        //lines.splice(lastLine, 0, '\n```\n')
-
         message.channel.send('```csharp\n' + message.content + '\n```')
-        }
         return
     }
     return
