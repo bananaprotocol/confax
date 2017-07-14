@@ -74,7 +74,9 @@ bot.on('message', message => {
         lines.splice(lastLine, 0, '\n```\n')
         let strmessage = "Your code is bad and you should feel bad!"
         message.channel.send(strmessage) // idk about this really.
+        return
     }
+    return
 
 });
 
@@ -85,7 +87,7 @@ function checkMessageForCode(inputLines){
         if(line.search("```") >= 0){
             console.log("This code is A Okay!")
             isFormatted = true
-            return;
+            return
         }
         else{
             checkLastCharacter(i, line, ';')
@@ -94,6 +96,7 @@ function checkMessageForCode(inputLines){
             checkLastCharacter(i, line, ')')
         }
     }
+    return
 }
 
 function checkLastCharacter(index, inLine, inChar){
@@ -102,7 +105,9 @@ function checkLastCharacter(index, inLine, inChar){
         console.log(inLine)
         totalLinesOfCode += 1
         console.log("Total Lines of Code: " + totalLinesOfCode)
-    }    
+        return
+    }  
+    return  
 }
 
 function isBadCode(){
