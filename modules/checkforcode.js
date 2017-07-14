@@ -92,8 +92,8 @@ bot.on('message', message => {
 
         try{
             let channel = message.guild.channels.find("name", "programing_help")
-            channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
-            channel.send(strmessage);
+            message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
+            message.channel.send(strmessage);
         }
         finally{
             message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
