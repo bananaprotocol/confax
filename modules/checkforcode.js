@@ -51,7 +51,7 @@ const config = Confax.config
 
 var isFormatted = false
 var totalLinesOfCode = 0;
-var originalLines = []   
+
 var lines = []
 var codeLines = []
 
@@ -65,22 +65,19 @@ bot.on('message', message => {
     totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
-    originalLines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
         //var firstLine = Math.min(...this.codeLines);
-        let firstLine = Math.min.apply(Math, codeLines)
-        let lastLine = Math.max.apply(Math, codeLines) + 2
+        //let firstLine = Math.min.apply(Math, codeLines)
+        //let lastLine = Math.max.apply(Math, codeLines) + 2
         
-        originalLines.splice(firstLine, 0, '```csharp\n')
-        originalLines.splice(lastLine, 0, '\n```\n')
-        let strmessage = ""
-        for (let j = 0; j < originalLines.length; j++){
-            strmessage += originalLines[j]
+        //lines.splice(firstLine, 0, '```csharp\n')
+        //lines.splice(lastLine, 0, '\n```\n')
+
+        message.channel.send('```csharp\n' + message.content + '\n```')
         }
-        message.channel.send(strmessage) // idk about this really.
         return
     }
     return
@@ -88,11 +85,11 @@ bot.on('message', message => {
 });
 
 function checkMessageForCode(inputLines){
-    console.log("Starting to check for code")
+    //console.log("Starting to check for code")
     for(let i = 0; i < inputLines.length; i++){
         let line = inputLines[i].replace(/\s"/,'')
         if(line.search("```") >= 0){
-            console.log("This code is A Okay!")
+            //console.log("This code is A Okay!")
             isFormatted = true
             return
         }
@@ -109,9 +106,9 @@ function checkMessageForCode(inputLines){
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
-        console.log(inLine)
+        //console.log(inLine)
         totalLinesOfCode += 1
-        console.log("Total Lines of Code: " + totalLinesOfCode)
+        //console.log("Total Lines of Code: " + totalLinesOfCode)
         return
     }  
     return  
@@ -119,7 +116,7 @@ function checkLastCharacter(index, inLine, inChar){
 
 function isBadCode(){
     if (totalLinesOfCode >= 5){
-        console.log("Bad code")
+        //console.log("Bad code")
         return true
     }
     else{
