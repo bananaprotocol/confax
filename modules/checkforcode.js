@@ -61,6 +61,10 @@ bot.on('message', message => {
         //console.log("This is a bot message :D")
         return
     }
+    if(message.content.length > 1900){
+        return
+    }
+
     isFormatted = false
     totalLinesOfCode = 0;  
 
@@ -72,7 +76,9 @@ bot.on('message', message => {
     if(isBadCode() && !isFormatted){
 
         let firstLine = Math.min.apply(Math, codeLines)
+        console.log(firstLine)
         let lastLine = Math.max.apply(Math, codeLines) + 2
+        console.log(lastLine)
           
         originalLines.splice(firstLine, 0, '```csharp\n')
         originalLines.splice(lastLine, 0, '\n```\n')
@@ -84,9 +90,16 @@ bot.on('message', message => {
         }
 
 
-        message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
-        //message.channel.send('```csharp\n' + message.content + '\n```')
-        message.channel.send(strmessage)
+        try{
+            message.guild.channels.find('`I see you forgot to format your code... Let me help you.` :doggo:')
+            message.guild.channels.find("name", "programing_help").sendMessage(strmessage);
+        }
+        finally{
+            message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
+            //message.channel.send('```csharp\n' + message.content + '\n```')
+            message.channel.send(strmessage)
+        }
+
         return
     }
     return
