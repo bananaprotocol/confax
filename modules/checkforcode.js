@@ -77,7 +77,7 @@ bot.on('message', message => {
 
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
-        console.log("First Line is: " _ firstLine)
+        console.log("First Line is: " + firstLine)
         originalLines.splice(firstLine, 0, '```csharp\n')
         originalLines.splice(lastLine,  0, '\n```\n'    )
 
