@@ -69,6 +69,7 @@ bot.on('message', message => {
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
+        message.channel.send('I see you forgot to format you code... Let me help you :doggo:')
         message.channel.send('```csharp\n' + message.content + '\n```')
         return
     }
