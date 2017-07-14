@@ -37,11 +37,16 @@
 // Import the discord.js module
 const Discord = require('discord.js');
 
+// Guess this was for name and whatnot
+const Confax = require('../bot.js')
+
 // This is the bot
 const bot = Confax.bot
 
 // Prob dont need config
 const config = Confax.config
+
+
 
 var isFormatted = false
 var totalLinesOfCode = 0
