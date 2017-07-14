@@ -80,13 +80,11 @@ bot.on('message', message => {
 function checkMessageForCode(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         let line = inputLines[i].replace('\s','')
-        if(line.search('```') >= 0){
-            message.channel.send("This is some good code, perfecto!") 
+        if(line.search("```") >= 0){
             isFormatted = true
             return;
         }
         else{
-            message.channel.send("About to search code, bad on you :(") 
             checkLastCharacter(i, line, ';')
             checkLastCharacter(i, line, '{')
             checkLastCharacter(i, line, '}')
@@ -98,14 +96,12 @@ function checkMessageForCode(inputLines){
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
-        message.channel.send("Code-like element found") 
         totalLinesOfCode += 1
     }    
 }
 
 function isBadCode(){
     if (totalLinesOfCode >= 5){
-        message.channel.send("We have more than 5 code-like elements") 
         return true
     }
     else{
