@@ -116,7 +116,7 @@ bot.on('message', message => {
 function checkMessageForCode(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         //let line = inputLines[i].replace(/\s"/,'')
-        let line = inputLines
+        let line = inputLines[i]
         if(line.search("```") >= 0){
             isFormatted = true
             return
