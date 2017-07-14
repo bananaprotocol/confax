@@ -52,12 +52,12 @@ exports.loadScript = loadScript
 exports.changeConfig = changeConfig
 exports.getConfigValue = getConfigValue
 
-var commands = fs.readdirSync('./commands/')
-commands.forEach(script => {
-  if (script.substring(script.length - 3, script.length) === '.js') {
-    exports.loadScript('./commands/' + script)
-  }
-})
+//var commands = fs.readdirSync('./commands/')
+//commands.forEach(script => {
+// if (script.substring(script.length - 3, script.length) === '.js') {
+//    exports.loadScript('./commands/' + script)
+//  }
+//})
 
 var modules = fs.readdirSync('./modules/')
 modules.forEach(script => {
