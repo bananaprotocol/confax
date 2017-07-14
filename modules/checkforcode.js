@@ -57,6 +57,7 @@ var codeLines = []
 // Create an event listener for messages to parse
 bot.on('message', message => {
     if (message.author.bot){
+        console.log("This is a bot message :D")
         return
     }
 
@@ -78,9 +79,11 @@ bot.on('message', message => {
 });
 
 function checkMessageForCode(inputLines){
+    console.log("Starting to check for code")
     for(let i = 0; i < inputLines.length; i++){
         let line = inputLines[i].replace('\s','')
         if(line.search("```") >= 0){
+            console.log("This code is A Okay!")
             isFormatted = true
             return;
         }
@@ -96,12 +99,14 @@ function checkMessageForCode(inputLines){
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
+        console.log(inLine)
         totalLinesOfCode += 1
     }    
 }
 
 function isBadCode(){
     if (totalLinesOfCode >= 5){
+        console.log("Bad code")
         return true
     }
     else{
