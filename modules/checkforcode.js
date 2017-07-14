@@ -34,8 +34,8 @@
         // Default constructor
         public MyClass(float _myFloat, float _myOtherFLoat)
         {
-            this.myFloat = _newAngle;
-            this.myOtherFLoat = _changeTime;
+            this.myFloat = _myFloat;
+            this.myOtherFLoat = _myOtherFLoat;
         }
     }
     ```
@@ -47,12 +47,9 @@ const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
 
-
-
 var isFormatted = false
 var totalLinesOfCode = 0
 var originalLines = [] 
-
 var lines = []
 var codeLines = []
 
