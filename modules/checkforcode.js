@@ -57,9 +57,11 @@ var codeLines = []
 // Create an event listener for messages to parse
 bot.on('message', message => {
     if (message.author.bot){
-        console.log("This is a bot message :D")
+        //console.log("This is a bot message :D")
         return
     }
+    isFormatted = false
+    totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
     
