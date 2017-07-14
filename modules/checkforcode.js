@@ -92,12 +92,12 @@ bot.on('message', message => {
         let channel = message.guild.channels.find("name", "programing_help")
 
         if(channel != null && channel != message.channel){
-            message.channel.send('`Your unformatted code has been formatted and moved to` ' + channel.name + '.\n`Which makes sense...` :doggo:')
-            channel.send('`I have formated your code and placed it here. Good Luck!.` :doggo:')
+            message.channel.send('`Your unformatted code has been formatted and moved to` ' '#'+ channel.name + '.\n`Which makes sense...` :doggo:')
+            channel.send('`I have formated your code and placed it here. Good Luck!.`')
             channel.send(strmessage);
         }
         else{
-                message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
+                message.channel.send('`I see you forgot to format your code... Let me help you.`')
                 //message.channel.send('```csharp\n' + message.content + '\n```')
                 message.channel.send(strmessage)
             }
