@@ -1,16 +1,16 @@
 const Discord = require('discord.js')
-const Confax = require('../bot.js')
+const GlassBot = require('../bot.js')
 
-Confax.bot.on('guildCreate', (guild) => {
+GlassBot.bot.on('guildCreate', (guild) => {
   var guildID = guild.id
-  var path = './confaxfiles/' + guildID + '.yml'
+  var path = './GlassBotfiles/' + guildID + '.yml'
   fs.writeFileSync(path, defaultConfig)
-  guild.owner.send('Thank you for adding Confax to your guild named **' + guild.name + '**.\n\nConfax will use the default configuration.')
+  guild.owner.send('Thank you for adding GlassBot to your guild named **' + guild.name + '**.\n\nGlassBot will use the default configuration.')
 })
 
-Confax.bot.on('guildDelete', (guild) => {
+GlassBot.bot.on('guildDelete', (guild) => {
   var guildID = guild.id
-  var path = './confaxfiles/' + guildID + '.yml'
+  var path = './GlassBotfiles/' + guildID + '.yml'
   try { fs.unlinkSync(path) } catch (error) { console.log('An error occured: ' + error.stack) }
   console.log('Deleted guild config file for ' + guild + '(' + path + ')')
 })

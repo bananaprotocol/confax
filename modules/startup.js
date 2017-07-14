@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
-const Confax = require('../bot.js')
-const bot = Confax.bot
-const config = Confax.config
+const GlassBot = require('../bot.js')
+const bot = GlassBot.bot
+const config = GlassBot.config
 
 bot.on('ready', () => {
   bot.user.setGame('Hey, format code pls.')
