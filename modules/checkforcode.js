@@ -1,15 +1,22 @@
-/*
+/*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
+
+    14 July, 2017 
+    https://github.com/GlassToeStudio
+    http://glasstoestudio.weebly.com/
+    https://twitter.com/GlassToeStudio
+
+    ------------------------------------------------------------------------
     Systematically search through Discord comments to find unformatted Code.
 
-    * Look for lines ending in ;
-    * Look for lines ending in )
-    * Look for lines ending in { or }
-    * If found, Locate the first Code Block Line
-    * If found, Locate the last Code Block Line
-    * RePost the message surrounded by ```csharp ```
+        * Look for lines ending in ; { } )
+
+        * If found, Locate the first Code Block Line
+        * If found, Locate the last Code Block Line
+        * 
+        * RePost the message surrounded by code formatting ```csharp ```
 
 
-    EXAMPLE
+    EXAMPLE-----------------------------------------------------------------
 
     ```csharp
     using UnityEngine;
@@ -32,19 +39,13 @@
         }
     }
     ```
+    ------------------------------------------------------------------------
 */
 
-// Import the discord.js module
 const Discord = require('discord.js');
-
-// Guess this was for name and whatnot
 const Confax = require('../bot.js')
-
-// This is the bot
-const bot = Confax.bot
-
-// Prob dont need config
-const config = Confax.config
+const bot = GlassBot.bot
+const config = GlassBot.config
 
 
 
