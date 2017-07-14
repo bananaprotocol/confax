@@ -55,12 +55,10 @@ var codeLines = []
 
 // Create an event listener for messages to parse
 bot.on('message', message => {
-    if (message.author.bot){
+    if (message.author.bot)
         return
-    }
-    if(message.content.length > 1900){
+    if (message.content.length > 1900)
         return
-    }
 
     isFormatted = false
     totalLinesOfCode = 0;  
@@ -70,7 +68,7 @@ bot.on('message', message => {
     
     checkMessageForCode(lines)
     
-    if(isBadCode() && !isFormatted){
+    if (isBadCode() && !isFormatted){
 
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
@@ -103,7 +101,6 @@ bot.on('message', message => {
         return
     }
     return
-
 });
 
 
@@ -142,10 +139,8 @@ function checkLastCharacter(index, inLine, inChar){
 // Checks the total number of code like elements in an unformatted
 // code block. If greater than 5 than this is bad code lol, return true
 function isBadCode(){
-    if (totalLinesOfCode >= 5){
+    if (totalLinesOfCode >= 5)
         return true
-    }
-    else{
+    else
         return false
-    }
 }
