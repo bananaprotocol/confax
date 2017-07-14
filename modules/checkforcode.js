@@ -89,18 +89,17 @@ bot.on('message', message => {
            strmessage += originalLines[j]+'\n'
         }
 
-
-        try{
-            let channel = message.guild.channels.find("name", "programing_help")
+        let channel = message.guild.channels.find("name", "programing_help")
+        if(channel != null){
             console.log(channel)
             channel.sendMessage('`I see you forgot to format your code... Let me help you.` :doggo:')
             channel.sendMessage(strmessage);
         }
-        finally{
-            message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
-            //message.channel.send('```csharp\n' + message.content + '\n```')
-            message.channel.send(strmessage)
-        }
+        else{
+                message.channel.send('`I see you forgot to format your code... Let me help you.` :doggo:')
+                //message.channel.send('```csharp\n' + message.content + '\n```')
+                message.channel.send(strmessage)
+            }
 
         return
     }
