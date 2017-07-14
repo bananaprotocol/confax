@@ -43,7 +43,7 @@
 */
 
 const Discord = require('discord.js');
-const Confax = require('../bot.js')
+const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
 
