@@ -84,7 +84,7 @@ bot.on('message', message => {
         }
 
 
-        message.channel.send('I see you forgot to format you code... Let me help you :doggo:')
+        message.channel.send('`I see you forgot to format you code... Let me help you.` :doggo:')
         //message.channel.send('```csharp\n' + message.content + '\n```')
         message.channel.send(strmessage)
         return
