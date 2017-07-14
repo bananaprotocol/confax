@@ -72,15 +72,15 @@ bot.on('message', message => {
     if(isBadCode() && !isFormatted){
 
         let firstLine = Math.min.apply(Math, codeLines)
- +      let lastLine = Math.max.apply(Math, codeLines) + 2
+        let lastLine = Math.max.apply(Math, codeLines) + 2
           
- +      originalLines.splice(firstLine, 0, '```csharp\n')
- +      originalLines.splice(lastLine, 0, '\n```\n')
+        originalLines.splice(firstLine, 0, '```csharp\n')
+        originalLines.splice(lastLine, 0, '\n```\n')
 
         let strmessage = ""
 
- +      for (let j = 0; j < originalLines.length; j++){
- +          strmessage += originalLines[j]+'\n'
+        for (let j = 0; j < originalLines.length; j++){
+           strmessage += originalLines[j]+'\n'
         }
 
 
