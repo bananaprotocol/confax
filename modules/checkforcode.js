@@ -37,12 +37,6 @@
 // Import the discord.js module
 const Discord = require('discord.js');
 
-// The token of your bot - https://discordapp.com/developers/applications/me
-const token = 'your bot token here';
-
-// Guess this was for name and whatnot
-const Confax = require('../bot.js')
-
 // This is the bot
 const bot = Confax.bot
 
@@ -50,7 +44,8 @@ const bot = Confax.bot
 const config = Confax.config
 
 var isFormatted = false
-var totalLinesOfCode = 0;
+var totalLinesOfCode = 0
+var originalLines = [] 
 
 var lines = []
 var codeLines = []
@@ -65,12 +60,28 @@ bot.on('message', message => {
     totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
+    originalLines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
+
+        let firstLine = Math.min.apply(Math, codeLines)
+ +      let lastLine = Math.max.apply(Math, codeLines) + 2
+          
+ +      originalLines.splice(firstLine, 0, '```csharp\n')
+ +      originalLines.splice(lastLine, 0, '\n```\n')
+
+        let strmessage = ""
+
+ +      for (let j = 0; j < originalLines.length; j++){
+ +          strmessage += originalLines[j]+'\n'
+        }
+
+
         message.channel.send('I see you forgot to format you code... Let me help you :doggo:')
-        message.channel.send('```csharp\n' + message.content + '\n```')
+        //message.channel.send('```csharp\n' + message.content + '\n```')
+        message.channel.send(strmessage)
         return
     }
     return

@@ -4,15 +4,15 @@ const bot = Confax.bot
 const config = Confax.config
 
 bot.on('ready', () => {
-  bot.user.setGame('!help to get started.')
+  bot.user.setGame('Hey, format code pls.')
   bot.user.setStatus('online')
-  console.log('Confax is ready to rumble!')
+  console.log('GlassBot seeks bad code!')
 })
 
 bot.on('reconnecting', () => {
-  bot.user.setGame('!help to get started.')
+  bot.user.setGame('Hey, format code pls.')
   bot.user.setStatus('online')
-  console.log('Confax has reconnected to Discord.')
+  console.log('GlassBot seeks bad code.. again.')
 })
 
 bot.login(process.env.BOT_TOKEN)
