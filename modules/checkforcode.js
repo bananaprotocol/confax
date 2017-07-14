@@ -77,7 +77,7 @@ bot.on('message', message => {
 
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
-          
+        console.log("First Line is: " _ firstLine)
         originalLines.splice(firstLine, 0, '```csharp\n')
         originalLines.splice(lastLine,  0, '\n```\n'    )
 
@@ -136,9 +136,9 @@ function checkMessageForCode(inputLines){
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
-        //console.log(inLine)
+        console.log(inLine)
         totalLinesOfCode += 1
-        //console.log("Total Lines of Code: " + totalLinesOfCode)
+        console.log("Total Lines of Code: " + totalLinesOfCode)
         return
     }  
     return  
