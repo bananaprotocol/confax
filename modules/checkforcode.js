@@ -53,22 +53,25 @@ var originalLines = []
 var lines = []
 var codeLines = []
 
-// Create an event listener for messages to parse
 bot.on('message', message => {
-    if (message.author.bot)
+    if (message.author.bot){
         return
-    if (message.content.length > 1900)
+    }
+
+    if(message.content.length > 1900){
         return
+    }
 
     isFormatted = false
     totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
+    // Unsure if this is needed now, we no longer strip the lines in checkMessageForCode()
     originalLines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
-    if (isBadCode() && !isFormatted){
+    if(isBadCode() && !isFormatted){
 
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
@@ -98,7 +101,6 @@ bot.on('message', message => {
                 message.channel.send('**`I see you forgot to format your code... Let me help you.`**')
                 message.channel.send(strmessage)
             }
-        return
     }
     return
 });
@@ -110,16 +112,23 @@ bot.on('message', message => {
 function checkMessageForCode(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         //let line = inputLines[i].replace(/\s"/,'')
-        let line = inputLines[i]
-        if(line.search("```") >= 0){
+        //let line = inputLines[i]
+        if(inputLines[i].search("```") >= 0){
             isFormatted = true
             return
         }
-        else{
-            checkLastCharacter(i, line, ';')
-            checkLastCharacter(i, line, '{')
-            checkLastCharacter(i, line, '}')
-            checkLastCharacter(i, line, ')')
+        else{ 
+            // TODO: these characters should be in an array or list 
+            // so we can easity add and replace characters as we so
+            // choose:
+            // 
+            // Example codeElements = [';', '{', '}', ')''] 
+            // Could add &&, #, %, ||
+            // and not only search at the end but within the string
+            checkLastCharacter(i, inputLines[i], ';') 
+            checkLastCharacter(i, inputLines[i], '{')
+            checkLastCharacter(i, inputLines[i], '}')
+            checkLastCharacter(i, inputLines[i], ')')
         }
     }
     return
@@ -131,7 +140,6 @@ function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
         totalLinesOfCode += 1
-        return
     }  
     return  
 }
@@ -139,8 +147,10 @@ function checkLastCharacter(index, inLine, inChar){
 // Checks the total number of code like elements in an unformatted
 // code block. If greater than 5 than this is bad code lol, return true
 function isBadCode(){
-    if (totalLinesOfCode >= 5)
+    if (totalLinesOfCode >= 5){
         return true
-    else
+    }
+    else{
         return false
+    }
 }
