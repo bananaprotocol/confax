@@ -50,7 +50,8 @@ const bot = Confax.bot
 const config = Confax.config
 
 var isFormatted = false
-var totalLinesOfCode = 0;   
+var totalLinesOfCode = 0;
+var originalLines = []   
 var lines = []
 var codeLines = []
 
@@ -64,19 +65,20 @@ bot.on('message', message => {
     totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
+    originalLines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
         //var firstLine = Math.min(...this.codeLines);
         let firstLine = Math.min.apply(Math, codeLines)
-        let lastLine = Math.max.apply(Math, codeLines)
+        let lastLine = Math.max.apply(Math, codeLines) + 2
         
-        lines.splice(firstLine, 0, '```csharp\n')
-        lines.splice(lastLine, 0, '\n```\n')
+        originalLines.splice(firstLine, 0, '```csharp\n')
+        originalLines.splice(lastLine, 0, '\n```\n')
         let strmessage = ""
-        for (let j = 0; j < lines.length; j++){
-            strmessage += lines[j]
+        for (let j = 0; j < originalLines.length; j++){
+            strmessage += originalLines[j]
         }
         message.channel.send(strmessage) // idk about this really.
         return
