@@ -56,31 +56,37 @@ var codeLines = []
 
 // Create an event listener for messages to parse
 bot.on('message', message => {
+    if (message.author.bot){
+        return
+    }
+
     lines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
     if(isBadCode() && !isFormatted){
         //var firstLine = Math.min(...this.codeLines);
-        var firstLine = Math.min.apply(Math, codeLines)
-        var lastLine = Math.max.apply(Math, codeLines)
+        let firstLine = Math.min.apply(Math, codeLines)
+        let lastLine = Math.max.apply(Math, codeLines)
         
         lines.splice(firstLine, 0, '```\n')
         lines.splice(lastLine, 0, '\n```\n')
-        var strmessage = "Your code is bad and you should feel bad!"
+        let strmessage = "Your code is bad and you should feel bad!"
         message.channel.send(strmessage) // idk about this really.
     }
 
 });
 
 function checkMessageForCode(inputLines){
-    for(var i = 0; i < inputLines.length; i++){
-        var line = inputLines[i].replace('\s','')
+    for(let i = 0; i < inputLines.length; i++){
+        let line = inputLines[i].replace('\s','')
         if(line.search('```') >= 0){
+            message.channel.send("This is some good code, perfecto!") 
             isFormatted = true
             return;
         }
         else{
+            message.channel.send("About to search code, bad on you :(") 
             checkLastCharacter(i, line, ';')
             checkLastCharacter(i, line, '{')
             checkLastCharacter(i, line, '}')
@@ -92,13 +98,17 @@ function checkMessageForCode(inputLines){
 function checkLastCharacter(index, inLine, inChar){
     if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
         codeLines.push(index)
+        message.channel.send("Code-like element found") 
         totalLinesOfCode += 1
     }    
 }
 
 function isBadCode(){
-    if (totalLinesOfCode >= 5)
+    if (totalLinesOfCode >= 5){
+        message.channel.send("We have more than 5 code-like elements") 
         return true
-    else
+    }
+    else{
         return false
+    }
 }
