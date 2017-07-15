@@ -49,9 +49,10 @@ const config = GlassBot.config
 
 var isFormatted = false
 var totalLinesOfCode = 0
-var originalLines = [] 
 var lines = []
 var codeLines = []
+var codeElements = [';', '{', '}', ')'] 
+var repostThreshold = 4
 
 bot.on('message', message => {
     if (message.author.bot){
@@ -66,8 +67,6 @@ bot.on('message', message => {
     totalLinesOfCode = 0;  
 
     lines = message.content.split('\n')
-    // Unsure if this is needed now, we no longer strip the lines in checkMessageForCode()
-    originalLines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
@@ -76,20 +75,22 @@ bot.on('message', message => {
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
 
-        originalLines.splice(firstLine, 0, '```csharp\n')
-        originalLines.splice(lastLine,  0, '\n```\n'    )
+        lines.splice(firstLine, 0, '```csharp\n')
+        lines.splice(lastLine,  0, '\n```\n'    )
 
         let strmessage = ""
-
-        for (let j = 0; j < originalLines.length; j++){
-           strmessage += originalLines[j] + '\n'
+        // Recreate the message.content with the code wrapped in ```
+        for (let j = 0; j < lines.length; j++){
+           strmessage += lines[j] + '\n'
         }
 
         // TODO: Check if channel name contains help, if so just paste the new code here
         // else paste it in programing_help
         let channel = message.guild.channels.find("name", "programing_help")
+        let channelName = message.channel.name
+        let isHelp = channelName.index('help') > 0 
 
-        if(channel != null && channel != message.channel){
+        if(channel != null && channel != message.channel && !isHelp){
             // TODO: Would like to add alink to #programming help for user friendliness :D
             // TODO: Would like to add some color to this message also
             // Maybe make it bold
@@ -112,23 +113,12 @@ bot.on('message', message => {
 function checkMessageForCode(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         //let line = inputLines[i].replace(/\s"/,'')
-        //let line = inputLines[i]
         if(inputLines[i].search("```") >= 0){
             isFormatted = true
             return
         }
         else{ 
-            // TODO: these characters should be in an array or list 
-            // so we can easity add and replace characters as we so
-            // choose:
-            // 
-            // Example codeElements = [';', '{', '}', ')''] 
-            // Could add &&, #, %, ||
-            // and not only search at the end but within the string
-            checkLastCharacter(i, inputLines[i], ';') 
-            checkLastCharacter(i, inputLines[i], '{')
-            checkLastCharacter(i, inputLines[i], '}')
-            checkLastCharacter(i, inputLines[i], ')')
+            checkLastCharacter(i, inputLines[i]) 
         }
     }
     return
@@ -136,18 +126,22 @@ function checkMessageForCode(inputLines){
 
 
 // Checks the last character in a string to see of it machess a code-like character (inChar)
-function checkLastCharacter(index, inLine, inChar){
-    if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
-        codeLines.push(index)
-        totalLinesOfCode += 1
-    }  
+function checkLastCharacter(index, inLine){
+    let lineLength = inLine.length - 1
+    for(let i = 0; i < codeElements.length; i++){
+        if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
+            codeLines.push(index)
+            totalLinesOfCode += 1
+            return
+        }
+    }
     return  
 }
 
 // Checks the total number of code like elements in an unformatted
-// code block. If greater than 5 than this is bad code lol, return true
+// code block. If greater than repostThreshold than this is bad code lol, return true
 function isBadCode(){
-    if (totalLinesOfCode >= 5){
+    if (totalLinesOfCode >= repostThreshold){
         return true
     }
     else{
