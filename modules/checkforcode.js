@@ -112,10 +112,10 @@ function PostNewMessage(oldMessage, newMessage){
         // TODO: Would like to add some color to this message also
         // Maybe make it bold
         oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
-        channel.send('**`★★ I have formated your code and placed it here. Good Luck! ★★.`**')
+        channel.send(oldMessage.user + ' **`★★ I have formated your code and placed it here. Good Luck! ★★.`**')
         channel.send(newMessage);
     }else{
-        oldMessage.channel.send('**`★★ I see you forgot to format your code... Let me help you. ★★`**')
+        oldMessage.channel.send(oldMessage.user + ' **`★★ I see you forgot to format your code... Let me help you. ★★`**')
         oldMessage.channel.send(newMessage)
     }
 }
