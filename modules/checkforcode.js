@@ -60,35 +60,20 @@ var isFormatted = false
 var totalLinesOfCode = 0
 var firstLine = false
 var lastLine = 0
-var lines = []
 
 bot.on('message', message => {
     if(message.author.bot || message.content.length > 1900) return
 
     InitVariables()
 
-    lines = message.content.split('\n')
+    let lines = message.content.split('\n')
     ParseMessage(lines)
     
     if(IsBadCode() && !isFormatted){
 
         lines[lastLine] = FormatLastLine(lines[lastLine])
 
-        let formattedMessage = ""
-
-        // Recreate the message.content with the code wrapped in ```
-        for(let j = 0; j < lines.length; j++)
-           formattedMessage += lines[j] + '\n'
-        PostNewMessage(message, formattedMessage)
-
-        let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-        if(managePerms){
-            console.log("Gonna delete your messge son")
-            message.delete()
-        }else{
-            console.log("Bot cannot delete your message")
-            message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
-        }
+        CreateNewMessage(lines, message)
     }
     return
 });
@@ -97,19 +82,47 @@ bot.on('message', message => {
 // Loop through each line in message and check for 
 // code-like characters. If code formatting is found
 // return, else keep checking.
-function ParseMessage(inputLines){
-    for(let i = 0; i < inputLines.length; i++){
-        if(inputLines[i].search("```") >= 0){
+function ParseMessage(lines){
+    for(let i = 0; i < lines.length; i++){
+        if(lines[i].search("```") >= 0){
             isFormatted = true
             return
         }else
-            FindCodeElements(i, inputLines[i]) 
+            FindCodeElements(i, lines[i]) 
     }
     return
 }
 
+// Checks the last character in a string to see of it machess a code-like character
+function FindCodeElements(index, line){
+    let lineLength = line.length - 1
+    for(let i = 0; i < codeElements.length; i++){
+        if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
+            if(!firstLine){
+                lines[index] = FormatFirstLine(line)
+                return
+            }else{
+                lastLine = index
+                totalLinesOfCode += 1
+                return
+            }
+        }
+    }
+    return  
+}
+
+
+// Recreate the new message with code formatting included
+function CreateNewMessage(lines, message){
+    let newMessage = ""
+    for(let j = 0; j < lines.length; j++)
+       newMessage += lines[j] + '\n'
+
+    PostNewMessage(message, newMessage)
+}
+
 // Post the formatted message in the appropriate channel
-function PostNewMessage(oldMessage, newMessage){
+function PostNewMessage(message, newMessage){
     let channel = oldMessage.guild.channels.find("name", "programing_help")
     let channelName = oldMessage.channel.name
     let isHelp = channelName.indexOf('help') > 0 
@@ -123,26 +136,22 @@ function PostNewMessage(oldMessage, newMessage){
         oldMessage.channel.send(oldMessage.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
         oldMessage.channel.send(newMessage)
     }
+
+    DeleteOldMessage(message)
 }
 
-
-// Checks the last character in a string to see of it machess a code-like character
-function FindCodeElements(index, inLine){
-    let lineLength = inLine.length - 1
-    for(let i = 0; i < codeElements.length; i++){
-        if (inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            if(!firstLine){
-                lines[index] = FormatFirstLine(inLine)
-                return
-            }else{
-                lastLine = index
-                totalLinesOfCode += 1
-                return
-            }
-        }
+// Deletes the old unformatted messge if bot has permission
+function DeleteOldMessage(message){
+    let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
+    if(managePerms){
+        console.log("Gonna delete your messge son")
+        message.delete()
+    }else{
+        console.log("Bot cannot delete your message")
+        message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
     }
-    return  
 }
+
 
 // Adds code formatting block start to the first line of code
 function FormatFirstLine(inLine){
