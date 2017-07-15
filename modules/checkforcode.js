@@ -67,9 +67,9 @@ bot.on('message', message => {
 
     let lines = message.content.split('\n')
     
-    checkMessageForCode(lines)
+    ParseMessage(lines)
     
-    if(isBadCode() && !isFormatted){
+    if(IsBadCode() && !isFormatted){
 
         //let firstLine = Math.min.apply(Math, codeLines)
         //let lastLine  = Math.max.apply(Math, codeLines) + 2
@@ -77,13 +77,13 @@ bot.on('message', message => {
         //lines.splice(firstLine, 0, '```csharp\n')
         //lines.splice(lastLine,  0, '\n```\n'    )
 
-        lines[lastLine] = formatLastLine(lines[lastLine])
+        lines[lastLine] = FormatLastLine(lines[lastLine])
 
         let strmessage = ""
+        
         // Recreate the message.content with the code wrapped in ```
-        for (let j = 0; j < lines.length; j++){
+        for (let j = 0; j < lines.length; j++)
            strmessage += lines[j] + '\n'
-        }
 
         let channel = message.guild.channels.find("name", "programing_help")
         let channelName = message.channel.name
@@ -96,8 +96,7 @@ bot.on('message', message => {
             message.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
             channel.send('**`I have formated your code and placed it here. Good Luck!.`**')
             channel.send(strmessage);
-        }
-        else{
+        }else{
                 message.channel.send('**`I see you forgot to format your code... Let me help you.`**')
                 message.channel.send(strmessage)
             }
@@ -109,54 +108,48 @@ bot.on('message', message => {
 // Loop through each line in message and check for 
 // code-like characters. If code formaatting is found
 // return else keep checking.
-function checkMessageForCode(inputLines){
+function ParseMessage(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         //let line = inputLines[i].replace(/\s"/,'')
         if(inputLines[i].search("```") >= 0){
             isFormatted = true
             return
-        }
-        else{ 
-            checkLastCharacter(i, inputLines[i]) 
-        }
+        }else
+            FindCodeElements(i, inputLines[i]) 
     }
     return
 }
 
 
 // Checks the last character in a string to see of it machess a code-like character (inChar)
-function checkLastCharacter(index, inLine){
+function FindCodeElements(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
         if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
             if(!hasFirstLine){
-                inLine = formatFirstLine(inLine)
+                lines[index] = FormatFirstLine(inLine)
+                return
+            }else{
+                lastLine = index
+                totalLinesOfCode += 1
                 return
             }
-            
-            lastLine = i
-            totalLinesOfCode += 1
-            return
         }
     }
     return  
 }
 
-function formatFirstLine(inLine){
+function FormatFirstLine(inLine){
     hasFirstLine = true
     return '```csharp\n' + inLine
 }
 
-function formatLastLine(inLine){
+function FormatLastLine(inLine){
     return inLine + '\n```'
 }
 // Checks the total number of code like elements in an unformatted
 // code block. If greater than repostThreshold than this is bad code lol, return true
-function isBadCode(){
-    if (totalLinesOfCode >= repostThreshold){
-        return true
-    }
-    else{
-        return false
-    }
+function IsBadCode(){
+    if (totalLinesOfCode >= repostThreshold) return true
+    else return false
 }
