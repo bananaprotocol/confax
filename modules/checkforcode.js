@@ -111,7 +111,7 @@ function PostNewMessage(oldMessage, newMessage){
         // TODO: Would like to add alink to #programming help for user friendliness :D
         // TODO: Would like to add some color to this message also
         // Maybe make it bold
-        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
+        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...`')
         channel.send(oldMessage.author + ' **`★★ I have formated your code and placed it here. Good Luck! ★★.`**')
         channel.send(newMessage);
     }else{
