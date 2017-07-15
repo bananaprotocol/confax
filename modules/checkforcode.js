@@ -63,17 +63,13 @@ var lastLine = 0
 var lines = []
 
 bot.on('message', message => {
-    if(message.author.bot) return
-
-    if(message.content.length > 1900) return
+    if(message.author.bot || message.content.length > 1900) return
 
     InitVariables()
 
     lines = message.content.split('\n')
-    
     ParseMessage(lines)
     
-
     if(IsBadCode() && !isFormatted){
 
         lines[lastLine] = FormatLastLine(lines[lastLine])
@@ -83,15 +79,12 @@ bot.on('message', message => {
         // Recreate the message.content with the code wrapped in ```
         for(let j = 0; j < lines.length; j++)
            formattedMessage += lines[j] + '\n'
-
         PostNewMessage(message, formattedMessage)
 
         let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-
         if(managePerms){
             console.log("Gonna delete your messge son")
             message.delete()
-
         }else{
             console.log("Bot cannot delete your message")
             message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
@@ -122,9 +115,7 @@ function PostNewMessage(oldMessage, newMessage){
     let isHelp = channelName.indexOf('help') > 0 
 
     if(channel != null && channel != oldMessage.channel && !isHelp){
-        // TODO: Would like to add alink to #programming help for user friendliness :D
-        // TODO: Would like to add some color to this message also
-        // Maybe make it bold
+        // TODO: Would like to add some color to this message
         oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
         channel.send(oldMessage.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
         channel.send(newMessage);
