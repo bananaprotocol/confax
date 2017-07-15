@@ -87,12 +87,12 @@ bot.on('message', message => {
         PostNewMessage(message, formattedMessage)
 
         console.log(message.guild.member(bot.user))
-        
+
         let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
 
         if(managePerms){
             console.log("Gonna delete your messge son")
-            bot.deleteMessage(message)
+            message.delete()
 
         }else{
             console.log("Bot cannot delete your message")
