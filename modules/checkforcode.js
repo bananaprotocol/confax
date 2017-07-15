@@ -84,6 +84,15 @@ bot.on('message', message => {
            formattedMessage += lines[j] + '\n'
 
         PostNewMessage(message, formattedMessage)
+
+        let canDelete = message.channel.permissionsFor(bot).hasPermission("MANAGE_MESSAGES");
+        if(canDelete){
+            console.log("Gonna delete your messge son")
+            bot.delete(message)
+        }else{
+            console.log("Bot cannot delete your message")
+            message.channel.send('Tell the owner to grant me permission to delete your old message, thank\'s :wink:')
+        }
     }
     return
 });
@@ -113,11 +122,11 @@ function PostNewMessage(oldMessage, newMessage){
         // TODO: Would like to add alink to #programming help for user friendliness :D
         // TODO: Would like to add some color to this message also
         // Maybe make it bold
-        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...` :nerd:')
-        channel.send(oldMessage.author + ' **`★★ I have formatted your code and placed it here. Good Luck! ★★.`**')
+        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        channel.send(oldMessage.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
         channel.send(newMessage);
     }else{
-        oldMessage.channel.send(oldMessage.author + ' **`★★ I see you forgot to format your code... Let me help you. ★★`**')
+        oldMessage.channel.send(oldMessage.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
         oldMessage.channel.send(newMessage)
     }
 }
