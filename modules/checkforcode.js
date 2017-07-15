@@ -47,105 +47,119 @@ const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
 
+// Salt to taste
+var codeElements = [';', '{', '}', ')'] 
+var repostThreshold = 4
+
+// Variables
 var isFormatted = false
 var totalLinesOfCode = 0
-var originalLines = [] 
+var firstLine = false
+var lastLine = 0
 var lines = []
-var codeLines = []
 
-// Create an event listener for messages to parse
+
 bot.on('message', message => {
-    if (message.author.bot){
-        return
-    }
-    if(message.content.length > 1900){
-        return
-    }
+    if (message.author.bot) return
 
-    isFormatted = false
-    totalLinesOfCode = 0;  
+    if(message.content.length > 1900) return
+
+    InitVariables()
 
     lines = message.content.split('\n')
-    originalLines = message.content.split('\n')
     
-    checkMessageForCode(lines)
+    ParseMessage(lines)
     
-    if(isBadCode() && !isFormatted){
+    if(IsBadCode() && !isFormatted){
 
-        let firstLine = Math.min.apply(Math, codeLines)
-        let lastLine  = Math.max.apply(Math, codeLines) + 2
+        lines[lastLine] = FormatLastLine(lines[lastLine])
 
-        originalLines.splice(firstLine, 0, '```csharp\n')
-        originalLines.splice(lastLine,  0, '\n```\n'    )
+        let formattedMessage = ""
 
-        let strmessage = ""
+        // Recreate the message.content with the code wrapped in ```
+        for (let j = 0; j < lines.length; j++)
+           formattedMessage += lines[j] + '\n'
 
-        for (let j = 0; j < originalLines.length; j++){
-           strmessage += originalLines[j] + '\n'
-        }
+        PostNewMessage(message, formattedMessage)
 
-        // TODO: Check if channel name contains help, if so just paste the new code here
-        // else paste it in programing_help
-        let channel = message.guild.channels.find("name", "programing_help")
-
-        if(channel != null && channel != message.channel){
-            // TODO: Would like to add alink to #programming help for user friendliness :D
-            // TODO: Would like to add some color to this message also
-            // Maybe make it bold
-            message.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
-            channel.send('**`I have formated your code and placed it here. Good Luck!.`**')
-            channel.send(strmessage);
-        }
-        else{
-                message.channel.send('**`I see you forgot to format your code... Let me help you.`**')
-                message.channel.send(strmessage)
-            }
-        return
     }
     return
-
 });
 
 
 // Loop through each line in message and check for 
 // code-like characters. If code formaatting is found
 // return else keep checking.
-function checkMessageForCode(inputLines){
+function ParseMessage(inputLines){
     for(let i = 0; i < inputLines.length; i++){
-        //let line = inputLines[i].replace(/\s"/,'')
-        let line = inputLines[i]
-        if(line.search("```") >= 0){
+        if(inputLines[i].search("```") >= 0){
             isFormatted = true
             return
-        }
-        else{
-            checkLastCharacter(i, line, ';')
-            checkLastCharacter(i, line, '{')
-            checkLastCharacter(i, line, '}')
-            checkLastCharacter(i, line, ')')
-        }
+        }else
+            FindCodeElements(i, inputLines[i]) 
     }
     return
 }
 
+// Post the formatted message in the appropriate channel
+function PostNewMessage(oldMessage, newMessage){
+    let channel = oldMessage.guild.channels.find("name", "programing_help")
+    let channelName = oldMessage.channel.name
+    let isHelp = channelName.indexOf('help') > 0 
 
-// Checks the last character in a string to see of it machess a code-like character (inChar)
-function checkLastCharacter(index, inLine, inChar){
-    if(inLine.charAt(inLine.length-1).valueOf() == inChar.valueOf()){
-        codeLines.push(index)
-        totalLinesOfCode += 1
-        return
-    }  
+    if(channel != null && channel != oldMessage.channel && !isHelp){
+        // TODO: Would like to add alink to #programming help for user friendliness :D
+        // TODO: Would like to add some color to this message also
+        // Maybe make it bold
+        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...`')
+        channel.send(oldMessage.author + ' **`★★ I have formatted your code and placed it here. Good Luck! ★★.`**')
+        channel.send(newMessage);
+    }else{
+        oldMessage.channel.send(oldMessage.author + ' **`★★ I see you forgot to format your code... Let me help you. ★★`**')
+        oldMessage.channel.send(newMessage)
+    }
+}
+
+
+// Checks the last character in a string to see of it machess a code-like character
+function FindCodeElements(index, inLine){
+    let lineLength = inLine.length - 1
+    for(let i = 0; i < codeElements.length; i++){
+        if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
+            if(!firstLine){
+                lines[index] = FormatFirstLine(inLine)
+                return
+            }else{
+                lastLine = index
+                totalLinesOfCode += 1
+                return
+            }
+        }
+    }
     return  
 }
 
-// Checks the total number of code like elements in an unformatted
-// code block. If greater than 5 than this is bad code lol, return true
-function isBadCode(){
-    if (totalLinesOfCode >= 5){
-        return true
-    }
-    else{
-        return false
-    }
+// Adds code formatting block start to the first line of code
+function FormatFirstLine(inLine){
+    firstLine = true
+    return '```csharp\n' + inLine
+}
+
+// Add formatting code bock end to the last line of code
+function FormatLastLine(inLine){
+    return inLine + '\n```'
+}
+
+// If total line of code is greater than repostThreshold return true
+function IsBadCode(){
+    if (totalLinesOfCode >= repostThreshold) return true
+    else return false
+}
+
+// ReInitalize variables
+function InitVariables(){
+    isFormatted = false
+    totalLinesOfCode = 0; 
+    firstLine = false
+    lastLine = 0
 }
