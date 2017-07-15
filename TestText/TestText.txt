@@ -21,7 +21,7 @@ using UnityEngine;
                 With multiple lines of text.
             */
             
-            this.MyFloat    = _myFloat;
+            this.myFloat    = _myFloat;
             this.MyInt      = _myInt;
         }
         
