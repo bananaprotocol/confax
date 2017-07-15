@@ -85,13 +85,13 @@ bot.on('message', message => {
            formattedMessage += lines[j] + '\n'
 
         PostNewMessage(message, formattedMessage)
-        console.log(bot)
 
-        let canDelete = message.channel.permissionsFor(message.channel.bot).hasPermission("MANAGE_MESSAGES");
+        let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSGES')
 
-        if(canDelete){
-            console.log("Gonna delete your messge son")
+        if(managePerms){
             bot.delete(message)
+            console.log("Gonna delete your messge son")
+        }
         }else{
             console.log("Bot cannot delete your message")
             message.channel.send('Tell the owner to grant me permission to delete your old message, thank\'s :wink:')
