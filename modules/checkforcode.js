@@ -47,26 +47,22 @@ const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
 
+// Variables
 var isFormatted = false
 var totalLinesOfCode = 0
-var lines = []
 var codeLines = []
 var codeElements = [';', '{', '}', ')'] 
 var repostThreshold = 4
 
 bot.on('message', message => {
-    if (message.author.bot){
-        return
-    }
+    if (message.author.bot) return
 
-    if(message.content.length > 1900){
-        return
-    }
+    if(message.content.length > 1900) return
 
     isFormatted = false
     totalLinesOfCode = 0;  
 
-    lines = message.content.split('\n')
+    let lines = message.content.split('\n')
     
     checkMessageForCode(lines)
     
@@ -75,7 +71,7 @@ bot.on('message', message => {
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
 
-        lines.splice(firstLine, 0, '```csharp\n\t')
+        lines.splice(firstLine, 0, '```csharp\n')
         lines.splice(lastLine,  0, '\n```\n'    )
 
         let strmessage = ""
@@ -84,12 +80,9 @@ bot.on('message', message => {
            strmessage += lines[j] + '\n'
         }
 
-        // TODO: Check if channel name contains help, if so just paste the new code here
-        // else paste it in programing_help
         let channel = message.guild.channels.find("name", "programing_help")
         let channelName = message.channel.name
         let isHelp = channelName.indexOf('help') > 0 
-        console.log(isHelp)
 
         if(channel != null && channel != message.channel && !isHelp){
             // TODO: Would like to add alink to #programming help for user friendliness :D
