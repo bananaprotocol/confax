@@ -8,15 +8,35 @@
     ------------------------------------------------------------------------
     Systematically search through Discord comments to find unformatted Code.
 
-        * Look for lines ending in ; { } )
-
-        * If found, Locate the first Code Block Line
-        * If found, Locate the last Code Block Line
-        * 
-        * RePost the message surrounded by code formatting ```csharp ```
-
+        * Search is based in chars in codeElements array. 
+            * Default:  [';', '{', '}', ')'] 
+        * Bot will parse the code line by line searchig for 
+        * code elements and keep track of which line are code
+        * and which are plain text. 
+        * The bot will do his best to only format a true code
+        * block, leaveing the plain text alone. One complte
+        * the bot will add code block formattign aroind the 
+        * code block, with the current code lang 'csharp'.
+        * The message will be posted anew as formatted code
+        * and, if possible, the old message will be deleted.
+        *
+        * If the informatted code is posted in a channel with
+        * 'help' in the tile, then the new messge is posted
+        * there.
+        * If the message is posted in any other chnannel, the 
+        * new message will be posted in #programing_help (if it exists)
+        * If there is no programing_help channel, the message is
+        * posted in the original channel.
+        *
+        * When a new message is posted in a new channel, the user
+        * is notified that the post has been moved, with a link
+        * to the channel. The new post in the new channel will
+        * also mention the user, as an added bonus to help
+        * the user navigate the newmessage.
 
     EXAMPLE-----------------------------------------------------------------
+
+    THis is not code so it is not in the code block.
 
     ```csharp
     using UnityEngine;
@@ -39,6 +59,9 @@
         }
     }
     ```
+
+    THis is not code so it is not in the code block.
+    
     ------------------------------------------------------------------------
 
     Discord Markdown 101 for more formatting guidelines:
@@ -51,9 +74,9 @@ const bot = GlassBot.bot
 const config = GlassBot.config
 
 // Salt to taste
-var codeElements = [';', '{', '}', ')'] // Could be in config
-var repostThreshold = 4
-var codeLang = 'csharp'
+const codeElements = [';', '{', '}', ')'] // Could be in config
+const codeLang = 'csharp'
+const repostThreshold = 4
 
 // Variables
 var isFormatted = false
@@ -61,12 +84,13 @@ var totalLinesOfCode = 0
 var firstLine = false
 var lastLine = 0
 
+// Lets begin
 bot.on('message', message => {
     if(message.author.bot || message.content.length > 1900) return
-
     InitVariables()
 
     let lines = message.content.split('\n')
+
     ParseMessage(lines)
     
     if(IsBadCode() && !isFormatted){
@@ -111,7 +135,6 @@ function FindCodeElements(index, line, lines){
     return  
 }
 
-
 // Recreate the new message with code formatting included
 function CreateNewMessage(lines, message){
     let newMessage = ""
@@ -151,7 +174,6 @@ function DeleteOldMessage(message){
         message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
     }
 }
-
 
 // Adds code formatting block start to the first line of code
 function FormatFirstLine(inLine){
