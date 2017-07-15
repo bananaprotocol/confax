@@ -40,6 +40,9 @@
     }
     ```
     ------------------------------------------------------------------------
+
+    Discord Markdown 101 for more formatting guidelines:
+    https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
 const Discord = require('discord.js');
@@ -60,14 +63,11 @@ var lastLine = 0
 var lines = []
 
 bot.on('message', message => {
-    if(message.author.bot) return
-
-    if(message.content.length > 1900) return
+    if(message.author.bot || message.content.length > 1900) return
 
     InitVariables()
 
     lines = message.content.split('\n')
-    
     ParseMessage(lines)
     
     if(IsBadCode() && !isFormatted){
@@ -79,8 +79,16 @@ bot.on('message', message => {
         // Recreate the message.content with the code wrapped in ```
         for(let j = 0; j < lines.length; j++)
            formattedMessage += lines[j] + '\n'
-
         PostNewMessage(message, formattedMessage)
+
+        let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
+        if(managePerms){
+            console.log("Gonna delete your messge son")
+            message.delete()
+        }else{
+            console.log("Bot cannot delete your message")
+            message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
+        }
     }
     return
 });
@@ -107,14 +115,12 @@ function PostNewMessage(oldMessage, newMessage){
     let isHelp = channelName.indexOf('help') > 0 
 
     if(channel != null && channel != oldMessage.channel && !isHelp){
-        // TODO: Would like to add alink to #programming help for user friendliness :D
-        // TODO: Would like to add some color to this message also
-        // Maybe make it bold
-        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...`')
-        channel.send(oldMessage.author + ' **`★★ I have formatted your code and placed it here. Good Luck! ★★.`**')
+        // TODO: Would like to add some color to this message
+        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        channel.send(oldMessage.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
         channel.send(newMessage);
     }else{
-        oldMessage.channel.send(oldMessage.author + ' **`★★ I see you forgot to format your code... Let me help you. ★★`**')
+        oldMessage.channel.send(oldMessage.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
         oldMessage.channel.send(newMessage)
     }
 }
@@ -154,7 +160,7 @@ function IsBadCode(){
     return (totalLinesOfCode >= repostThreshold)
 }
 
-// ReInitalize variables
+// Initalize variables
 function InitVariables(){
     isFormatted = false
     totalLinesOfCode = 0; 
