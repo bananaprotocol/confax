@@ -123,18 +123,18 @@ function CreateNewMessage(lines, message){
 
 // Post the formatted message in the appropriate channel
 function PostNewMessage(message, newMessage){
-    let channel = oldMessage.guild.channels.find("name", "programing_help")
-    let channelName = oldMessage.channel.name
+    let channel = message.guild.channels.find("name", "programing_help")
+    let channelName = message.channel.name
     let isHelp = channelName.indexOf('help') > 0 
 
-    if(channel != null && channel != oldMessage.channel && !isHelp){
+    if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
-        channel.send(oldMessage.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
+        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
         channel.send(newMessage);
     }else{
-        oldMessage.channel.send(oldMessage.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
-        oldMessage.channel.send(newMessage)
+        message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
+        message.channel.send(newMessage)
     }
 
     DeleteOldMessage(message)
