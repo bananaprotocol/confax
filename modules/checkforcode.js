@@ -84,9 +84,8 @@ bot.on('message', message => {
            formattedMessage += lines[j] + '\n'
 
         PostNewMessage(message, formattedMessage)
+        console.log(bot.user.name)
 
-
-        console.log(member.name)
         let canDelete = message.channel.permissionsFor(bot.member).hasPermission("MANAGE_MESSAGES");
 
         if(canDelete){
