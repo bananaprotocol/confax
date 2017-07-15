@@ -73,6 +73,7 @@ bot.on('message', message => {
     
     ParseMessage(lines)
     
+
     if(IsBadCode() && !isFormatted){
 
         lines[lastLine] = FormatLastLine(lines[lastLine])
@@ -84,7 +85,7 @@ bot.on('message', message => {
            formattedMessage += lines[j] + '\n'
 
         PostNewMessage(message, formattedMessage)
-        console.log(message.channel.bot.name)
+        console.log(bot)
 
         let canDelete = message.channel.permissionsFor(message.channel.bot).hasPermission("MANAGE_MESSAGES");
 
