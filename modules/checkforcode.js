@@ -64,10 +64,7 @@ bot.on('message', message => {
 
     if(message.content.length > 1900) return
 
-    isFormatted = false
-    totalLinesOfCode = 0; 
-    firstLine = false
-    lastLine = 0
+    InitVariables()
 
     lines = message.content.split('\n')
     
@@ -75,35 +72,16 @@ bot.on('message', message => {
     
     if(IsBadCode() && !isFormatted){
 
-        //let firstLine = Math.min.apply(Math, codeLines)
-        //let lastLine  = Math.max.apply(Math, codeLines) + 2
-
-        //lines.splice(firstLine, 0, '```csharp\n')
-        //lines.splice(lastLine,  0, '\n```\n'    )
-
         lines[lastLine] = FormatLastLine(lines[lastLine])
 
-        let strmessage = ""
+        let formattedMessage = ""
 
         // Recreate the message.content with the code wrapped in ```
         for (let j = 0; j < lines.length; j++)
-           strmessage += lines[j] + '\n'
+           formattedMessage += lines[j] + '\n'
 
-        let channel = message.guild.channels.find("name", "programing_help")
-        let channelName = message.channel.name
-        let isHelp = channelName.indexOf('help') > 0 
+        PostNewMessage(message, formattedMessage)
 
-        if(channel != null && channel != message.channel && !isHelp){
-            // TODO: Would like to add alink to #programming help for user friendliness :D
-            // TODO: Would like to add some color to this message also
-            // Maybe make it bold
-            message.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
-            channel.send('**`I have formated your code and placed it here. Good Luck!.`**')
-            channel.send(strmessage);
-        }else{
-                message.channel.send('**`I see you forgot to format your code... Let me help you.`**')
-                message.channel.send(strmessage)
-            }
     }
     return
 });
@@ -114,7 +92,6 @@ bot.on('message', message => {
 // return else keep checking.
 function ParseMessage(inputLines){
     for(let i = 0; i < inputLines.length; i++){
-        //let line = inputLines[i].replace(/\s"/,'')
         if(inputLines[i].search("```") >= 0){
             isFormatted = true
             return
@@ -124,8 +101,27 @@ function ParseMessage(inputLines){
     return
 }
 
+// Post the formatted message in the appropriate channel
+function PostNewMessage(oldMessage, newMessage){
+    let channel = oldMessage.guild.channels.find("name", "programing_help")
+    let channelName = oldMessage.channel.name
+    let isHelp = channelName.indexOf('help') > 0 
 
-// Checks the last character in a string to see of it machess a code-like character (inChar)
+    if(channel != null && channel != oldMessage.channel && !isHelp){
+        // TODO: Would like to add alink to #programming help for user friendliness :D
+        // TODO: Would like to add some color to this message also
+        // Maybe make it bold
+        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + '#'+ channel.name + '.\n`Which makes sense...`')
+        channel.send('**`I have formated your code and placed it here. Good Luck!.`**')
+        channel.send(newMessage);
+    }else{
+        oldMessage.channel.send('**`I see you forgot to format your code... Let me help you.`**')
+        oldMessage.channel.send(newMessage)
+    }
+}
+
+
+// Checks the last character in a string to see of it machess a code-like character
 function FindCodeElements(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
@@ -143,17 +139,27 @@ function FindCodeElements(index, inLine){
     return  
 }
 
+// Adds code formatting block start to the first line of code
 function FormatFirstLine(inLine){
     firstLine = true
     return '```csharp\n' + inLine
 }
 
+// Add formatting code bock end to the last line of code
 function FormatLastLine(inLine){
     return inLine + '\n```'
 }
-// Checks the total number of code like elements in an unformatted
-// code block. If greater than repostThreshold than this is bad code lol, return true
+
+// If total line of code is greater than repostThreshold return true
 function IsBadCode(){
     if (totalLinesOfCode >= repostThreshold) return true
     else return false
+}
+
+// ReInitalize variables
+function InitVariables(){
+    isFormatted = false
+    totalLinesOfCode = 0; 
+    firstLine = false
+    lastLine = 0
 }
