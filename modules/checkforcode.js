@@ -78,7 +78,7 @@ bot.on('message', message => {
         //lines.splice(lastLine,  0, '\n```\n'    )
 
         lines[lastLine] = formatLastLine(lines[lastLine])
-        
+
         let strmessage = ""
         // Recreate the message.content with the code wrapped in ```
         for (let j = 0; j < lines.length; j++){
@@ -140,6 +140,7 @@ function checkLastCharacter(index, inLine){
 }
 
 function formatFirstLine(inLine){
+    formatFirstLine = true
     return '```\n + inLine'
 }
 
