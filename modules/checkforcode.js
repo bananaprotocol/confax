@@ -48,8 +48,9 @@ const bot = GlassBot.bot
 const config = GlassBot.config
 
 // Salt to taste
-var codeElements = [';', '{', '}', ')'] 
+var codeElements = [';', '{', '}', ')'] // Could be in config
 var repostThreshold = 4
+var codeLang = 'csharp'
 
 // Variables
 var isFormatted = false
@@ -58,9 +59,8 @@ var firstLine = false
 var lastLine = 0
 var lines = []
 
-
 bot.on('message', message => {
-    if (message.author.bot) return
+    if(message.author.bot) return
 
     if(message.content.length > 1900) return
 
@@ -77,19 +77,18 @@ bot.on('message', message => {
         let formattedMessage = ""
 
         // Recreate the message.content with the code wrapped in ```
-        for (let j = 0; j < lines.length; j++)
+        for(let j = 0; j < lines.length; j++)
            formattedMessage += lines[j] + '\n'
 
         PostNewMessage(message, formattedMessage)
-
     }
     return
 });
 
 
 // Loop through each line in message and check for 
-// code-like characters. If code formaatting is found
-// return else keep checking.
+// code-like characters. If code formatting is found
+// return, else keep checking.
 function ParseMessage(inputLines){
     for(let i = 0; i < inputLines.length; i++){
         if(inputLines[i].search("```") >= 0){
@@ -125,7 +124,7 @@ function PostNewMessage(oldMessage, newMessage){
 function FindCodeElements(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
-        if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
+        if (inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
             if(!firstLine){
                 lines[index] = FormatFirstLine(inLine)
                 return
@@ -142,7 +141,7 @@ function FindCodeElements(index, inLine){
 // Adds code formatting block start to the first line of code
 function FormatFirstLine(inLine){
     firstLine = true
-    return '```csharp\n' + inLine
+    return '```' + codeLang + '\n' + inLine
 }
 
 // Add formatting code bock end to the last line of code
@@ -152,8 +151,7 @@ function FormatLastLine(inLine){
 
 // If total line of code is greater than repostThreshold return true
 function IsBadCode(){
-    if (totalLinesOfCode >= repostThreshold) return true
-    else return false
+    return (totalLinesOfCode >= repostThreshold)
 }
 
 // ReInitalize variables
