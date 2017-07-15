@@ -40,6 +40,9 @@
     }
     ```
     ------------------------------------------------------------------------
+
+    Discord Markdown 101 for more formatting guidelines:
+    https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
 const Discord = require('discord.js');
@@ -110,7 +113,7 @@ function PostNewMessage(oldMessage, newMessage){
         // TODO: Would like to add alink to #programming help for user friendliness :D
         // TODO: Would like to add some color to this message also
         // Maybe make it bold
-        oldMessage.channel.send('__`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...`')
+        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '.\n`Which makes sense...` :nerd:')
         channel.send(oldMessage.author + ' **`★★ I have formatted your code and placed it here. Good Luck! ★★.`**')
         channel.send(newMessage);
     }else{
@@ -154,7 +157,7 @@ function IsBadCode(){
     return (totalLinesOfCode >= repostThreshold)
 }
 
-// ReInitalize variables
+// Initalize variables
 function InitVariables(){
     isFormatted = false
     totalLinesOfCode = 0; 
