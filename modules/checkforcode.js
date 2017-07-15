@@ -47,25 +47,29 @@ const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
 
+// Salt to taste
+var codeElements = [';', '{', '}', ')'] 
+var repostThreshold = 4
+
 // Variables
 var isFormatted = false
 var totalLinesOfCode = 0
-var hasFirstLine = false
-var codeElements = [';', '{', '}', ')'] 
-var repostThreshold = 4
+var firstLine = false
 var lastLine = 0
+var lines = []
+
 
 bot.on('message', message => {
     if (message.author.bot) return
 
     if(message.content.length > 1900) return
 
-    hasFirstLine = false
     isFormatted = false
-    totalLinesOfCode = 0;  
+    totalLinesOfCode = 0; 
+    firstLine = false
     lastLine = 0
 
-    let lines = message.content.split('\n')
+    lines = message.content.split('\n')
     
     ParseMessage(lines)
     
@@ -80,7 +84,7 @@ bot.on('message', message => {
         lines[lastLine] = FormatLastLine(lines[lastLine])
 
         let strmessage = ""
-        
+
         // Recreate the message.content with the code wrapped in ```
         for (let j = 0; j < lines.length; j++)
            strmessage += lines[j] + '\n'
@@ -126,7 +130,7 @@ function FindCodeElements(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
         if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            if(!hasFirstLine){
+            if(!firstLine){
                 lines[index] = FormatFirstLine(inLine)
                 return
             }else{
@@ -140,7 +144,7 @@ function FindCodeElements(index, inLine){
 }
 
 function FormatFirstLine(inLine){
-    hasFirstLine = true
+    firstLine = true
     return '```csharp\n' + inLine
 }
 
