@@ -129,8 +129,11 @@ function checkLastCharacter(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
         if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            if(!formatFirstLine)
+            if(!hasFirstLine){
                 inLine = formatFirstLine(inLine)
+                return
+            }
+            
             lastLine = i
             totalLinesOfCode += 1
             return
@@ -141,7 +144,7 @@ function checkLastCharacter(index, inLine){
 
 function formatFirstLine(inLine){
     formatFirstLine = true
-    return '```\n + inLine'
+    return '```csharp\n' + inLine
 }
 
 function formatLastLine(inLine){
