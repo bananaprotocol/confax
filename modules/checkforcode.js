@@ -91,7 +91,6 @@ bot.on('message', message => {
         if(managePerms){
             bot.delete(message)
             console.log("Gonna delete your messge son")
-        }
         }else{
             console.log("Bot cannot delete your message")
             message.channel.send('Tell the owner to grant me permission to delete your old message, thank\'s :wink:')
