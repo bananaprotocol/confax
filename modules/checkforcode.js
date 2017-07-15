@@ -50,17 +50,20 @@ const config = GlassBot.config
 // Variables
 var isFormatted = false
 var totalLinesOfCode = 0
-var codeLines = []
+var hasFirstLine = false
 var codeElements = [';', '{', '}', ')'] 
 var repostThreshold = 4
+var lastLine = 0
 
 bot.on('message', message => {
     if (message.author.bot) return
 
     if(message.content.length > 1900) return
 
+    hasFirstLine = false
     isFormatted = false
     totalLinesOfCode = 0;  
+    lastLine = 0
 
     let lines = message.content.split('\n')
     
@@ -68,12 +71,14 @@ bot.on('message', message => {
     
     if(isBadCode() && !isFormatted){
 
-        let firstLine = Math.min.apply(Math, codeLines)
-        let lastLine  = Math.max.apply(Math, codeLines) + 2
+        //let firstLine = Math.min.apply(Math, codeLines)
+        //let lastLine  = Math.max.apply(Math, codeLines) + 2
 
-        lines.splice(firstLine, 0, '```csharp\n')
-        lines.splice(lastLine,  0, '\n```\n'    )
+        //lines.splice(firstLine, 0, '```csharp\n')
+        //lines.splice(lastLine,  0, '\n```\n'    )
 
+        lines[lastLine] = formatLastLine(lines[lastLine])
+        
         let strmessage = ""
         // Recreate the message.content with the code wrapped in ```
         for (let j = 0; j < lines.length; j++){
@@ -124,7 +129,9 @@ function checkLastCharacter(index, inLine){
     let lineLength = inLine.length - 1
     for(let i = 0; i < codeElements.length; i++){
         if(inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            codeLines.push(index)
+            if(!formatFirstLine)
+                inLine = formatFirstLine(inLine)
+            lastLine = i
             totalLinesOfCode += 1
             return
         }
@@ -132,6 +139,13 @@ function checkLastCharacter(index, inLine){
     return  
 }
 
+function formatFirstLine(inLine){
+    return '```\n + inLine'
+}
+
+function formatLastLine(inLine){
+    return inLine + '\n```'
+}
 // Checks the total number of code like elements in an unformatted
 // code block. If greater than repostThreshold than this is bad code lol, return true
 function isBadCode(){
