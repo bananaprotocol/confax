@@ -86,7 +86,7 @@ bot.on('message', message => {
 
         PostNewMessage(message, formattedMessage)
 
-        let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSGES')
+        let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
 
         if(managePerms){
             bot.delete(message)
