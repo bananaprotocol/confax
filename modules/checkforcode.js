@@ -75,7 +75,7 @@ bot.on('message', message => {
         let firstLine = Math.min.apply(Math, codeLines)
         let lastLine  = Math.max.apply(Math, codeLines) + 2
 
-        lines.splice(firstLine, 0, '```csharp\n')
+        lines.splice(firstLine, 0, '```csharp\n\t')
         lines.splice(lastLine,  0, '\n```\n'    )
 
         let strmessage = ""
