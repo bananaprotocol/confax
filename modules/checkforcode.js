@@ -85,8 +85,10 @@ bot.on('message', message => {
 
         PostNewMessage(message, formattedMessage)
 
-        let canDelete = message.channel.permissionsFor(member).hasPermission("MANAGE_MESSAGES");
+
         console.log(member.name)
+        let canDelete = message.channel.permissionsFor(bot.member).hasPermission("MANAGE_MESSAGES");
+
         if(canDelete){
             console.log("Gonna delete your messge son")
             bot.delete(message)
