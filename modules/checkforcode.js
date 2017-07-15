@@ -143,7 +143,7 @@ function checkLastCharacter(index, inLine){
 }
 
 function formatFirstLine(inLine){
-    formatFirstLine = true
+    hasFirstLine = true
     return '```csharp\n' + inLine
 }
 
