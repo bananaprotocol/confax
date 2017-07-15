@@ -89,7 +89,7 @@ bot.on('message', message => {
         let channel = message.guild.channels.find("name", "programing_help")
         let channelName = message.channel.name
         let isHelp = channelName.indexOf('help') > 0 
-        console.log(ishelp)
+        console.log(isHelp)
 
         if(channel != null && channel != message.channel && !isHelp){
             // TODO: Would like to add alink to #programming help for user friendliness :D
