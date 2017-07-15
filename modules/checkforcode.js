@@ -88,13 +88,13 @@ function ParseMessage(lines){
             isFormatted = true
             return
         }else
-            FindCodeElements(i, lines[i]) 
+            FindCodeElements(i, lines[i], lines) 
     }
     return
 }
 
 // Checks the last character in a string to see of it machess a code-like character
-function FindCodeElements(index, line){
+function FindCodeElements(index, line, lines){
     let lineLength = line.length - 1
     for(let i = 0; i < codeElements.length; i++){
         if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
