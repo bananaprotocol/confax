@@ -87,12 +87,17 @@ var lastLine = 0
 // Lets begin
 bot.on('message', message => {
     if(message.author.bot){
+        /*
+        THIS IS ALL EXPERIMENTAL
+        */
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
             let usr = message.mentions[0]
+            console.log(message.mentions[0].id)
             let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
-            callNTimes(9, 1000, EditBotMessage, message, chnl, usr)
+            callNTimes(10, 1000, EditBotMessage, message, chnl, usr)
         }
+        // END EXPERIMENTAL
         return
     }
     if(message.content.length > 1900) return
@@ -204,10 +209,16 @@ function InitVariables(){
     lastLine = 0
 }
 
+/*
+THIS IS ALL EXPERIMENTAL
+ */
 function EditBotMessage(usr, message, channel, t){
     message.edit(usr + ':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
 }
 
+/*
+THIS IS ALL EXPERIMENTAL
+ */
 function callNTimes(n, time, fn, msg, chnl, usr) {
   function callFn() {
     if (--n < 0){
