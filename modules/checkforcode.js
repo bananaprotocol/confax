@@ -32,11 +32,11 @@
         * is notified that the post has been moved, with a link
         * to the channel. The new post in the new channel will
         * also mention the user, as an added bonus to help
-        * the user navigate the newmessage.
+        * the user navigate to the new message.
 
     EXAMPLE-----------------------------------------------------------------
 
-    THis is not code so it is not in the code block.
+    This is not code so it is not in the code block.
 
     ```csharp
     using UnityEngine;
@@ -60,7 +60,7 @@
     }
     ```
 
-    THis is not code so it is not in the code block.
+    This is not code so it is not in the code block.
 
     ------------------------------------------------------------------------
 
@@ -74,9 +74,9 @@ const bot = GlassBot.bot
 const config = GlassBot.config
 
 // Salt to taste
-const codeElements = [';', '{', '}', ')'] // Could be in config
-const codeLang = 'csharp'
-const repostThreshold = 4
+const codeElements = [';', '{', '}', ')']   // Could be in a config
+const codeLang = 'csharp'                   // Could be in a config
+const repostThreshold = 4                   // Could be in a config
 
 // Variables
 var isFormatted = false
@@ -92,6 +92,8 @@ var usr
 
 // Lets begin
 bot.on('message', message => {
+    // Message too long
+    if(message.content.length > 1900) return
     if(message.author.bot){
         /*
         THIS IS ALL EXPERIMENTAL
@@ -99,12 +101,12 @@ bot.on('message', message => {
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
             let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
-            callNTimes(10, 1000, EditBotMessage, message, chnl, usr)
+            callNTimes(3, 1000, EditBotMessage, message, chnl, usr)
         }
         // END EXPERIMENTAL
         return
     }
-    if(message.content.length > 1900) return
+
     InitVariables()
 
     let lines = message.content.split('\n')
@@ -112,9 +114,7 @@ bot.on('message', message => {
     ParseMessage(lines)
     
     if(IsBadCode() && !isFormatted){
-
         lines[lastLine] = FormatLastLine(lines[lastLine])
-
         CreateNewMessage(lines, message)
     }
     return
@@ -176,9 +176,9 @@ function PostNewMessage(message, newMessage){
     let isHelp = message.channel.name.indexOf('help') > 0 
     // Move to new channel
     if(channel != null && channel != message.channel && !isHelp){
-        // TODO: Would like to add some color to this message
         usr = message.author //Experimental hack
-        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 10 seconds*')
+        // TODO: Would like to add some color to this message
+        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 3 seconds*')
         channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     // post is same channel
@@ -234,9 +234,9 @@ function IsBadCode(){
  */
 function InitVariables(){
     isFormatted = false
-    totalLinesOfCode = 0
     firstLine = false
     lastLine = 0
+    totalLinesOfCode = 0
 }
 
 /*
