@@ -151,12 +151,12 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:')
-        channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
+        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        channel.reply(' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
-        //message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
-        message.channel.reply('**★★ I see you forgot to format your code. Let me help you. ★★**\n' + newMessage)
+        message.channel.reply(' **★★ I see you forgot to format your code... Let me help you. ★★**')
+        message.channel.send(newMessage)
     }
 
     DeleteOldMessage(message)
