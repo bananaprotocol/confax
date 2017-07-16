@@ -61,7 +61,7 @@
     ```
 
     THis is not code so it is not in the code block.
-    
+
     ------------------------------------------------------------------------
 
     Discord Markdown 101 for more formatting guidelines:
@@ -147,17 +147,16 @@ function CreateNewMessage(lines, message){
 // Post the formatted message in the appropriate channel
 function PostNewMessage(message, newMessage){
     let channel = message.guild.channels.find("name", "programing_help")
-    let channelName = message.channel.name
-    let isHelp = channelName.indexOf('help') > 0 
+    let isHelp = message.channel.name.indexOf('help') > 0 
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:')
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
         channel.send(newMessage);
     }else{
-        message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
-        message.channel.send(newMessage)
+        //message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
+        message.channel.reply('**★★ I see you forgot to format your code. Let me help you. ★★**\n' + newMessage)
     }
 
     DeleteOldMessage(message)
@@ -166,13 +165,10 @@ function PostNewMessage(message, newMessage){
 // Deletes the old unformatted messge if bot has permission
 function DeleteOldMessage(message){
     let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-    if(managePerms){
-        console.log("Gonna delete your messge son")
+    if(managePerms)
         message.delete()
-    }else{
-        console.log("Bot cannot delete your message")
+    else
         message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
-    }
 }
 
 // Adds code formatting block start to the first line of code
