@@ -26,5 +26,6 @@
   },
   "scripts": {
     "start": "node bot.js"
-  }
+  },
+  "false": {}
 }
