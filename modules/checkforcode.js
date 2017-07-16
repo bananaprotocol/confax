@@ -88,7 +88,7 @@ var lastLine = 0
 bot.on('message', message => {
     if(message.author.bot){
         // If this is our reply to the user, delete after 3 seconds
-        if(message.content.startsWith(':nerd:')){
+        if(message.content.includes('Your unformatted code')){
             message.delete(300)
             .then(msg => console.log(`Deleted message from ${msg.author}`))
             .catch(console.error);
