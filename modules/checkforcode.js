@@ -84,6 +84,9 @@ var totalLinesOfCode = 0
 var firstLine = false
 var lastLine = 0
 
+// Real hacky way to do this.
+var usr
+
 // Lets begin
 bot.on('message', message => {
     if(message.author.bot){
@@ -169,6 +172,7 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
+        usr = message.author
         message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 10 seconds*')
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
