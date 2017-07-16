@@ -92,7 +92,8 @@ bot.on('message', message => {
            // message.delete(10000)
            // .then(msg => console.log(`Deleted message from ${msg.author}`))
            // .catch(console.error);
-           callNTimes(10, 10000, EditBotMessage, message)
+           let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
+           callNTimes(10, 10000, EditBotMessage, message, chnl)
         }
         return
     }
@@ -205,14 +206,14 @@ function InitVariables(){
     lastLine = 0
 }
 
-function EditBotMessage(message, t){
+function EditBotMessage(message, channel, t){
     message.edit(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ${t} seconds*')
 }
 
-function callNTimes(n, time, fn, msg) {
+function callNTimes(n, time, fn, msg, chnl) {
   function callFn() {
     if (--n < 0) return;
-    fn(msg, n);
+    fn(msg, chnl, n);
     setTimeout(callFn, time);
   }
   setTimeout(callFn, time);
