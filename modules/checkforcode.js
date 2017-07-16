@@ -89,9 +89,10 @@ bot.on('message', message => {
     if(message.author.bot){
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
-            message.delete(10000)
-            .then(msg => console.log(`Deleted message from ${msg.author}`))
-            .catch(console.error);
+           // message.delete(10000)
+           // .then(msg => console.log(`Deleted message from ${msg.author}`))
+           // .catch(console.error);
+           callNTimes(10, 10000, EditBotMessage, message)
         }
         return
     }
@@ -160,7 +161,7 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \nThis message will self-destruct in 10 seconds')
+        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 10 seconds*')
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
@@ -202,4 +203,17 @@ function InitVariables(){
     totalLinesOfCode = 0; 
     firstLine = false
     lastLine = 0
+}
+
+function EditBotMessage(message, t){
+    message.edit(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ${t} seconds*')
+}
+
+function callNTimes(n, time, fn, msg) {
+  function callFn() {
+    if (--n < 0) return;
+    fn(msg, n);
+    setTimeout(callFn, time);
+  }
+  setTimeout(callFn, time);
 }
