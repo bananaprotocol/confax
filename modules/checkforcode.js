@@ -87,9 +87,9 @@ var lastLine = 0
 // Lets begin
 bot.on('message', message => {
     if(message.author.bot){
-        // If this is our reply to the user, delete after 3 seconds
+        // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
-            message.delete(300)
+            message.delete(10000)
             .then(msg => console.log(`Deleted message from ${msg.author}`))
             .catch(console.error);
         }
@@ -160,7 +160,7 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:')
+        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \nThis message will self-destruct in 10 seconds')
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
