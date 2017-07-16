@@ -173,7 +173,7 @@ function PostNewMessage(message, newMessage){
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
-        message.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
+        message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
         message.channel.send(newMessage)
     }
 
