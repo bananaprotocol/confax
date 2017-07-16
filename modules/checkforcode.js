@@ -92,9 +92,12 @@ bot.on('message', message => {
         */
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
-            let usr = message.mentions[0]
-            console.log(message.mentions[0])
+            let usr = message.mentions
+            for(let i = 0; i < usr.length; i++){
+                console.log(message.mentions[i])
+            }
             
+
             let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
             callNTimes(10, 1000, EditBotMessage, message, chnl, usr)
         }
