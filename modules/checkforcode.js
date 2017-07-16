@@ -89,8 +89,9 @@ bot.on('message', message => {
     if(message.author.bot){
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
-           let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
-           callNTimes(9, 1000, EditBotMessage, message, chnl)
+            let usr = message.mentions.users
+            let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
+            callNTimes(9, 1000, EditBotMessage, message, chnl, usr)
         }
         return
     }
@@ -203,11 +204,11 @@ function InitVariables(){
     lastLine = 0
 }
 
-function EditBotMessage(message, channel, t){
-    message.edit(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
+function EditBotMessage(usr, message, channel, t){
+    message.edit(usr + ':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
 }
 
-function callNTimes(n, time, fn, msg, chnl) {
+function callNTimes(n, time, fn, msg, chnl, usr) {
   function callFn() {
     if (--n < 0){
         msg.delete()
@@ -215,7 +216,7 @@ function callNTimes(n, time, fn, msg, chnl) {
         .catch(console.error);
         return;
     }
-    fn(msg, chnl, n);
+    fn(usr, msg, chnl, n);
     setTimeout(callFn, time);
   }
   setTimeout(callFn, time);
