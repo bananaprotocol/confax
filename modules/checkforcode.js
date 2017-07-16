@@ -85,6 +85,9 @@ var firstLine = false
 var lastLine = 0
 
 // Real hacky way to do this.
+// But had to do it this way
+// because message.mentions was
+// always undefined.
 var usr
 
 // Lets begin
@@ -118,9 +121,11 @@ bot.on('message', message => {
 });
 
 
-// Loop through each line in message and check for 
-// code-like characters. If code formatting is found
-// return, else keep checking.
+/*
+ Loop through each line in message and check for 
+ code-like characters. If code formatting is found
+ return, else keep checking.
+ */
 function ParseMessage(lines){
     for(let i = 0; i < lines.length; i++){
         if(lines[i].search("```") >= 0){
@@ -132,7 +137,9 @@ function ParseMessage(lines){
     return
 }
 
-// Checks the last character in a string to see of it machess a code-like character
+/*
+ Checks the last character in a string to see of it machess a code-like character
+ */
 function FindCodeElements(index, line, lines){
     let lineLength = line.length - 1
     for(let i = 0; i < codeElements.length; i++){
@@ -150,7 +157,9 @@ function FindCodeElements(index, line, lines){
     return  
 }
 
-// Recreate the new message with code formatting included
+/*
+ Recreate the new message with code formatting included
+ */
 function CreateNewMessage(lines, message){
     let newMessage = ""
     for(let j = 0; j < lines.length; j++)
@@ -159,17 +168,20 @@ function CreateNewMessage(lines, message){
     PostNewMessage(message, newMessage)
 }
 
-// Post the formatted message in the appropriate channel
+/* 
+ Post the formatted message in the appropriate channel
+ */
 function PostNewMessage(message, newMessage){
     let channel = message.guild.channels.find("name", "programing_help")
     let isHelp = message.channel.name.indexOf('help') > 0 
-
+    // Move to new channel
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        usr = message.author
+        usr = message.author //Experimental hack
         message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 10 seconds*')
-        channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
+        channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
+    // post is same channel
     }else{
         message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
         message.channel.send(newMessage)
@@ -178,7 +190,9 @@ function PostNewMessage(message, newMessage){
     DeleteOldMessage(message)
 }
 
-// Deletes the old unformatted messge if bot has permission
+/*
+ Deletes the old unformatted messge if bot has permission
+ */
 function DeleteOldMessage(message){
     let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
     if(managePerms)
@@ -187,26 +201,40 @@ function DeleteOldMessage(message){
         message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
 }
 
-// Adds code formatting block start to the first line of code
+/*
+ Adds code formatting block start to the first line of code
+ */
 function FormatFirstLine(inLine){
+    /*
+    What if the first line of code has some regular text at the beginning?
+        "Here is my code: public int myInt = 0;"
+        "Here is my code" will also be formatted.
+        We do not want this.
+     */
     firstLine = true
     return '```' + codeLang + '\n' + inLine
 }
 
-// Add formatting code bock end to the last line of code
+/*
+ Add formatting code bock end to the last line of code
+ */
 function FormatLastLine(inLine){
     return inLine + '\n```'
 }
 
-// If total line of code is greater than repostThreshold return true
+/*
+ If total line of code is greater than repostThreshold return true
+ */
 function IsBadCode(){
     return (totalLinesOfCode >= repostThreshold)
 }
 
-// Initalize variables
+/*
+ Initalize variables
+ */
 function InitVariables(){
     isFormatted = false
-    totalLinesOfCode = 0; 
+    totalLinesOfCode = 0
     firstLine = false
     lastLine = 0
 }
@@ -215,7 +243,7 @@ function InitVariables(){
 THIS IS ALL EXPERIMENTAL
  */
 function EditBotMessage(usr, message, channel, t){
-    message.edit(usr + ':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
+    message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
 }
 
 /*
@@ -223,7 +251,8 @@ THIS IS ALL EXPERIMENTAL
  */
 function callNTimes(n, time, fn, msg, chnl, usr) {
   function callFn() {
-    if (--n < 0){
+    if (--n < 1){
+        usr = null
         msg.delete()
         .then(m => console.log(`Deleted message from ${m.author}`))
         .catch(console.error);
