@@ -151,7 +151,9 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        message.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        let msg = message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
+        msg.delete(300).then(msg => console.log(`Deleted message from ${msg.author}`))
+                       .catch(console.error);
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
