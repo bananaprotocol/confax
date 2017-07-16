@@ -93,13 +93,13 @@ var usr
 // Lets begin
 bot.on('message', message => {
     // Message too long
-    if(message.content.length > 1900) return
-    if(message.author.bot){
+    if (message.content.length > 1900) return
+    if (message.author.bot) {
         /*
         THIS IS ALL EXPERIMENTAL
         */
         // If this is our reply to the user, delete after 10 seconds
-        if(message.content.includes('Your unformatted code')){
+        if (message.content.includes('Your unformatted code')) {
             let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
             callNTimes(3, 1000, EditBotMessage, message, chnl, usr)
         }
@@ -112,8 +112,8 @@ bot.on('message', message => {
     let lines = message.content.split('\n')
 
     ParseMessage(lines)
-    
-    if(IsBadCode() && !isFormatted){
+
+    if (IsBadCode() && !isFormatted) {
         lines[lastLine] = FormatLastLine(lines[lastLine])
         CreateNewMessage(lines, message)
     }
@@ -126,13 +126,13 @@ bot.on('message', message => {
  code-like characters. If code formatting is found
  return, else keep checking.
  */
-function ParseMessage(lines){
-    for(let i = 0; i < lines.length; i++){
-        if(lines[i].search("```") >= 0){
+function ParseMessage(lines) {
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].search("```") >= 0) {
             isFormatted = true
             return
-        }else
-            FindCodeElements(i, lines[i], lines) 
+        } else
+            FindCodeElements(i, lines[i], lines)
     }
     return
 }
@@ -140,30 +140,30 @@ function ParseMessage(lines){
 /*
  Checks the last character in a string to see of it machess a code-like character
  */
-function FindCodeElements(index, line, lines){
+function FindCodeElements(index, line, lines) {
     let lineLength = line.length - 1
-    for(let i = 0; i < codeElements.length; i++){
-        if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            if(!firstLine){
+    for (let i = 0; i < codeElements.length; i++) {
+        if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()) {
+            if (!firstLine) {
                 lines[index] = FormatFirstLine(line)
                 return
-            }else{
+            } else {
                 lastLine = index
                 totalLinesOfCode += 1
                 return
             }
         }
     }
-    return  
+    return
 }
 
 /*
  Recreate the new message with code formatting included
  */
-function CreateNewMessage(lines, message){
+function CreateNewMessage(lines, message) {
     let newMessage = ""
-    for(let j = 0; j < lines.length; j++)
-       newMessage += lines[j] + '\n'
+    for (let j = 0; j < lines.length; j++)
+        newMessage += lines[j] + '\n'
 
     PostNewMessage(message, newMessage)
 }
@@ -171,18 +171,18 @@ function CreateNewMessage(lines, message){
 /* 
  Post the formatted message in the appropriate channel
  */
-function PostNewMessage(message, newMessage){
+function PostNewMessage(message, newMessage) {
     let channel = message.guild.channels.find("name", "programing_help")
-    let isHelp = message.channel.name.indexOf('help') > 0 
+    let isHelp = message.channel.name.indexOf('help') > 0
     // Move to new channel
-    if(channel != null && channel != message.channel && !isHelp){
+    if (channel != null && channel != message.channel && !isHelp) {
         usr = message.author //Experimental hack
         // TODO: Would like to add some color to this message
         message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in 3 seconds*')
         channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
-    // post is same channel
-    }else{
+        // post is same channel
+    } else {
         message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
         message.channel.send(newMessage)
     }
@@ -193,9 +193,9 @@ function PostNewMessage(message, newMessage){
 /*
  Deletes the old unformatted messge if bot has permission
  */
-function DeleteOldMessage(message){
+function DeleteOldMessage(message) {
     let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-    if(managePerms)
+    if (managePerms)
         message.delete()
     else
         message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
@@ -204,7 +204,7 @@ function DeleteOldMessage(message){
 /*
  Adds code formatting block start to the first line of code
  */
-function FormatFirstLine(inLine){
+function FormatFirstLine(inLine) {
     /*
     What if the first line of code has some regular text at the beginning?
         "Here is my code: public int myInt = 0;"
@@ -218,21 +218,21 @@ function FormatFirstLine(inLine){
 /*
  Add formatting code bock end to the last line of code
  */
-function FormatLastLine(inLine){
+function FormatLastLine(inLine) {
     return inLine + '\n```'
 }
 
 /*
  If total line of code is greater than repostThreshold return true
  */
-function IsBadCode(){
+function IsBadCode() {
     return (totalLinesOfCode >= repostThreshold)
 }
 
 /*
  Initalize variables
  */
-function InitVariables(){
+function InitVariables() {
     isFormatted = false
     firstLine = false
     lastLine = 0
@@ -242,7 +242,7 @@ function InitVariables(){
 /*
 THIS IS ALL EXPERIMENTAL
  */
-function EditBotMessage(usr, message, channel, t){
+function EditBotMessage(usr, message, channel, t) {
     message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd: \n\t*This message will self-destruct in ' + t + ' seconds*')
 }
 
@@ -250,16 +250,16 @@ function EditBotMessage(usr, message, channel, t){
 THIS IS ALL EXPERIMENTAL
  */
 function callNTimes(n, time, fn, msg, chnl, usr) {
-  function callFn() {
-    if (--n < 1){
-        usr = null
-        msg.delete()
-        .then(m => console.log(`Deleted message from ${m.author}`))
-        .catch(console.error);
-        return;
+    function callFn() {
+        if (--n < 1) {
+            usr = null
+            msg.delete()
+                .then(m => console.log(`Deleted message from ${m.author}`))
+                .catch(console.error);
+            return;
+        }
+        fn(usr, msg, chnl, n);
+        setTimeout(callFn, time);
     }
-    fn(usr, msg, chnl, n);
     setTimeout(callFn, time);
-  }
-  setTimeout(callFn, time);
 }
