@@ -89,9 +89,6 @@ bot.on('message', message => {
     if(message.author.bot){
         // If this is our reply to the user, delete after 10 seconds
         if(message.content.includes('Your unformatted code')){
-           // message.delete(10000)
-           // .then(msg => console.log(`Deleted message from ${msg.author}`))
-           // .catch(console.error);
            let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
            callNTimes(9, 1000, EditBotMessage, message, chnl)
         }
@@ -212,7 +209,12 @@ function EditBotMessage(message, channel, t){
 
 function callNTimes(n, time, fn, msg, chnl) {
   function callFn() {
-    if (--n < 0) return;
+    if (--n < 0){
+        msg.delete()
+        .then(m => console.log(`Deleted message from ${m.author}`))
+        .catch(console.error);
+        return;
+    }
     fn(msg, chnl, n);
     setTimeout(callFn, time);
   }

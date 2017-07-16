@@ -3,46 +3,46 @@ All of this text of obviously not code, so why would we want to include it in th
 What if there is a line right above the code? Is this included in the code block? It should not be.
 using UnityEngine;
 
-    /// <summary>
-    /// Class summary looks like this.
-    /// </summary>
-    public class MyClass
+/// <summary>
+/// Class summary looks like this.
+/// </summary>
+public class MyClass
+{
+    /// <summary>   Description of myFloat. </summary>
+    private float myFloat;
+    /// <summary>   Description of myInt.   </summary>
+    private int myInt;
+
+    /// <summary>   Default constructor. </summary>
+    public MyClass(float _myFloat, int _myInt)
     {
-        /// <summary>   Description of myFloat. </summary>
-        private float myFloat;
-        /// <summary>   Description of myInt.   </summary>
-        private int myInt;
-
-        /// <summary>   Default constructor. </summary>
-        public MyClass(float _myFloat, int _myInt)
-        {
-            /*
-                Multi-line comment looks like this.
-                With multiple lines of text.
-            */
-            
-            this.myFloat    = _myFloat;
-            this.MyInt      = _myInt;
-        }
+        /*
+            Multi-line comment looks like this.
+            With multiple lines of text.
+        */
         
-                
-        /// <summary>   Description of MyInt property.</summary>
-        public int MyInt{
-            get{ return myInt; }
-            set{ myInt = value;}
-        }
-        
-        /// <summary>   
-        /// Description of GetMyFloat.
-        /// Returns: myFloat
-        /// </summary>
-        public float GetMyFloat(){
-            return myFloat;
-        }
-
-        // Create a MyClass Object.
-        public MyClass = new MyClass(6f, 5);   
+        this.myFloat    = _myFloat;
+        this.MyInt      = _myInt;
     }
+    
+            
+    /// <summary>   Description of MyInt property.</summary>
+    public int MyInt{
+        get{ return myInt; }
+        set{ myInt = value;}
+    }
+    
+    /// <summary>   
+    /// Description of GetMyFloat.
+    /// Returns: myFloat
+    /// </summary>
+    public float GetMyFloat(){
+        return myFloat;
+    }
+
+    // Create a MyClass Object.
+    public MyClass = new MyClass(6f, 5);   
+}
 What if there is a line right below the code? Is this included in the code block? It should not be.
     
 As you can see, even the text on the bottom has not been included in the code block, this is great. :D
