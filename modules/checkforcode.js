@@ -86,7 +86,16 @@ var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
-    if(message.author.bot || message.content.length > 1900) return
+    if(message.author.bot){
+        // If this is our reply to the user, delete after 3 seconds
+        if(message.content.startsWith(':nerd:')){
+            message.delete(300)
+            .then(msg => console.log(`Deleted message from ${msg.author}`))
+            .catch(console.error);
+        }
+        return
+    }
+    if(message.content.length > 1900) return
     InitVariables()
 
     let lines = message.content.split('\n')
@@ -151,9 +160,7 @@ function PostNewMessage(message, newMessage){
 
     if(channel != null && channel != message.channel && !isHelp){
         // TODO: Would like to add some color to this message
-        let msg = message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
-        msg.delete(300).then(msg => console.log(`Deleted message from ${msg.author}`))
-                       .catch(console.error);
+        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:')
         channel.send(message.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
     }else{
