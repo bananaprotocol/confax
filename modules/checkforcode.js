@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017
+    14 July, 2017 
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -77,7 +77,7 @@ const bot = GlassBot.bot
 const config = GlassBot.config
 
 // Salt to taste
-const codeElements = [';', '{', '}', ')', '[', ']'] // Could be in a config
+const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
 const codeLang = 'csharp' // Could be in a config
 const repostThreshold = 4 // Could be in a config
 
@@ -109,17 +109,7 @@ bot.on('message', message => {
         // END EXPERIMENTAL
         return
     }
-
-    InitVariables()
-
-    let lines = message.content.split('\n')
-
-    ParseMessage(lines)
-
-    if (IsBadCode() && !isFormatted) {
-        lines[lastLine] = FormatLastLine(lines[lastLine])
-        CreateNewMessage(lines, message)
-    }
+    ParseMessage(message)
     return
 });
 
@@ -128,8 +118,11 @@ bot.on('message', message => {
  * code-like characters. If code formatting is found
  * return, else keep checking.
  * @param  {string[]} lines
+ * @param  {string[]} message
  */
-function ParseMessage(lines) {
+function ParseMessage(message) {
+    InitVariables()
+    let lines = message.content.split('\n')
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].search("```") >= 0) {
             isFormatted = true
@@ -137,11 +130,21 @@ function ParseMessage(lines) {
         } else
             FindCodeElements(i, lines[i], lines)
     }
-    // Could call this:
-    //  if (IsBadCode() && !isFormatted) {
-    //     lines[lastLine] = FormatLastLine(lines[lastLine])
-    //     CreateNewMessage(lines, message)
-    //  }
+
+    CheckMessage(lines, message)
+    return
+}
+
+/**
+ * Check if this is unformatted code, if so Create New Messge
+ * @param  {string[]} lines
+ * @param  {string[]} message
+ */
+function CheckMessage(lines, message) {
+    if (IsBadCode() && !isFormatted) {
+        lines[lastLine] = FormatLastLine(lines[lastLine])
+        CreateNewMessage(lines, message)
+    }
     return
 }
 
