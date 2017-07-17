@@ -1,18 +1,18 @@
 const Discord = require('discord.js')
-const GlassBot = require('../bot.js')
-const bot = GlassBot.bot
-const config = GlassBot.config
+const Confax = require('../bot.js')
+const bot = Confax.bot
+const config = Confax.config
 
 bot.on('ready', () => {
-  bot.user.setGame('Hey, format code pls.')
+  bot.user.setGame('!help to get started.')
   bot.user.setStatus('online')
-  console.log('GlassBot seeks bad code!')
+  console.log('Confax is ready to rumble!')
 })
 
 bot.on('reconnecting', () => {
-  bot.user.setGame('Hey, format code pls.')
+  bot.user.setGame('!help to get started.')
   bot.user.setStatus('online')
-  console.log('GlassBot seeks bad code.. again.')
+  console.log('Confax has reconnected to Discord.')
 })
 
 bot.login(process.env.BOT_TOKEN)
