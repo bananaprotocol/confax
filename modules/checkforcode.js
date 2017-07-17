@@ -67,6 +67,7 @@
     Discord Markdown 101 for more formatting guidelines:
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
+
 /*jshint esversion: 6 */
 /*jshint asi: true */
 
