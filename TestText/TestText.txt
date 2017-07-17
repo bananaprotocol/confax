@@ -1,6 +1,7 @@
 This text should not be formatted
 
 This text should not be formatted
+[System.Serializable]
 using UnityEngine;
 
 /// <summary>
