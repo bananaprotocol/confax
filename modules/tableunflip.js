@@ -27,7 +27,7 @@ bot.on('message', message => {
             message.channel.send("Table is already flipped.. you can't flip a table thats flipped.")
             return
         }
-    } else if (message.content.includes("┬─┬ ノ( ゜-゜ノ)"))
+    } else if (message.content.includes("┬─┬﻿ ノ( ゜-゜ノ)"))
         isFlipped = false
 
     return
