@@ -77,7 +77,7 @@ const bot = GlassBot.bot
 const config = GlassBot.config
 
 // Salt to taste
-const codeElements = [';', '{', '}', ')'] // Could be in a config
+const codeElements = [';', '{', '}', ')', '[', ']'] // Could be in a config
 const codeLang = 'csharp' // Could be in a config
 const repostThreshold = 4 // Could be in a config
 
