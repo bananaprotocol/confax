@@ -10,23 +10,25 @@ var isFlipped = false
 
 // bot.on('message', message => {
 //     if (message.author.bot) return
-//     if (message.content == "(╯°□°）╯︵ ┻━┻")
+//     if (message.content.includes("(╯°□°）╯︵ ┻━┻"))
 //         message.channel.send("┬─┬ ノ( ゜-゜ノ)")
 //     return
 // });
 
 bot.on('message', message => {
     if (message.author.bot) return
-
-    if (message.content == "(╯°□°）╯︵ ┻━┻" || !isFlipped) {
-        isFlipped = true
-        return
-    } else {
-        message.delete()
-        message.channel.send("Table is already flipped.. you can't flip a table thats flipped.")
-        return
-    }
-    if (message.content == "┬─┬ ノ( ゜-゜ノ)")
+    s
+    if (message.content.includes("(╯°□°）╯︵ ┻━┻")) {
+        if (!isFlipped) {
+            isFlipped = true
+            return
+        } else {
+            message.delete()
+            message.channel.send("Table is already flipped.. you can't flip a table thats flipped.")
+            return
+        }
+    } else if (message.content.includes("┬─┬ ノ( ゜-゜ノ)"))
         isFlipped = false
+
     return
 });
