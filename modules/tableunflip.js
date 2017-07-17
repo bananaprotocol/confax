@@ -17,7 +17,7 @@ var isFlipped = false
 
 bot.on('message', message => {
     if (message.author.bot) return
-    s
+
     if (message.content.includes("(╯°□°）╯︵ ┻━┻")) {
         if (!isFlipped) {
             isFlipped = true
