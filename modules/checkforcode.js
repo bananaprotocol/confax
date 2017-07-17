@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017
+    14 July, 2017 
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -8,23 +8,22 @@
     ------------------------------------------------------------------------
     Systematically search through Discord comments to find unformatted Code.
 
-<<<<<<< HEAD
         * Search is based in chars in codeElements array. 
-            * Default:  [';', '{', '}', ')'] 
-        * Bot will parse the code line by line searchig for 
+            * Default:  [';', '{', '}', ')', '[', ']', '>']
+        * Bot will parse the code line by line searching for 
         * code elements and keep track of which line are code
         * and which are plain text. 
         * The bot will do his best to only format a true code
-        * block, leaveing the plain text alone. One complte
-        * the bot will add code block formattign aroind the 
-        * code block, with the current code lang 'csharp'.
+        * block, leaving the plain text alone. One complete
+        * the bot will add code block formatting around the 
+        * code block, with the current code Lang 'csharp'.
         * The message will be posted anew as formatted code
         * and, if possible, the old message will be deleted.
         *
-        * If the informatted code is posted in a channel with
-        * 'help' in the tile, then the new messge is posted
+        * If the unformatted code is posted in a channel with
+        * 'help' in the tile, then the new message is posted
         * there.
-        * If the message is posted in any other chnannel, the 
+        * If the message is posted in any other channel, the 
         * new message will be posted in #programing_help (if it exists)
         * If there is no programing_help channel, the message is
         * posted in the original channel.
@@ -34,20 +33,13 @@
         * to the channel. The new post in the new channel will
         * also mention the user, as an added bonus to help
         * the user navigate to the new message.
-=======
-        * Look for lines ending in ; { } )
-
-        * If found, Locate the first Code Block Line
-        * If found, Locate the last Code Block Line
-        *
-        * RePost the message surrounded by code formatting ```csharp ```
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
 
     EXAMPLE-----------------------------------------------------------------
 
     This is not code so it is not in the code block.
 
     ```csharp
+    [System.Serializable]
     using UnityEngine;
 
     /// <summary>
@@ -77,7 +69,7 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
-<<<<<<< HEAD
+
 /*jshint esversion: 6 */
 /*jshint asi: true */
 
@@ -85,91 +77,77 @@ const Discord = require('discord.js');
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 const config = GlassBot.config
-=======
-const Discord = require('discord.js')
-const Confax = require('../bot.js')
-const bot = Confax.bot
-const config = Confax.config
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
 
 // Salt to taste
-const codeElements = [';', '{', '}', ')', '[', ']'] // Could be in a config
+const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
 const codeLang = 'csharp' // Could be in a config
 const repostThreshold = 4 // Could be in a config
+
+var formatBlock = '```'
 
 // Variables
 var isFormatted = false
 var totalLinesOfCode = 0
 var hasFirstLine = false
 var lastLine = 0
-
-// Real hacky way to do this.
-// But had to do it this way
-// because message.mentions was
-// always undefined.
-var usr
+var selfDestructIn = 5
 
 // Lets begin
 bot.on('message', message => {
-    // Message too long
     if (message.content.length > 1900) return
     if (message.author.bot) {
-        /*
-        THIS IS ALL EXPERIMENTAL
-        */
-        // If this is our reply to the user, delete after 5 seconds
+        // Self-destruct message
         if (message.content.includes('Your unformatted code')) {
-            let chnl = (message.guild.channels.find("name", "programing_help") != null) ? message.guild.channels.find("name", "programing_help") : message.channel
-            callNTimes(5, 1000, EditBotMessage, message, chnl, usr)
+            let usr = message.mentions.users.array()[0]
+            let chnl = (message.guild.channels.find("name", "programing_help") != null) ?
+                message.guild.channels.find("name", "programing_help") :
+                message.channel
+            callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
         }
-        // END EXPERIMENTAL
         return
     }
-
-    InitVariables()
-
-    let lines = message.content.split('\n')
-
-    ParseMessage(lines)
-<<<<<<< HEAD
-=======
-
-    if(IsBadCode() && !isFormatted){
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
-
-    if (IsBadCode() && !isFormatted) {
-        lines[lastLine] = FormatLastLine(lines[lastLine])
-        CreateNewMessage(lines, message)
-    }
+    ParseMessage(message)
     return
 });
 
-<<<<<<< HEAD
 /**
  * Loop through each line in message and check for 
  * code-like characters. If code formatting is found
  * return, else keep checking.
  * @param  {string[]} lines
+ * @param  {string[]} message
  */
-function ParseMessage(lines) {
+function ParseMessage(message) {
+    InitVariables()
+    let lines = message.content.split('\n')
     for (let i = 0; i < lines.length; i++) {
-        if (lines[i].search("```") >= 0) {
+        if (lines[i].search(formatBlock) >= 0) {
             isFormatted = true
             return
         } else
             FindCodeElements(i, lines[i], lines)
     }
-    // Could call this:
-    //  if (IsBadCode() && !isFormatted) {
-    //     lines[lastLine] = FormatLastLine(lines[lastLine])
-    //     CreateNewMessage(lines, message)
-    //  }
+
+    CheckMessage(lines, message)
     return
 }
 
 /**
- * Checks the last character in a string to see of it machess a code-like character
- * @param  {int} index
+ * Check if this is unformatted code, if so Create New Message
+ * @param  {string[]} lines
+ * @param  {string[]} message
+ */
+function CheckMessage(lines, message) {
+    if (IsBadCode() && !isFormatted) {
+        lines[lastLine] = FormatLastLine(lines[lastLine])
+        CreateNewMessage(lines, message)
+    }
+    return
+}
+
+/**
+ * Checks the last character in a string to see of it matches a code-like character
+ * @param  {number} index
  * @param  {string} line
  * @param  {string[]} lines
  */
@@ -179,47 +157,6 @@ function FindCodeElements(index, line, lines) {
         if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()) {
             if (!hasFirstLine) {
                 lines[index] = FormatFirstLine(line)
-=======
-
-// Loop through each line in message and check for
-// code-like characters. If code formatting is found
-// return, else keep checking.
-function ParseMessage(inputLines){
-    for(let i = 0; i < inputLines.length; i++){
-        if(inputLines[i].search("```") >= 0){
-            isFormatted = true
-            return
-        }else
-            FindCodeElements(i, inputLines[i])
-    }
-  }
-
-// Post the formatted message in the appropriate channel
-function PostNewMessage(oldMessage, newMessage){
-    let channel = oldMessage.guild.channels.find("name", "programing_help")
-    let channelName = oldMessage.channel.name
-    let isHelp = channelName.indexOf('help') > 0
-
-    if(channel != null && channel != oldMessage.channel && !isHelp){
-        // TODO: Would like to add some color to this message
-        oldMessage.channel.send(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. `Which makes sense...` :nerd:')
-        channel.send(oldMessage.author + ' **★★ I have formatted your code and placed it here. Good Luck! ★★**')
-        channel.send(newMessage);
-    }else{
-        oldMessage.channel.send(oldMessage.author + ' **★★ I see you forgot to format your code... Let me help you. ★★**')
-        oldMessage.channel.send(newMessage)
-    }
-}
-
-
-// Checks the last character in a string to see of it machess a code-like character
-function FindCodeElements(index, inLine){
-    let lineLength = inLine.length - 1
-    for(let i = 0; i < codeElements.length; i++){
-        if (inLine.charAt(lineLength).valueOf() == codeElements[i].valueOf()){
-            if(!firstLine){
-                lines[index] = FormatFirstLine(inLine)
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
                 return
             } else {
                 lastLine = index
@@ -229,7 +166,6 @@ function FindCodeElements(index, inLine){
         }
     }
     return
-<<<<<<< HEAD
 }
 
 /**
@@ -255,10 +191,9 @@ function PostNewMessage(message, newMessage) {
     let isHelp = message.channel.name.indexOf('help') > 0
         // Move to new channel
     if (channel != null && channel != message.channel && !isHelp) {
-        usr = message.author //Experimental hack
-            // TODO: Would like to add some color to this message
+        // TODO: Would like to add some color to this message
         message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
-            '\n\t*This message will self-destruct in 5 seconds*')
+            '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
         channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
         // post is same channel
@@ -268,12 +203,10 @@ function PostNewMessage(message, newMessage) {
     }
 
     DeleteOldMessage(message)
-=======
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
 }
 
 /**
- * Deletes the old unformatted messge if bot has permission
+ * Deletes the old unformatted message if bot has permission
  * @param  {string[]} message
  */
 function DeleteOldMessage(message) {
@@ -296,7 +229,7 @@ function FormatFirstLine(firstLine) {
         We do not want this.
      */
     hasFirstLine = true
-    return '```' + codeLang + '\n' + firstLine
+    return formatBlock + codeLang + '\n' + firstLine
 }
 
 /**
@@ -304,7 +237,7 @@ function FormatFirstLine(firstLine) {
  * @param  {string} lastLine
  */
 function FormatLastLine(lastLine) {
-    return lastLine + '\n```'
+    return lastLine + '\n' + formatBlock
 }
 
 /**
@@ -315,18 +248,24 @@ function IsBadCode() {
 }
 
 /**
- * Initalize variables
+ * Initialize variables
  */
 function InitVariables() {
     isFormatted = false
     hasFirstLine = false
     lastLine = 0
-<<<<<<< HEAD
     totalLinesOfCode = 0
+    selfDestructIn = 5
 }
 
+// Bot self destruct message functions
+
 /**
- * THIS IS ALL EXPERIMENTAL
+ * Edits the instruction message once a second, decrementing the time variable by 1
+ * @param  {string} usr
+ * @param  {string[]} message
+ * @param  {string} channel
+ * @param  {number} t
  */
 function EditBotMessage(usr, message, channel, t) {
     message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
@@ -334,7 +273,13 @@ function EditBotMessage(usr, message, channel, t) {
 }
 
 /**
- * THIS IS ALL EXPERIMENTAL
+ * Call the passed function n times every time step.
+ * @param  {number} n
+ * @param  {number} time
+ * @param  {function} fn
+ * @param  {string[]} msg
+ * @param  {string} chnl
+ * @param  {string} usr
  */
 function callNTimes(n, time, fn, msg, chnl, usr) {
     function callFn() {
@@ -349,6 +294,4 @@ function callNTimes(n, time, fn, msg, chnl, usr) {
         setTimeout(callFn, time);
     }
     setTimeout(callFn, time);
-=======
->>>>>>> 2abf89e98df08b7481a2b516197a5c1787cddb97
 }
