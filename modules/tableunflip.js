@@ -6,11 +6,27 @@ const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
     //const config = GlassBot.config
 
+var isFlipped = false
+
+// bot.on('message', message => {
+//     if (message.author.bot) return
+//     if (message.content == "(╯°□°）╯︵ ┻━┻")
+//         message.channel.send("┬─┬ ノ( ゜-゜ノ)")
+//     return
+// });
+
 bot.on('message', message => {
     if (message.author.bot) return
 
-    if (message.content == "(╯°□°）╯︵ ┻━┻")
-        message.channel.send("┬─┬ ノ( ゜-゜ノ)")
-
+    if (message.content == "(╯°□°）╯︵ ┻━┻" || !isFlipped) {
+        isFlipped = true
+        return
+    } else {
+        message.delete()
+        message.channel.send("Table is already flipped.. you can't flip a table thats flipped.")
+        return
+    }
+    if (message.content == "┬─┬ ノ( ゜-゜ノ)")
+        isFlipped = false
     return
 });
