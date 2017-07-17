@@ -34,7 +34,7 @@ var loadScript = (path, reload) => {
 }
 
 function changeConfig (guildID, callback) {
-  var path = './GlassBotfiles/' + guildID + '.yml'
+  var path = './confaxfiles/' + guildID + '.yml'
   var data = yaml.safeLoad(fs.readFileSync(path))
   callback()
   fs.writeFileSync(path, yaml.safeDump(data))
@@ -42,7 +42,7 @@ function changeConfig (guildID, callback) {
 }
 
 function getConfigValue (guildID, name) {
-  var path = './GlassBotfiles/' + guildID + '.yml'
+  var path = './confaxfiles/' + guildID + '.yml'
   var data = yaml.safeLoad(fs.readFileSync(path))
   try { return data[name] } catch (error) { console.log('An error occured: ' + error.stack) }
 }
@@ -52,12 +52,12 @@ exports.loadScript = loadScript
 exports.changeConfig = changeConfig
 exports.getConfigValue = getConfigValue
 
-//var commands = fs.readdirSync('./commands/')
-//commands.forEach(script => {
-// if (script.substring(script.length - 3, script.length) === '.js') {
-//    exports.loadScript('./commands/' + script)
-//  }
-//})
+var commands = fs.readdirSync('./commands/')
+commands.forEach(script => {
+  if (script.substring(script.length - 3, script.length) === '.js') {
+    exports.loadScript('./commands/' + script)
+  }
+})
 
 var modules = fs.readdirSync('./modules/')
 modules.forEach(script => {
