@@ -222,13 +222,20 @@ function DeleteOldMessage(message) {
  * @param  {string} firstLine
  */
 function FormatFirstLine(firstLine) {
-    /*
-    What if the first line of code has some regular text at the beginning?
-        "Here is my code: public int myInt = 0;"
-        "Here is my code" will also be formatted.
-        We do not want this.
-     */
     hasFirstLine = true
+        /*
+        What if the first line of code has some regular text at the beginning?
+            "Here is my code: public int myInt = 0;"
+            "Here is my code" will also be formatted.
+            We do not want this.
+            There are too many possibilites for what could be
+            the actual first word of the first line of code:
+                - public
+                - private
+                - int
+                - string
+                - list
+         */
     return formatBlock + codeLang + '\n' + firstLine
 }
 
