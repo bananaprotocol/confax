@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017
+    20 July, 2017
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -99,6 +99,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* jshint esversion: 6 */
 /* jshint asi: true */
 
@@ -132,6 +133,18 @@ const formatBlock = '```'
 var formatBlock = '```'
 
 var formatBlock = '```'
+=======
+const GlassBot = require('../bot.js')
+const bot = GlassBot.bot
+const config = GlassBot.config
+
+// Salt to taste
+const codeElements = config.codeElements
+const codeLang = config.codeLang
+const repostThreshold = config.repostThreshold
+const selfDestructIn = config.selfDestructIn
+const formatBlock = config.formatBlock
+>>>>>>> c11f391... Moved const variables to config file.
 
 // Variables
 var isFormatted = false
@@ -141,6 +154,7 @@ var hasFirstLine = false
 var lastLineIndex = 0
 =======
 var lastLine = 0
+<<<<<<< HEAD
 var selfDestructIn = 5
 <<<<<<< HEAD
 >>>>>>> refs/remotes/bananaprotocol/master
@@ -165,15 +179,19 @@ bot.on('message', message => {
       callNTimes(5, 1000, EditBotMessage, message, chnl, usr)
     }
 =======
+=======
+>>>>>>> c11f391... Moved const variables to config file.
 
 // Lets begin
 bot.on('message', message => {
   if (message.content.length > 1900) return
   if (message.author.bot) {
-        // Self-destruct message
+    // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
       let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', 'programing_help') != null) ? message.guild.channels.find('name', 'programing_help') : message.channel
+      let chnl = (message.guild.channels.find('name', 'programing_help') != null)
+                ? message.guild.channels.find('name', 'programing_help')
+                : message.channel
       callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
 <<<<<<< HEAD
@@ -281,10 +299,14 @@ function FindCodeElements (index, line, lines) {
   let lineLength = line.length - 1
   for (let i = 0; i < codeElements.length; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf()) {
 =======
     if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()) {
 >>>>>>> 79ddf29... js standard
+=======
+    if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf()) {
+>>>>>>> c11f391... Moved const variables to config file.
       if (!hasFirstLine) {
         lines[index] = FormatFirstLine(line)
         return
@@ -336,6 +358,7 @@ function CreateNewMessage (lines, message) {
   let newMessage = ''
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   for (let j = 0; j < lines.length; j++) {
     newMessage += lines[j] + '\n'
   }
@@ -347,6 +370,11 @@ function CreateNewMessage (lines, message) {
   for (let j = 0; j < lines.length; j++) { newMessage += lines[j] + '\n' }
 
 >>>>>>> 79ddf29... js standard
+=======
+  for (let j = 0; j < lines.length; j++) {
+    newMessage += lines[j] + '\n'
+  }
+>>>>>>> c11f391... Moved const variables to config file.
   PostNewMessage(message, newMessage)
 }
 
@@ -378,6 +406,7 @@ function PostNewMessage (message, formattedMessage) {
 function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
+<<<<<<< HEAD
         // Move to new channel
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -398,12 +427,21 @@ function PostNewMessage (message, newMessage) {
 =======
   if (channel != null && channel != message.channel && !isHelp) {
         // TODO: Would like to add some color to this message
+=======
+    // Move to new channel
+  if (channel != null && channel !== message.channel && !isHelp) {
+    // TODO: Would like to add some color to this message
+>>>>>>> c11f391... Moved const variables to config file.
     message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
                   '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
     channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
     channel.send(newMessage)
+<<<<<<< HEAD
 >>>>>>> 79ddf29... js standard
         // post is same channel
+=======
+    // post is same channel
+>>>>>>> c11f391... Moved const variables to config file.
   } else {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
     message.channel.send(newMessage)
@@ -429,17 +467,23 @@ function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c11f391... Moved const variables to config file.
   if (managePerms) {
     message.delete()
   } else {
     message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
   }
+<<<<<<< HEAD
 =======
   if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
 >>>>>>> refs/remotes/bananaprotocol/master
 =======
   if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
 >>>>>>> 79ddf29... js standard
+=======
+>>>>>>> c11f391... Moved const variables to config file.
 }
 
 /**
@@ -530,6 +574,7 @@ function InitVariables () {
 =======
   lastLine = 0
   totalLinesOfCode = 0
+<<<<<<< HEAD
   selfDestructIn = 5
 >>>>>>> refs/remotes/bananaprotocol/master
 =======
@@ -548,9 +593,9 @@ function InitVariables () {
   totalLinesOfCode = 0
   selfDestructIn = 5
 >>>>>>> 79ddf29... js standard
+=======
+>>>>>>> c11f391... Moved const variables to config file.
 }
-
-// Bot self destruct message functions
 
 /**
  * Edits the instruction message once a second, decrementing the time variable by 1
@@ -563,12 +608,16 @@ function EditBotMessage (usr, message, channel, t) {
   message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                '\n\t*This message will self-destruct in ' + t + ' seconds*')
 =======
 =======
 >>>>>>> 79ddf29... js standard
         '\n\t*This message will self-destruct in ' + t + ' seconds*')
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+               '\n\t*This message will self-destruct in ' + t + ' seconds*')
+>>>>>>> c11f391... Moved const variables to config file.
 }
 
 /**
