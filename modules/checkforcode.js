@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017 
+    14 July, 2017
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -8,6 +8,7 @@
     ------------------------------------------------------------------------
     Systematically search through Discord comments to find unformatted Code.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         * Search is based in chars in codeElements array.
             * Default:  [';', '{', '}', ')', '[', ']', '>']
@@ -17,15 +18,24 @@
             * Default:  [';', '{', '}', ')', '[', ']', '>']
         * Bot will parse the code line by line searching for 
 >>>>>>> 8240259... USE VAR
+=======
+        * Search is based in chars in codeElements array.
+            * Default:  [';', '{', '}', ')', '[', ']', '>']
+        * Bot will parse the code line by line searching for
+>>>>>>> 79ddf29... js standard
         * code elements and keep track of which line are code
         * and which are plain text.
         * The bot will do his best to only format a true code
         * block, leaving the plain text alone. One complete
 <<<<<<< HEAD
+<<<<<<< HEAD
         * the bot will add code block formatting around the
 =======
         * the bot will add code block formatting around the 
 >>>>>>> 8240259... USE VAR
+=======
+        * the bot will add code block formatting around the
+>>>>>>> 79ddf29... js standard
         * code block, with the current code Lang 'csharp'.
         * The message will be posted anew as formatted code
         * and, if possible, the old message will be deleted.
@@ -34,10 +44,14 @@
         * 'help' in the tile, then the new message is posted
         * there.
 <<<<<<< HEAD
+<<<<<<< HEAD
         * If the message is posted in any other channel, the
 =======
         * If the message is posted in any other channel, the 
 >>>>>>> 8240259... USE VAR
+=======
+        * If the message is posted in any other channel, the
+>>>>>>> 79ddf29... js standard
         * new message will be posted in #programing_help (if it exists)
         * If there is no programing_help channel, the message is
         * posted in the original channel.
@@ -84,6 +98,7 @@
 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* jshint esversion: 6 */
 /* jshint asi: true */
 
@@ -94,15 +109,18 @@ const Discord = require('discord.js')
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 =======
+=======
+/* jshint esversion: 6 */
+/* jshint asi: true */
+>>>>>>> 79ddf29... js standard
 
-/*jshint esversion: 6 */
-/*jshint asi: true */
-
-const Discord = require('discord.js');
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
+<<<<<<< HEAD
 const config = GlassBot.config
 >>>>>>> 8240259... USE VAR
+=======
+>>>>>>> 79ddf29... js standard
 
 // Salt to taste
 const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
@@ -150,20 +168,19 @@ bot.on('message', message => {
 
 // Lets begin
 bot.on('message', message => {
-    if (message.content.length > 1900) return
-    if (message.author.bot) {
+  if (message.content.length > 1900) return
+  if (message.author.bot) {
         // Self-destruct message
-        if (message.content.includes('Your unformatted code')) {
-            let usr = message.mentions.users.array()[0]
-            let chnl = (message.guild.channels.find("name", "programing_help") != null) ?
-                message.guild.channels.find("name", "programing_help") :
-                message.channel
-            callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
-        }
-        return
+    if (message.content.includes('Your unformatted code')) {
+      let usr = message.mentions.users.array()[0]
+      let chnl = (message.guild.channels.find('name', 'programing_help') != null) ? message.guild.channels.find('name', 'programing_help') : message.channel
+      callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
+<<<<<<< HEAD
     ParseMessage(message)
 >>>>>>> 8240259... USE VAR
+=======
+>>>>>>> 79ddf29... js standard
     return
   }
   ParseMessage(message)
@@ -177,6 +194,9 @@ bot.on('message', message => {
  * @param  {string[]} message
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 79ddf29... js standard
 function ParseMessage (message) {
   InitVariables()
   let lines = message.content.split('\n')
@@ -184,6 +204,7 @@ function ParseMessage (message) {
     if (lines[i].search(formatBlock) >= 0) {
       isFormatted = true
       return
+<<<<<<< HEAD
 <<<<<<< HEAD
     } else {
       FindCodeElements(i, lines[i], lines)
@@ -209,10 +230,13 @@ function ParseMessage(message) {
             return
         } else
             FindCodeElements(i, lines[i], lines)
+=======
+    } else {
+      FindCodeElements(i, lines[i], lines)
+>>>>>>> 79ddf29... js standard
     }
-
-    CheckMessage(lines, message)
-    return
+  }
+  CheckMessage(lines, message)
 }
 
 /**
@@ -220,12 +244,11 @@ function ParseMessage(message) {
  * @param  {string[]} lines
  * @param  {string[]} message
  */
-function CheckMessage(lines, message) {
-    if (IsBadCode() && !isFormatted) {
-        lines[lastLine] = FormatLastLine(lines[lastLine])
-        CreateNewMessage(lines, message)
-    }
-    return
+function CheckMessage (lines, message) {
+  if (IsBadCode() && !isFormatted) {
+    lines[lastLine] = FormatLastLine(lines[lastLine])
+    CreateNewMessage(lines, message)
+  }
 }
 
 /**
@@ -257,11 +280,16 @@ function CheckMessage (lines, message) {
 function FindCodeElements (index, line, lines) {
   let lineLength = line.length - 1
   for (let i = 0; i < codeElements.length; i++) {
+<<<<<<< HEAD
     if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf()) {
+=======
+    if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()) {
+>>>>>>> 79ddf29... js standard
       if (!hasFirstLine) {
         lines[index] = FormatFirstLine(line)
         return
       } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
         lastLineIndex = index
 =======
@@ -289,6 +317,14 @@ function FindCodeElements(index, line, lines) {
     }
     return
 >>>>>>> 8240259... USE VAR
+=======
+        lastLine = index
+        totalLinesOfCode += 1
+        return
+      }
+    }
+  }
+>>>>>>> 79ddf29... js standard
 }
 
 /**
@@ -299,6 +335,7 @@ function FindCodeElements(index, line, lines) {
 function CreateNewMessage (lines, message) {
   let newMessage = ''
 <<<<<<< HEAD
+<<<<<<< HEAD
   for (let j = 0; j < lines.length; j++) {
     newMessage += lines[j] + '\n'
   }
@@ -306,6 +343,10 @@ function CreateNewMessage (lines, message) {
   for (let j = 0; j < lines.length; j++) { newMessage += lines[j] + '\n' }
 
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+  for (let j = 0; j < lines.length; j++) { newMessage += lines[j] + '\n' }
+
+>>>>>>> 79ddf29... js standard
   PostNewMessage(message, newMessage)
 }
 
@@ -314,6 +355,7 @@ function CreateNewMessage (lines, message) {
  * @param  {string[]} message
  * @param  {string} formattedMessage
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 function PostNewMessage (message, formattedMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
@@ -331,10 +373,13 @@ function PostNewMessage (message, formattedMessage) {
     message.channel.send(formattedMessage)
   }
 =======
+=======
+>>>>>>> 79ddf29... js standard
 function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
         // Move to new channel
+<<<<<<< HEAD
 <<<<<<< HEAD
   if (channel !== null && channel !== message.channel && !isHelp) {
         // TODO: Would like to add some color to this message
@@ -350,11 +395,20 @@ function PostNewMessage (message, newMessage) {
         channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
         channel.send(newMessage);
 >>>>>>> 8240259... USE VAR
+=======
+  if (channel != null && channel != message.channel && !isHelp) {
+        // TODO: Would like to add some color to this message
+    message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
+                  '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
+    channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
+    channel.send(newMessage)
+>>>>>>> 79ddf29... js standard
         // post is same channel
   } else {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
     message.channel.send(newMessage)
   }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 >>>>>>> refs/remotes/bananaprotocol/master
@@ -362,6 +416,9 @@ function PostNewMessage (message, newMessage) {
 =======
     DeleteOldMessage(message)
 >>>>>>> 8240259... USE VAR
+=======
+  DeleteOldMessage(message)
+>>>>>>> 79ddf29... js standard
 }
 
 /**
@@ -371,6 +428,7 @@ function PostNewMessage (message, newMessage) {
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
 <<<<<<< HEAD
+<<<<<<< HEAD
   if (managePerms) {
     message.delete()
   } else {
@@ -379,12 +437,16 @@ function DeleteOldMessage (message) {
 =======
   if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+  if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
+>>>>>>> 79ddf29... js standard
 }
 
 /**
  *  Adds code formatting block start to the first line of code
  * @param  {string} firstLine
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 function FormatFirstLine (firstLine) {
     /*
@@ -416,6 +478,17 @@ function FormatFirstLine(firstLine) {
          */
     return formatBlock + codeLang + '\n' + firstLine
 >>>>>>> 8240259... USE VAR
+=======
+function FormatFirstLine (firstLine) {
+  /*
+  What if the first line of code has some regular text at the beginning?
+      "Here is my code: public int myInt = 0;"
+      "Here is my code" will also be formatted.
+      We do not want this.
+  */
+  hasFirstLine = true
+  return formatBlock + codeLang + '\n' + firstLine
+>>>>>>> 79ddf29... js standard
 }
 
 /**
@@ -423,12 +496,17 @@ function FormatFirstLine(firstLine) {
  * @param  {string} lastLine
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 function FormatLastLine (lastLine) {
   return lastLine + '\n' + formatBlock
 =======
 function FormatLastLine(lastLine) {
     return lastLine + '\n' + formatBlock
 >>>>>>> 8240259... USE VAR
+=======
+function FormatLastLine (lastLine) {
+  return lastLine + '\n' + formatBlock
+>>>>>>> 79ddf29... js standard
 }
 
 /**
@@ -441,6 +519,7 @@ function IsBadCode () {
 /**
  * Initialize variables
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 function InitVariables () {
   isFormatted = false
@@ -461,6 +540,14 @@ function InitVariables() {
     totalLinesOfCode = 0
     selfDestructIn = 5
 >>>>>>> 8240259... USE VAR
+=======
+function InitVariables () {
+  isFormatted = false
+  hasFirstLine = false
+  lastLine = 0
+  totalLinesOfCode = 0
+  selfDestructIn = 5
+>>>>>>> 79ddf29... js standard
 }
 
 // Bot self destruct message functions
@@ -475,8 +562,11 @@ function InitVariables() {
 function EditBotMessage (usr, message, channel, t) {
   message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
 <<<<<<< HEAD
+<<<<<<< HEAD
                '\n\t*This message will self-destruct in ' + t + ' seconds*')
 =======
+=======
+>>>>>>> 79ddf29... js standard
         '\n\t*This message will self-destruct in ' + t + ' seconds*')
 >>>>>>> refs/remotes/bananaprotocol/master
 }
@@ -496,6 +586,7 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
       usr = null
       msg.delete()
 <<<<<<< HEAD
+<<<<<<< HEAD
         .then(m => console.log(`Deleted message from ${m.author}`))
         .catch(console.error)
 =======
@@ -505,12 +596,21 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
       return
     }
 <<<<<<< HEAD
+=======
+          .then(m => console.log(`Deleted message from ${m.author}`))
+          .catch(console.error)
+      return
+    }
+>>>>>>> 79ddf29... js standard
     fn(usr, msg, chnl, n)
     setTimeout(callFn, time)
   }
   setTimeout(callFn, time)
 }
+<<<<<<< HEAD
 =======
     setTimeout(callFn, time);
 }
 >>>>>>> 8240259... USE VAR
+=======
+>>>>>>> 79ddf29... js standard
