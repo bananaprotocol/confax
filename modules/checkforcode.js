@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017
+    14 July, 2017 
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -8,14 +8,24 @@
     ------------------------------------------------------------------------
     Systematically search through Discord comments to find unformatted Code.
 
+<<<<<<< HEAD
         * Search is based in chars in codeElements array.
             * Default:  [';', '{', '}', ')', '[', ']', '>']
         * Bot will parse the code line by line searching for
+=======
+        * Search is based in chars in codeElements array. 
+            * Default:  [';', '{', '}', ')', '[', ']', '>']
+        * Bot will parse the code line by line searching for 
+>>>>>>> 8240259... USE VAR
         * code elements and keep track of which line are code
         * and which are plain text.
         * The bot will do his best to only format a true code
         * block, leaving the plain text alone. One complete
+<<<<<<< HEAD
         * the bot will add code block formatting around the
+=======
+        * the bot will add code block formatting around the 
+>>>>>>> 8240259... USE VAR
         * code block, with the current code Lang 'csharp'.
         * The message will be posted anew as formatted code
         * and, if possible, the old message will be deleted.
@@ -23,7 +33,11 @@
         * If the unformatted code is posted in a channel with
         * 'help' in the tile, then the new message is posted
         * there.
+<<<<<<< HEAD
         * If the message is posted in any other channel, the
+=======
+        * If the message is posted in any other channel, the 
+>>>>>>> 8240259... USE VAR
         * new message will be posted in #programing_help (if it exists)
         * If there is no programing_help channel, the message is
         * posted in the original channel.
@@ -69,6 +83,7 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
+<<<<<<< HEAD
 /* jshint esversion: 6 */
 /* jshint asi: true */
 
@@ -78,6 +93,16 @@ const Discord = require('discord.js')
 >>>>>>> refs/remotes/bananaprotocol/master
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
+=======
+
+/*jshint esversion: 6 */
+/*jshint asi: true */
+
+const Discord = require('discord.js');
+const GlassBot = require('../bot.js')
+const bot = GlassBot.bot
+const config = GlassBot.config
+>>>>>>> 8240259... USE VAR
 
 // Salt to taste
 const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
@@ -85,6 +110,8 @@ const codeLang = 'csharp' // Could be in a config
 const repostThreshold = 4 // Could be in a config
 const selfDestructIn = 5
 const formatBlock = '```'
+
+var formatBlock = '```'
 
 var formatBlock = '```'
 
@@ -97,6 +124,7 @@ var lastLineIndex = 0
 =======
 var lastLine = 0
 var selfDestructIn = 5
+<<<<<<< HEAD
 >>>>>>> refs/remotes/bananaprotocol/master
 
 // Lets begin
@@ -118,6 +146,24 @@ bot.on('message', message => {
                 : message.channel
       callNTimes(5, 1000, EditBotMessage, message, chnl, usr)
     }
+=======
+
+// Lets begin
+bot.on('message', message => {
+    if (message.content.length > 1900) return
+    if (message.author.bot) {
+        // Self-destruct message
+        if (message.content.includes('Your unformatted code')) {
+            let usr = message.mentions.users.array()[0]
+            let chnl = (message.guild.channels.find("name", "programing_help") != null) ?
+                message.guild.channels.find("name", "programing_help") :
+                message.channel
+            callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
+        }
+        return
+    }
+    ParseMessage(message)
+>>>>>>> 8240259... USE VAR
     return
   }
   ParseMessage(message)
@@ -130,6 +176,7 @@ bot.on('message', message => {
  * @param  {string[]} lines
  * @param  {string[]} message
  */
+<<<<<<< HEAD
 function ParseMessage (message) {
   InitVariables()
   let lines = message.content.split('\n')
@@ -152,9 +199,44 @@ function ParseMessage (message) {
 
 /**
  * Check if this is unformatted code, if so Create New Message
+=======
+function ParseMessage(message) {
+    InitVariables()
+    let lines = message.content.split('\n')
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].search(formatBlock) >= 0) {
+            isFormatted = true
+            return
+        } else
+            FindCodeElements(i, lines[i], lines)
+    }
+
+    CheckMessage(lines, message)
+    return
+}
+
+/**
+ * Check if this is unformatted code, if so Create New Message
  * @param  {string[]} lines
  * @param  {string[]} message
  */
+function CheckMessage(lines, message) {
+    if (IsBadCode() && !isFormatted) {
+        lines[lastLine] = FormatLastLine(lines[lastLine])
+        CreateNewMessage(lines, message)
+    }
+    return
+}
+
+/**
+ * Checks the last character in a string to see of it matches a code-like character
+ * @param  {number} index
+ * @param  {string} line
+>>>>>>> 8240259... USE VAR
+ * @param  {string[]} lines
+ * @param  {string[]} message
+ */
+<<<<<<< HEAD
 function CheckMessage (lines, message) {
   if (IsBadCode() && !isFormatted) {
 <<<<<<< HEAD
@@ -190,6 +272,23 @@ function FindCodeElements (index, line, lines) {
       }
     }
   }
+=======
+function FindCodeElements(index, line, lines) {
+    let lineLength = line.length - 1
+    for (let i = 0; i < codeElements.length; i++) {
+        if (line.charAt(lineLength).valueOf() == codeElements[i].valueOf()) {
+            if (!hasFirstLine) {
+                lines[index] = FormatFirstLine(line)
+                return
+            } else {
+                lastLine = index
+                totalLinesOfCode += 1
+                return
+            }
+        }
+    }
+    return
+>>>>>>> 8240259... USE VAR
 }
 
 /**
@@ -236,20 +335,33 @@ function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
         // Move to new channel
+<<<<<<< HEAD
   if (channel !== null && channel !== message.channel && !isHelp) {
         // TODO: Would like to add some color to this message
     message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
             '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
     channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
     channel.send(newMessage)
+=======
+    if (channel != null && channel != message.channel && !isHelp) {
+        // TODO: Would like to add some color to this message
+        message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
+            '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
+        channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
+        channel.send(newMessage);
+>>>>>>> 8240259... USE VAR
         // post is same channel
   } else {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
     message.channel.send(newMessage)
   }
 
+<<<<<<< HEAD
 >>>>>>> refs/remotes/bananaprotocol/master
   DeleteOldMessage(message)
+=======
+    DeleteOldMessage(message)
+>>>>>>> 8240259... USE VAR
 }
 
 /**
@@ -280,16 +392,26 @@ function FormatFirstLine (firstLine) {
         "Here is my code" will also be formatted.
         We do not want this.
      */
+<<<<<<< HEAD
   hasFirstLine = true
   return formatBlock + codeLang + '\n' + firstLine
+=======
+    hasFirstLine = true
+    return formatBlock + codeLang + '\n' + firstLine
+>>>>>>> 8240259... USE VAR
 }
 
 /**
  * Add formatting code bock end to the last line of code
  * @param  {string} lastLine
  */
+<<<<<<< HEAD
 function FormatLastLine (lastLine) {
   return lastLine + '\n' + formatBlock
+=======
+function FormatLastLine(lastLine) {
+    return lastLine + '\n' + formatBlock
+>>>>>>> 8240259... USE VAR
 }
 
 /**
@@ -302,6 +424,7 @@ function IsBadCode () {
 /**
  * Initialize variables
  */
+<<<<<<< HEAD
 function InitVariables () {
   isFormatted = false
   hasFirstLine = false
@@ -313,6 +436,14 @@ function InitVariables () {
   totalLinesOfCode = 0
   selfDestructIn = 5
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+function InitVariables() {
+    isFormatted = false
+    hasFirstLine = false
+    lastLine = 0
+    totalLinesOfCode = 0
+    selfDestructIn = 5
+>>>>>>> 8240259... USE VAR
 }
 
 // Bot self destruct message functions
@@ -356,8 +487,13 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
 >>>>>>> refs/remotes/bananaprotocol/master
       return
     }
+<<<<<<< HEAD
     fn(usr, msg, chnl, n)
     setTimeout(callFn, time)
   }
   setTimeout(callFn, time)
 }
+=======
+    setTimeout(callFn, time);
+}
+>>>>>>> 8240259... USE VAR
