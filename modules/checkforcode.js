@@ -385,6 +385,7 @@ function DeleteOldMessage (message) {
  *  Adds code formatting block start to the first line of code
  * @param  {string} firstLine
  */
+<<<<<<< HEAD
 function FormatFirstLine (firstLine) {
     /*
     What if the first line of code has some regular text at the beginning?
@@ -396,7 +397,23 @@ function FormatFirstLine (firstLine) {
   hasFirstLine = true
   return formatBlock + codeLang + '\n' + firstLine
 =======
+=======
+function FormatFirstLine(firstLine) {
+>>>>>>> 7472f97... minor edits
     hasFirstLine = true
+        /*
+        What if the first line of code has some regular text at the beginning?
+            "Here is my code: public int myInt = 0;"
+            "Here is my code" will also be formatted.
+            We do not want this.
+            There are too many possibilites for what could be
+            the actual first word of the first line of code:
+                - public
+                - private
+                - int
+                - string
+                - list
+         */
     return formatBlock + codeLang + '\n' + firstLine
 >>>>>>> 8240259... USE VAR
 }
