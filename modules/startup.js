@@ -15,4 +15,4 @@ bot.on('reconnecting', () => {
   console.log('Confax has reconnected to Discord.')
 })
 
-bot.login('MzI3MDI4MjgzMTI2MzE3MDY2.DFeyPQ.WeyTjqufnbWzmdeiOx5V2QZV0IQ')
+bot.login(process.env.BOT_TOKEN)
