@@ -4,8 +4,6 @@ const Confax = require('../bot.js')
 Confax.registerCommand('eval', 'master', (message, bot) => {
   try {
     let output = eval(message.content)
-    console.log(output);
-    debugger
     if (!message.content.includes('bot.token') || !output.includes(bot.token)) {
       return '**Output:** ' + output
     } else {
