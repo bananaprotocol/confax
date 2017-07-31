@@ -2,9 +2,9 @@ const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('ban', 'moderator', (message, bot) => {
-  var mention = message.mentions.users.array()[0]
+  var mention = message.mentions.users.first()
   var banPerms = message.guild.member(bot.user).hasPermission('BAN_MEMBERS')
-  if (mention === null) {
+  if (!mention) {
     return 'Please mention a user, that you would like to ban.'
   } else {
     if (!banPerms) {
