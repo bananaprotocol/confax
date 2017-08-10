@@ -3,7 +3,7 @@ const Confax = require('../bot.js')
 const math = require('mathjs')
 
 Confax.registerCommand('math', 'default', (message, bot) => {
-  var result
+  let result
   try {
     result = math.eval(message.content)
   } catch (error) {
