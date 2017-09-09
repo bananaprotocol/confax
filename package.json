@@ -12,7 +12,8 @@
     "js-yaml": "^3.9.0",
     "mathjs": "^3.14.2",
     "node-opus": "^0.2.6",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "socket.io": "^0.9.16"
   },
   "engines": {
     "node": "8.1.4"
@@ -26,5 +27,8 @@
   },
   "scripts": {
     "start": "node bot.js"
+  },
+  "devDependencies": {
+    "electron": "1.7.6"
   }
 }
