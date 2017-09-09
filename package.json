@@ -10,10 +10,14 @@
     "discord.js": "^11.1.0",
     "dotenv": "^4.0.0",
     "js-yaml": "^3.9.0",
-    "mathjs": "^3.14.2",
+    "math": "0.0.3",
+    "math.js": "^1.1.40",
+    "mathjs": "^3.16.3",
     "node-opus": "^0.2.6",
     "request": "^2.81.0",
-    "socket.io": "^0.9.16"
+    "socket.io": "^0.9.16",
+    "tiny-emitter": "^2.0.2",
+    "update": "^0.7.4"
   },
   "engines": {
     "node": "8.1.4"
