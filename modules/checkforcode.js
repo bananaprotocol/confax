@@ -69,12 +69,9 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
-/* jshint esversion: 6 */
-/* jshint asi: true */
-
-const Discord = require('discord.js')
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
+const config = GlassBot.config
 
 // Salt to taste
 const codeElements = config.codeElements
@@ -87,8 +84,7 @@ const formatBlock = config.formatBlock
 var isFormatted = false
 var totalLinesOfCode = 0
 var hasFirstLine = false
-var lastLineIndex = 0
-var selfDestructIn = 5
+var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
@@ -135,7 +131,7 @@ function ParseMessage (message) {
  */
 function CheckMessage (lines, message) {
   if (IsBadCode() && !isFormatted) {
-    lines[lastLineIndex] = FormatLastLine(lines[lastLineIndex])
+    lines[lastLine] = FormatLastLine(lines[lastLine])
     CreateNewMessage(lines, message)
   }
 }
@@ -154,7 +150,7 @@ function FindCodeElements (index, line, lines) {
         lines[index] = FormatFirstLine(line)
         return
       } else {
-        lastLineIndex = index
+        lastLine = index
         totalLinesOfCode += 1
         return
       }
@@ -178,23 +174,25 @@ function CreateNewMessage (lines, message) {
 /**
  * Post the formatted message in the appropriate channel
  * @param  {string[]} message
- * @param  {string} formattedMessage
+ * @param  {string} newMessage
  */
-function PostNewMessage (message, formattedMessage) {
+function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
-  // Move to new channel
+    // Move to new channel
   if (channel != null && channel !== message.channel && !isHelp) {
     // TODO: Would like to add some color to this message
     message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
-            '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
+                  '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
     channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
-    channel.send(formattedMessage)
-  // post is same channel
+    channel.send(newMessage)
+    // post is same channel
   } else {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
-    message.channel.send(formattedMessage)
+    message.channel.send(newMessage)
   }
+  DeleteOldMessage(message)
+}
 
 /**
  * Deletes the old unformatted message if bot has permission
@@ -245,9 +243,8 @@ function IsBadCode () {
 function InitVariables () {
   isFormatted = false
   hasFirstLine = false
-  lastLineIndex = 0
+  lastLine = 0
   totalLinesOfCode = 0
-  selfDestructIn = 5
 }
 
 /**
@@ -275,7 +272,7 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
   function callFn () {
     if (--n < 1) {
       usr = null
-      msg.delete()  
+      msg.delete()
           .then(m => console.log(`Deleted message from ${m.author}`))
           .catch(console.error)
       return
