@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    14 July, 2017
+    20 July, 2017
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -69,6 +69,7 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
+<<<<<<< HEAD
 /* jshint esversion: 6 */
 /* jshint asi: true */
 
@@ -76,10 +77,13 @@
 =======
 const Discord = require('discord.js')
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+>>>>>>> refs/remotes/bananaprotocol/master
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
 
 // Salt to taste
+<<<<<<< HEAD
 const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
 const codeLang = 'csharp' // Could be in a config
 const repostThreshold = 4 // Could be in a config
@@ -87,6 +91,13 @@ const selfDestructIn = 5
 const formatBlock = '```'
 
 var formatBlock = '```'
+=======
+const codeElements = config.codeElements
+const codeLang = config.codeLang
+const repostThreshold = config.repostThreshold
+const selfDestructIn = config.selfDestructIn
+const formatBlock = config.formatBlock
+>>>>>>> refs/remotes/bananaprotocol/master
 
 // Variables
 var isFormatted = false
@@ -96,13 +107,17 @@ var hasFirstLine = false
 var lastLineIndex = 0
 =======
 var lastLine = 0
+<<<<<<< HEAD
 var selfDestructIn = 5
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
 >>>>>>> refs/remotes/bananaprotocol/master
 
 // Lets begin
 bot.on('message', message => {
   if (message.content.length > 1900) return
   if (message.author.bot) {
+<<<<<<< HEAD
 <<<<<<< HEAD
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
@@ -114,9 +129,15 @@ bot.on('message', message => {
       let usr = message.mentions.users.array()[0]
       let chnl = (message.guild.channels.find('name', 'programing_help') !== null)
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+    // Self-destruct message
+    if (message.content.includes('Your unformatted code')) {
+      let usr = message.mentions.users.array()[0]
+      let chnl = (message.guild.channels.find('name', 'programing_help') != null)
+>>>>>>> refs/remotes/bananaprotocol/master
                 ? message.guild.channels.find('name', 'programing_help')
                 : message.channel
-      callNTimes(5, 1000, EditBotMessage, message, chnl, usr)
+      callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
     return
   }
@@ -138,6 +159,7 @@ function ParseMessage (message) {
       isFormatted = true
       return
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else {
       FindCodeElements(i, lines[i], lines)
     }
@@ -146,6 +168,12 @@ function ParseMessage (message) {
     } else { FindCodeElements(i, lines[i], lines) }
   }
 
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
+    } else {
+      FindCodeElements(i, lines[i], lines)
+    }
+  }
 >>>>>>> refs/remotes/bananaprotocol/master
   CheckMessage(lines, message)
 }
@@ -200,12 +228,18 @@ function FindCodeElements (index, line, lines) {
 function CreateNewMessage (lines, message) {
   let newMessage = ''
 <<<<<<< HEAD
+<<<<<<< HEAD
   for (let j = 0; j < lines.length; j++) {
     newMessage += lines[j] + '\n'
   }
 =======
   for (let j = 0; j < lines.length; j++) { newMessage += lines[j] + '\n' }
 
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
+  for (let j = 0; j < lines.length; j++) {
+    newMessage += lines[j] + '\n'
+  }
 >>>>>>> refs/remotes/bananaprotocol/master
   PostNewMessage(message, newMessage)
 }
@@ -235,19 +269,22 @@ function PostNewMessage (message, formattedMessage) {
 function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
-        // Move to new channel
-  if (channel !== null && channel !== message.channel && !isHelp) {
-        // TODO: Would like to add some color to this message
+    // Move to new channel
+  if (channel != null && channel !== message.channel && !isHelp) {
+    // TODO: Would like to add some color to this message
     message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
-            '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
+                  '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
     channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
     channel.send(newMessage)
-        // post is same channel
+    // post is same channel
   } else {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
     message.channel.send(newMessage)
   }
+<<<<<<< HEAD
 
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
 >>>>>>> refs/remotes/bananaprotocol/master
   DeleteOldMessage(message)
 }
@@ -259,13 +296,19 @@ function PostNewMessage (message, newMessage) {
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/bananaprotocol/master
   if (managePerms) {
     message.delete()
   } else {
     message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
   }
+<<<<<<< HEAD
 =======
   if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
 >>>>>>> refs/remotes/bananaprotocol/master
 }
 
@@ -274,12 +317,12 @@ function DeleteOldMessage (message) {
  * @param  {string} firstLine
  */
 function FormatFirstLine (firstLine) {
-    /*
-    What if the first line of code has some regular text at the beginning?
-        "Here is my code: public int myInt = 0;"
-        "Here is my code" will also be formatted.
-        We do not want this.
-     */
+  /*
+  What if the first line of code has some regular text at the beginning?
+      "Here is my code: public int myInt = 0;"
+      "Here is my code" will also be formatted.
+      We do not want this.
+  */
   hasFirstLine = true
   return formatBlock + codeLang + '\n' + firstLine
 }
@@ -311,11 +354,12 @@ function InitVariables () {
 =======
   lastLine = 0
   totalLinesOfCode = 0
+<<<<<<< HEAD
   selfDestructIn = 5
 >>>>>>> refs/remotes/bananaprotocol/master
+=======
+>>>>>>> refs/remotes/bananaprotocol/master
 }
-
-// Bot self destruct message functions
 
 /**
  * Edits the instruction message once a second, decrementing the time variable by 1
@@ -327,9 +371,13 @@ function InitVariables () {
 function EditBotMessage (usr, message, channel, t) {
   message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
 <<<<<<< HEAD
+<<<<<<< HEAD
                '\n\t*This message will self-destruct in ' + t + ' seconds*')
 =======
         '\n\t*This message will self-destruct in ' + t + ' seconds*')
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
+               '\n\t*This message will self-destruct in ' + t + ' seconds*')
 >>>>>>> refs/remotes/bananaprotocol/master
 }
 
@@ -348,11 +396,16 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
       usr = null
       msg.delete()
 <<<<<<< HEAD
+<<<<<<< HEAD
         .then(m => console.log(`Deleted message from ${m.author}`))
         .catch(console.error)
 =======
                 .then(m => console.log(`Deleted message from ${m.author}`))
                 .catch(console.error)
+>>>>>>> refs/remotes/bananaprotocol/master
+=======
+          .then(m => console.log(`Deleted message from ${m.author}`))
+          .catch(console.error)
 >>>>>>> refs/remotes/bananaprotocol/master
       return
     }
