@@ -69,72 +69,31 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
-<<<<<<< HEAD
-/* jshint esversion: 6 */
-/* jshint asi: true */
-
-<<<<<<< HEAD
-=======
-const Discord = require('discord.js')
->>>>>>> refs/remotes/bananaprotocol/master
-=======
->>>>>>> refs/remotes/bananaprotocol/master
 const GlassBot = require('../bot.js')
 const bot = GlassBot.bot
+const config = GlassBot.config
 
 // Salt to taste
-<<<<<<< HEAD
-const codeElements = [';', '{', '}', ')', '[', ']', '>'] // Could be in a config
-const codeLang = 'csharp' // Could be in a config
-const repostThreshold = 4 // Could be in a config
-const selfDestructIn = 5
-const formatBlock = '```'
-
-var formatBlock = '```'
-=======
 const codeElements = config.codeElements
 const codeLang = config.codeLang
 const repostThreshold = config.repostThreshold
 const selfDestructIn = config.selfDestructIn
 const formatBlock = config.formatBlock
->>>>>>> refs/remotes/bananaprotocol/master
 
 // Variables
 var isFormatted = false
 var totalLinesOfCode = 0
 var hasFirstLine = false
-<<<<<<< HEAD
-var lastLineIndex = 0
-=======
 var lastLine = 0
-<<<<<<< HEAD
-var selfDestructIn = 5
->>>>>>> refs/remotes/bananaprotocol/master
-=======
->>>>>>> refs/remotes/bananaprotocol/master
 
 // Lets begin
 bot.on('message', message => {
   if (message.content.length > 1900) return
   if (message.author.bot) {
-<<<<<<< HEAD
-<<<<<<< HEAD
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
       let usr = message.mentions.users.array()[0]
       let chnl = (message.guild.channels.find('name', 'programing_help') != null)
-=======
-        // Self-destruct message
-    if (message.content.includes('Your unformatted code')) {
-      let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', 'programing_help') !== null)
->>>>>>> refs/remotes/bananaprotocol/master
-=======
-    // Self-destruct message
-    if (message.content.includes('Your unformatted code')) {
-      let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', 'programing_help') != null)
->>>>>>> refs/remotes/bananaprotocol/master
                 ? message.guild.channels.find('name', 'programing_help')
                 : message.channel
       callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
@@ -158,23 +117,10 @@ function ParseMessage (message) {
     if (lines[i].search(formatBlock) >= 0) {
       isFormatted = true
       return
-<<<<<<< HEAD
-<<<<<<< HEAD
     } else {
       FindCodeElements(i, lines[i], lines)
     }
   }
-=======
-    } else { FindCodeElements(i, lines[i], lines) }
-  }
-
->>>>>>> refs/remotes/bananaprotocol/master
-=======
-    } else {
-      FindCodeElements(i, lines[i], lines)
-    }
-  }
->>>>>>> refs/remotes/bananaprotocol/master
   CheckMessage(lines, message)
 }
 
@@ -185,11 +131,7 @@ function ParseMessage (message) {
  */
 function CheckMessage (lines, message) {
   if (IsBadCode() && !isFormatted) {
-<<<<<<< HEAD
-    lines[lastLineIndex] = FormatLastLine(lines[lastLineIndex])
-=======
     lines[lastLine] = FormatLastLine(lines[lastLine])
->>>>>>> refs/remotes/bananaprotocol/master
     CreateNewMessage(lines, message)
   }
 }
@@ -208,11 +150,7 @@ function FindCodeElements (index, line, lines) {
         lines[index] = FormatFirstLine(line)
         return
       } else {
-<<<<<<< HEAD
-        lastLineIndex = index
-=======
         lastLine = index
->>>>>>> refs/remotes/bananaprotocol/master
         totalLinesOfCode += 1
         return
       }
@@ -227,45 +165,17 @@ function FindCodeElements (index, line, lines) {
  */
 function CreateNewMessage (lines, message) {
   let newMessage = ''
-<<<<<<< HEAD
-<<<<<<< HEAD
   for (let j = 0; j < lines.length; j++) {
     newMessage += lines[j] + '\n'
   }
-=======
-  for (let j = 0; j < lines.length; j++) { newMessage += lines[j] + '\n' }
-
->>>>>>> refs/remotes/bananaprotocol/master
-=======
-  for (let j = 0; j < lines.length; j++) {
-    newMessage += lines[j] + '\n'
-  }
->>>>>>> refs/remotes/bananaprotocol/master
   PostNewMessage(message, newMessage)
 }
 
 /**
  * Post the formatted message in the appropriate channel
  * @param  {string[]} message
- * @param  {string} formattedMessage
+ * @param  {string} newMessage
  */
-<<<<<<< HEAD
-function PostNewMessage (message, formattedMessage) {
-  let channel = message.guild.channels.find('name', 'programing_help')
-  let isHelp = message.channel.name.indexOf('help') > 0
-  // Move to new channel
-  if (channel != null && channel !== message.channel && !isHelp) {
-    // TODO: Would like to add some color to this message
-    message.reply(':nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
-            '\n\t*This message will self-destruct in ' + selfDestructIn + ' seconds*')
-    channel.send(message.author + ', **★★ I have formatted your code and placed it here. Good Luck! ★★** ')
-    channel.send(formattedMessage)
-  // post is same channel
-  } else {
-    message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
-    message.channel.send(formattedMessage)
-  }
-=======
 function PostNewMessage (message, newMessage) {
   let channel = message.guild.channels.find('name', 'programing_help')
   let isHelp = message.channel.name.indexOf('help') > 0
@@ -281,11 +191,6 @@ function PostNewMessage (message, newMessage) {
     message.channel.send(message.author + ' **★★ I see you forgot to format your code... Let me help you. ★★** ')
     message.channel.send(newMessage)
   }
-<<<<<<< HEAD
-
->>>>>>> refs/remotes/bananaprotocol/master
-=======
->>>>>>> refs/remotes/bananaprotocol/master
   DeleteOldMessage(message)
 }
 
@@ -295,21 +200,11 @@ function PostNewMessage (message, newMessage) {
  */
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/bananaprotocol/master
   if (managePerms) {
     message.delete()
   } else {
     message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
   }
-<<<<<<< HEAD
-=======
-  if (managePerms) { message.delete() } else { message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:') }
->>>>>>> refs/remotes/bananaprotocol/master
-=======
->>>>>>> refs/remotes/bananaprotocol/master
 }
 
 /**
@@ -348,17 +243,8 @@ function IsBadCode () {
 function InitVariables () {
   isFormatted = false
   hasFirstLine = false
-<<<<<<< HEAD
-  lastLineIndex = 0
-  totalLinesOfCode = 0
-=======
   lastLine = 0
   totalLinesOfCode = 0
-<<<<<<< HEAD
-  selfDestructIn = 5
->>>>>>> refs/remotes/bananaprotocol/master
-=======
->>>>>>> refs/remotes/bananaprotocol/master
 }
 
 /**
@@ -370,15 +256,7 @@ function InitVariables () {
  */
 function EditBotMessage (usr, message, channel, t) {
   message.edit(usr + ', :nerd: __`Your unformatted code has been formatted and moved to`__ ' + channel + '. :nerd:' +
-<<<<<<< HEAD
-<<<<<<< HEAD
                '\n\t*This message will self-destruct in ' + t + ' seconds*')
-=======
-        '\n\t*This message will self-destruct in ' + t + ' seconds*')
->>>>>>> refs/remotes/bananaprotocol/master
-=======
-               '\n\t*This message will self-destruct in ' + t + ' seconds*')
->>>>>>> refs/remotes/bananaprotocol/master
 }
 
 /**
@@ -395,18 +273,8 @@ function callNTimes (n, time, fn, msg, chnl, usr) {
     if (--n < 1) {
       usr = null
       msg.delete()
-<<<<<<< HEAD
-<<<<<<< HEAD
-        .then(m => console.log(`Deleted message from ${m.author}`))
-        .catch(console.error)
-=======
-                .then(m => console.log(`Deleted message from ${m.author}`))
-                .catch(console.error)
->>>>>>> refs/remotes/bananaprotocol/master
-=======
           .then(m => console.log(`Deleted message from ${m.author}`))
           .catch(console.error)
->>>>>>> refs/remotes/bananaprotocol/master
       return
     }
     fn(usr, msg, chnl, n)
