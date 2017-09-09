@@ -2,14 +2,14 @@ const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('cmdhelp', 'default', (message, bot) => {
-  var helpInfo = ''
-  var cmd = message.content.split(' ')[0]
-  var realCmd
-  var cmdType
-  var commands = Confax.commands
+  let helpInfo = ''
+  let cmd = message.content.split(' ')[0]
+  let realCmd
+  let cmdType
+  let commands = Confax.commands
   if (!cmd) return 'Please provide a command to get the information from.'
-  for (var loopCmdType in commands) {
-    for (var loopCmd in commands[loopCmdType]) {
+  for (let loopCmdType in commands) {
+    for (let loopCmd in commands[loopCmdType]) {
       if (loopCmd === cmd || commands[loopCmdType][loopCmd].aliases.includes(cmd)) {
         realCmd = loopCmd
         cmdType = loopCmdType
