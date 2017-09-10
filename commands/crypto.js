@@ -23,7 +23,7 @@ GlassBot.registerCommand('crypto', 'default', (message, bot) => {
       let btcBody = JSON.parse(body)
       let str = btcBody.price_usd.toString()
       let price = str.slice(0, str.indexOf('.') + 3)
-      message.channel.send('The current price for 1 **' + message.content + '** is $**' + price + '** USD.').catch(err => console.log(err.stack))
+      message.channel.send('The current price for 1 **' + message.content.toUpperCase() + '** is $**' + price + '** USD.').catch(err => console.log(err.stack))
     } catch (error) {
       message.channel.send('<:doggo:328259712963313665>' + ' Not a valid crypto-currency, try BTC or ETH.')
     }
