@@ -177,7 +177,8 @@ function CreateNewMessage (lines, message) {
  * @param  {string} newMessage
  */
 function PostNewMessage (message, newMessage) {
-  let channel = message.guild.channels.find('name', 'programing_help')
+  // TODO: Add channel name to config.
+  let channel = message.guild.channels.find('name', 'programming_help')
   let isHelp = message.channel.name.indexOf('help') > 0
     // Move to new channel
   if (channel != null && channel !== message.channel && !isHelp) {
