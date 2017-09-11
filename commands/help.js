@@ -29,10 +29,10 @@ Confax.registerCommand('help', 'default', (message, bot) => {
   let defaultcmds = Object.keys(cmds['default']).length
   let dmcmds = Object.keys(cmds['dm']).length
 
-  return '\n\nDefault Commands **(' + defaultcmds + ')** `' + cmds['default'].join('`**,** `') +
-  '`\nDM Commands **(' + dmcmds + ')** `' + cmds['dm'].join('`**,** `') +
-  '`\nModerator Commands **(' + modcmds + ')** `' + cmds['moderator'].join('`**,** `') +
-  '\nMaster Commands **(' + mastercmds + ')** `' + cmds['master'].join('`**,** `') +
-  '\nAll Commands - **' + (defaultcmds + dmcmds + modcmds + mastercmds) + '**' +
-  '\nUse `advancedhelp` to get an advanced list of all commands or `cmdhelp` to get a detailed description of one.'
+  return 'Default Commands **(' + defaultcmds + ')** ```' + cmds['default'].join('\n') + ' ```\n' +
+         'DM Commands **(' + dmcmds + ')** ```' + cmds['dm'].join('\n') + ' ```\n' +
+         'Moderator Commands **(' + modcmds + ')** ```' + cmds['moderator'].join('\n') + ' ```\n' +
+         'Master Commands **(' + mastercmds + ')** ```' + cmds['master'].join('\n') + ' ```\n' +
+         'All Commands - **(' + (defaultcmds + dmcmds + modcmds + mastercmds) + ')**' +
+         '```Use advancedhelp to get an advanced list of all commands or cmdhelp to get a detailed description of one. ```'
 }, ['cmds', 'commands', 'commandlist'], 'List all commands', '[]')
