@@ -12,7 +12,7 @@ const GlassBot = require('../bot.js')
 const request = require('request')
 
 GlassBot.registerCommand('crypto', 'default', (message, bot) => {
-  let address = 'http://www.coincap.io/page/' + message.content
+  let address = 'http://www.coincap.io/page/' + message.content.toUpperCase()
   request(address, function (error, response, body) {
     if (error) {
       //  error is always null, but put this here for jstandard: (Expected error to be handled.)
@@ -23,9 +23,9 @@ GlassBot.registerCommand('crypto', 'default', (message, bot) => {
       let btcBody = JSON.parse(body)
       let str = btcBody.price_usd.toString()
       let price = str.slice(0, str.indexOf('.') + 3)
-      message.channel.send('The current price for 1 **' + message.content + '** is $**' + price + '** USD.').catch(err => console.log(err.stack))
+      message.channel.send('The current price for 1 **' + message.content.toUpperCase() + '** is $**' + price + '** USD.').catch(err => console.log(err.stack))
     } catch (error) {
       message.channel.send('<:doggo:328259712963313665>' + ' Not a valid crypto-currency, try BTC or ETH.')
     }
   })
-}, ['crypto'], 'Get latest crypto currency price.', '[]')
+}, ['crypt', 'price'], 'Get latest crypto currency price.', '[]')
