@@ -14,11 +14,11 @@ Confax.registerCommand('help', 'default', (message, bot) => {
   for (let loopCmdType in commands) {
     for (let loopCmd in commands[loopCmdType]) {
       cmds[loopCmdType].push(loopCmd)
-      let aliases = commands[loopCmdType][loopCmd].aliases
-      for (let i = 0; i < aliases.length; i++) {
+/*      let aliases = commands[loopCmdType][loopCmd].aliases
+        for (let i = 0; i < aliases.length; i++) {
         let alias = aliases[i]
-        cmds[loopCmdType].push(alias)
-      }
+        cmds[loopCmdType].push(alias) 
+      } */ // Remove aliases from default command output
     }
   }
 
