@@ -3,6 +3,7 @@
   "suffix": "!",
   "masters": ["202515321402294275", "206092093653909504"],
   "botID": "319545839951544320",
+  "GlassToeID": "206092093653909504",
   "codeElements": [";", "{", "}", ")", "[", "]", ">"],
   "repostThreshold": 4,
   "codeLang": "csharp",
