@@ -29,7 +29,7 @@ const notFound = ' was not found. Either it does not exist or it is mispelled (o
 
 var isFound = false
 
-GlassBot.registerCommand('unity', 'default', (message, bot) => {
+Confax.registerCommand('unity', 'default', (message, bot) => {
   let channel = message.guild.channels.find('name', 'vip_members')
   if (channel === null || channel !== message.channel) { return }
   isFound = false
