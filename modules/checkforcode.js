@@ -93,8 +93,8 @@ bot.on('message', message => {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
       let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', 'programing_help') != null)
-                ? message.guild.channels.find('name', 'programing_help')
+      let chnl = (message.guild.channels.find('name', 'programming_help') != null)
+                ? message.guild.channels.find('name', 'programming_help')
                 : message.channel
       callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
