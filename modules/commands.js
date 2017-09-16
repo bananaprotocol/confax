@@ -1,30 +1,31 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 const bot = Confax.bot
 const config = Confax.config
 const commands = Confax.commands
 
 bot.on('message', (message) => {
-  var cmd
-  var cmdType
+  let cmd
+  let cmdType
   if (message.author.id === config.botID) {
-
+  //  This is the bot speaking
   } else if (message.author.bot) {
-
+  //  This is the bot speaking
   } else {
-    for (var loopCmdType in commands) {
-      for (var loopCmd in commands[loopCmdType]) {
-        if (message.content.toLowerCase().lastIndexOf(config.prefix + loopCmd, 0) === 0 || message.content.toLowerCase().lastIndexOf(loopCmd + config.suffix, 0) === 0) {
+    //  set the message content to lower case here. No need to check anymore and can accept any case input. ;)
+    message.content = message.content.toLowerCase()
+    for (let loopCmdType in commands) {
+      for (let loopCmd in commands[loopCmdType]) {
+        if (message.content.lastIndexOf(config.prefix + loopCmd, 0) === 0 || message.content.lastIndexOf(loopCmd + config.suffix, 0) === 0) {
           message.content = message.content.replace(config.prefix + loopCmd, '')
           message.content = message.content.replace(loopCmd + config.suffix, '')
           cmd = loopCmd
           cmdType = loopCmdType
           break
         } else {
-          var aliases = commands[loopCmdType][loopCmd].aliases
-          for (var i = 0; i < aliases.length; i++) {
-            var alias = aliases[i]
-            if (message.content.toLowerCase().lastIndexOf(config.prefix + alias, 0) === 0 || message.content.toLowerCase().lastIndexOf(alias + config.suffix, 0) === 0) {
+          let aliases = commands[loopCmdType][loopCmd].aliases
+          for (let i = 0; i < aliases.length; i++) {
+            let alias = aliases[i]
+            if (message.content.lastIndexOf(config.prefix + alias, 0) === 0 || message.content.lastIndexOf(alias + config.suffix, 0) === 0) {
               message.content = message.content.replace(config.prefix + alias, '')
               message.content = message.content.replace(alias + config.suffix, '')
               cmd = loopCmd
@@ -43,10 +44,10 @@ bot.on('message', (message) => {
           return
         }
       } else if (cmdType === 'moderator') {
-        var accepted = ['Bot Commander', 'Moderator']
-        var isMod
-        var roles = message.guild.member(message.author.id).roles.array()
-        for (var i = 0; i < roles.length; i++) {
+        let accepted = ['Bot Commander', 'Moderator']
+        let isMod
+        let roles = message.guild.member(message.author.id).roles.array()
+        for (let i = 0; i < roles.length; i++) {
           if (accepted.includes(roles[i].name)) {
             isMod = true
             break
