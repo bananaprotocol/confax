@@ -88,7 +88,7 @@ var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
-  if (message.content.length > 1900) return
+  if (message.content.length > 1975) return
   if (message.author.bot) {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
