@@ -42,7 +42,7 @@ Confax.registerCommand('unity', 'default', (message, bot) => {
     SearchAll(tableOfContents.children, name, message)
     if (!isFound) {
       message.channel.send('__**' + name + '**__' + notFound)
-      TellDevThisFailed(name, message)
+      //    TellDevThisFailed(name, message)
     }
   })
 }, ['Unity', 'unity3D', 'U3D', 'u3d', 'script', 'ref'], 'Look up Unity terms in the online script reference.', '<term>')
@@ -74,7 +74,7 @@ function CheckLink (address, name, message) {
     console.log('Status code:', response && response.statusCode)
     if (response.statusCode.toString() === '404') {
       message.channel.send('__**' + name + '**__' + notFound)
-      TellDevThisFailed(name, message)
+      //    TellDevThisFailed(name, message)
     } else {
       message.channel.send(address)
     }
