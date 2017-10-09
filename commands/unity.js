@@ -30,8 +30,8 @@ const notFound = ' was not found. Either it does not exist or it is mispelled.'
 var isFound = false
 
 Confax.registerCommand('unity', 'default', (message, bot) => {
-  let channel = message.guild.channels.find('name', 'vip_members')
-  if (channel === null || channel !== message.channel) { return }
+  //    let channel = message.guild.channels.find('name', 'vip_members')
+  //    if (channel === null || channel !== message.channel) { return }
   isFound = false
   let name = message.content.toString()
   //  Start the request to get the toc js object
