@@ -8,5 +8,4 @@ Confax.registerCommand('instructions', 'default', (message, bot) => {
     "3. Click save and generate link\n" +
     "4. Paste link here.\n" +
     "```" )
-  }
 }, ['paste', 'haste', 'pastebin', 'hastebin'], 'Simple Instuctions to post a link to your code', '<!haste>')
