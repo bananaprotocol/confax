@@ -1,7 +1,7 @@
 const Confax = require('../bot.js')
 
 Confax.registerCommand('instructions', 'default', (message, bot) => {
-    return("SIMPLE INSTRUCTIONS:\n"  +
+    return("\nSIMPLE INSTRUCTIONS:\n"  +
     "``` \n" +
     "1. Go to Hastenbin/Pastebin\n" +
     "2. Paste your FULL script\n" +
