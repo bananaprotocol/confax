@@ -37,10 +37,6 @@ You can keep your bot up to date by using
 
     git pull && npm install
 
-## Known Bugs
-
-- Help command formatting not correct.
-
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before getting started.
