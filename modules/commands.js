@@ -37,7 +37,7 @@ bot.on('message', (message) => {
         }
       }
     }
-    if(message.contentt.indexOf(' ') === 0)
+    if(message.content.indexOf(' ') === 0)
       hasArgs = true
     message.content = message.content.indexOf(' ') === 0 ? message.content.substring(1) : message.content
     if (cmd !== null) {
