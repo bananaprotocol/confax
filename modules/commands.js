@@ -4,6 +4,7 @@ const config = Confax.config
 const commands = Confax.commands
 
 bot.on('message', (message) => {
+  let hasArgs
   let cmd
   let cmdType
   if (message.author.id === config.botID) {
@@ -36,6 +37,8 @@ bot.on('message', (message) => {
         }
       }
     }
+    if(message.contentt.indexOf(' ') === 0)
+      hasArgs = true
     message.content = message.content.indexOf(' ') === 0 ? message.content.substring(1) : message.content
     if (cmd !== null) {
       if (cmdType === 'master') {
@@ -65,7 +68,8 @@ bot.on('message', (message) => {
         }
       }
       try {
-        var result = commands[cmdType][cmd].process(message, bot)
+        if(hasArgs || message.content.length > 0)
+          var result = commands[cmdType][cmd].process(message, bot)
       } catch (error) {
         console.log('An Error occured: ' + error.stack)
       }
