@@ -1,10 +1,10 @@
 {
-  "name": "confax",
+  "name": "GlassBot",
   "description": "Advanced and modular discord bot written in Discord.JS Edit",
   "version": "0.1.0",
-  "author": "bananaprotocol",
+  "author": "GlassToeStudio",
   "bugs": {
-    "url": "https://github.com/bananaprotocol/Confax/issues"
+    "url": "https://github.com/GlassToeStudio/Confax/issues"
   },
   "dependencies": {
     "discord.js": "^11.2.1",
@@ -22,12 +22,12 @@
   "engines": {
     "node": "8.9.0"
   },
-  "homepage": "https://github.com/bananaprotocol/Confax#readme",
+  "homepage": "https://github.com/GlassToeStudio/Confax#readme",
   "license": "MIT",
   "main": "bot.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bananaprotocol/Confax.git"
+    "url": "git+https://github.com/GlassToeStudio/Confax.git"
   },
   "scripts": {
     "start": "node bot.js"
