@@ -32,11 +32,15 @@ const allMoves = [
 const mojiMoves = [' 👊', ' ✋', ' ✌']
 
 Confax.registerCommand('roshambo', 'default', (message) => {
-  let userMove = message.content.toLowerCase()
-  userMove = allMoves.indexOf(userMove) >= 0 ? userMove : null
-  if (userMove == null) {
-    return '***' + message + '***' + ' is not a valid move.\n\n `Please use:  ` ' + allMoves.join(', ')
-  } else {
-    message.channel.send('Rock.. Paper.. Scissors.. SHOOT: ' + mojiMoves[Math.floor(Math.random() * 3)])
+  let channel = message.guild.channels.find('name', 'chill')
+  //  Command only works in #chill
+  if (channel != null && channel === message.channel) {
+    let userMove = message.content.toLowerCase()
+    userMove = allMoves.indexOf(userMove) >= 0 ? userMove : null
+    if (userMove == null) {
+      return '***' + message + '***' + ' is not a valid move.\n\n `Please use:  ` ' + allMoves.join(', ')
+    } else {
+      message.channel.send('Rock.. Paper.. Scissors.. SHOOT: ' + mojiMoves[Math.floor(Math.random() * 3)])
+    }
   }
-}, allMoves, 'Play Rock-Paper-Scissors! !roshambo rock', '[]')
+}, allMoves, 'Play Rock-Paper-Scissors! !roshambo rock', '<your_move>')

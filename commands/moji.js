@@ -71,6 +71,6 @@ const emojis = [
 ]
 
 Confax.registerCommand('moji', 'default', (message) => {
-  var index = Math.random(0, emojis.length - 1)
-  return emojis[index]
+  let index = Math.floor(Math.random() * (emojis.length)) // Math.random() returns a float from 0 - 1.
+  message.channel.send(emojis[index])
 }, ['emoji', 'emoticon', 'emote'], 'Get a random emote!', '[]')
