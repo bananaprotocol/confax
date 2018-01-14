@@ -88,13 +88,13 @@ var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
-  if (message.content.length > 1900) return
+  if (message.content.length > 1975) return
   if (message.author.bot) {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
       let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', 'programing_help') != null)
-                ? message.guild.channels.find('name', 'programing_help')
+      let chnl = (message.guild.channels.find('name', 'programming_help') != null)
+                ? message.guild.channels.find('name', 'programming_help')
                 : message.channel
       callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
