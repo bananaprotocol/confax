@@ -7,22 +7,24 @@
     "url": "https://github.com/GlassToeStudio/Confax/issues"
   },
   "dependencies": {
-    "discord.js": "^11.2.1",
+    "discord.js": "^11.3.0",
     "dotenv": "^4.0.0",
     "js-yaml": "^3.10.0",
-    "math": "0.0.3",
-    "math.js": "^1.1.40",
-    "mathjs": "^3.16.5",
+    "mathjs": "^3.20.1",
     "node-opus": "^0.2.7",
     "request": "^2.83.0",
-    "socket.io": "^0.9.19",
+    "socket.io": "^2.0.4",
     "tiny-emitter": "^2.0.2",
     "update": "^0.7.4"
   },
+<<<<<<< HEAD
   "engines": {
     "node": "8.9.0"
   },
   "homepage": "https://github.com/GlassToeStudio/Confax#readme",
+=======
+  "homepage": "https://github.com/bananaprotocol/Confax#readme",
+>>>>>>> 97b4961cd98bd8ad6bf968930a8421238a017296
   "license": "MIT",
   "main": "bot.js",
   "repository": {

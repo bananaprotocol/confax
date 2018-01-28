@@ -37,8 +37,7 @@ bot.on('message', (message) => {
         }
       }
     }
-    if(message.content.indexOf(' ') === 0)
-      hasArgs = true
+    if (message.content.indexOf(' ') === 0) { hasArgs = true }
     message.content = message.content.indexOf(' ') === 0 ? message.content.substring(1) : message.content
     if (cmd !== null) {
       if (cmdType === 'master') {
@@ -68,8 +67,7 @@ bot.on('message', (message) => {
         }
       }
       try {
-        if(hasArgs || !message.content.length > 0)
-          var result = commands[cmdType][cmd].process(message, bot)
+        if (hasArgs || !message.content.length > 0) { var result = commands[cmdType][cmd].process(message, bot) }
       } catch (error) {
         console.log('An Error occured: ' + error.stack)
       }

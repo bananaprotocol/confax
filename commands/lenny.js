@@ -9,4 +9,3 @@ Confax.registerCommand('lenny', 'default', (message, bot) => {
     message.channel.send('( ͡° ͜ʖ ͡°)')
   }
 }, ['lenny'], 'its lenny ffs', '<!lenny>')
-
