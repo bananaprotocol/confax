@@ -38,6 +38,7 @@ module.exports = {
   'CZK': 'Kč',
   'DJF': 'Fdj',
   'DKK': 'kr',
+  'DOGE': 'Ð',
   'DOP': 'RD$',
   'DZD': 'دج',
   'EEK': 'kr',

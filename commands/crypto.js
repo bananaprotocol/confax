@@ -8,7 +8,7 @@
     ------------------------------------------------------------------------
     Return current price of a given crypto-currency in $US
 
-    The following command is using a free API from https://www.cryptocompare.com/ (CC BY-NC 3.0)
+    The following command is uisng a free API from https://www.cryptocompare.com/ (CC BY-NC 3.0)
     The API request can be found here: https://www.cryptocompare.com/api#-api-data-price-
 
     Usage:
@@ -49,7 +49,7 @@ function CrytpoComparePrice (fsym, tsyms, message) {
   request(cryptoComparePrice, function (error, response, body) {
     if (error) message.channel.send('Not a valid crypto currency, try BTC or ETH.')
     let embed = new Discord.RichEmbed().setTitle('cryptocompare.com')
-      .setDescription('```MarkDown\n#_Current exchange rates for 1 ' + fsym + '```')
+      .setDescription('```MarkDown\n#_Exchange rates for 1 ' + fsym + '```')
       .setURL('https://www.cryptocompare.com/api/')
       .setColor(586901)
       .setTimestamp()
@@ -58,8 +58,8 @@ function CrytpoComparePrice (fsym, tsyms, message) {
       for (let sym = 0; sym < tsyms.length; sym++) {
         let price = responseBody[tsyms[sym]]
         if (price === undefined) price = '¯\\_(ツ)_/¯' // Not valid crypto currency ¯\_(ツ)_/¯
-        else if (getSymbolFromCurrency(tsyms[sym]) !== undefined) price = ' ' + getSymbolFromCurrency(tsyms[sym]) + ' ' + parseFloat(price).toLocaleString()
-        else price = parseFloat(price).toLocaleString()
+        else if (getSymbolFromCurrency(tsyms[sym]) !== undefined) price = ' ' + getSymbolFromCurrency(tsyms[sym]) + ' ' + parseFloat(price).toLocaleString('en-IN', { maximumSignificantDigits: 10, minimumFractionDigits: 2 })
+        else price = parseFloat(price).toLocaleString('en-IN', { maximumSignificantDigits: 10, minimumFractionDigits: 2 })
         embed.addField('*  ' + tsyms[sym], '```js\n' + price + '```', true)
       }
       message.channel.send('**' + fsym + '**', {embed})
