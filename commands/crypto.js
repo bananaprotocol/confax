@@ -31,7 +31,7 @@ const currencySymbolMap = require('../map')
 GlassBot.registerCommand('crypto', 'default', (message, bot) => {
   //  Init variables
   let symbols = (message.content.split(' ')).map(function (x) { return x.toUpperCase() })
-  let fromSymbol = (symbols.shift())
+  let fromSymbol = (symbols.shift()).replace('`', '')
   if (symbols.length === 0) symbols.push('USD')
   CrytpoComparePrice(fromSymbol, symbols, message)
 }, ['crypt', 'price'], 'Get latest crypto exchange price in USD, or in other cryptos.', '<crypto-currency ticker> (crypto-currency ticker )')
