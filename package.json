@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "discord.js": "^11.3.0",
-    "dotenv": "^4.0.0",
+    "dotenv": "^5.0.0",
     "js-yaml": "^3.10.0",
     "mathjs": "^3.20.1",
     "node-opus": "^0.2.7",
