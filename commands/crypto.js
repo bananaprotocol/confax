@@ -23,10 +23,10 @@
     ------------------------------------------------------------------------
 
 */
-const GlassBot = require('../bot.js')
+const Confax = require('../bot.js')
 const request = require('request')
 const Discord = require('discord.js')
-const currencySymbolMap = require('../map')
+const currencySymbolMap = require('../map.js')
 
 GlassBot.registerCommand('crypto', 'default', (message, bot) => {
   //  Init variables
@@ -34,7 +34,7 @@ GlassBot.registerCommand('crypto', 'default', (message, bot) => {
   let fromSymbol = (symbols.shift()).replace(/`/ig, '')
   if (symbols.length === 0) symbols.push('USD')
   CrytpoComparePrice(fromSymbol, symbols, message)
-}, ['crypt', 'price'], 'Get latest crypto exchange price in USD, or in other cryptos.', '<crypto-currency ticker> (crypto-currency ticker )')
+}, ['crypt', 'price'], 'Get latest crypto exchange price in USD, or in other cryptos.', '<crypto-currency ticker>')
 
 /**
  * Return the exchange rate for one crypto currency in terms of other currencies.

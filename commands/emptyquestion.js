@@ -10,4 +10,4 @@ Confax.registerCommand('emptyquestion', 'default', (message, bot) => {
          'using the transform from the object, but it doesn\'t move! I know the code is being run because I\'m logging. ' +
          'Here is the code: <your super isolated code>```' +
          '**3.** You should ask, and then wait.')
-}, ['question', 'uselessquestion', 'moreinfo'], 'Instructions on how to properly ask questions (in order to receive as much info as possible)', '<!moreinfo>')
+}, ['question', 'uselessquestion', 'moreinfo'], 'Instructions on how to properly ask questions (in order to receive as much info as possible)', '[]')
