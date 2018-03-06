@@ -28,12 +28,12 @@ const request = require('request')
 const Discord = require('discord.js')
 const currencySymbolMap = require('../map.js')
 
-GlassBot.registerCommand('crypto', 'default', (message, bot) => {
+Confax.registerCommand('crypto', 'default', (message, bot) => {
   //  Init variables
   let symbols = (message.content.split(' ')).map(function (x) { return x.toUpperCase() })
   let fromSymbol = (symbols.shift()).replace(/`/ig, '')
   if (symbols.length === 0) symbols.push('USD')
-  CrytpoComparePrice(fromSymbol, symbols, message)
+  CryptoComparePrice(fromSymbol, symbols, message)
 }, ['crypt', 'price'], 'Get latest crypto exchange price in USD, or in other cryptos.', '<crypto-currency ticker>')
 
 /**
@@ -42,7 +42,7 @@ GlassBot.registerCommand('crypto', 'default', (message, bot) => {
  * @param  {string[]} tsyms
  * @param  {string} messge
  */
-function CrytpoComparePrice (fsym, tsyms, message) {
+function CryptoComparePrice (fsym, tsyms, message) {
   //  The API call string.
   let cryptoComparePrice = 'https://min-api.cryptocompare.com/data/price?fsym=' + fsym + '&tsyms=' + tsyms
 
