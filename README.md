@@ -4,15 +4,13 @@
 
 Advanced and modular discord bot written in Discord.js
 
-## Installing / Getting started
+## Getting started
 
-### Hosted by me
+You can invite Confax to your Server by using this [Discord Invite Link](https://discordapp.com/oauth2/authorize?client_id=319545839951544320&permissions=519174&scope=bot)
 
-Invite to your Server using [Discord Invite Link](https://discordapp.com/oauth2/authorize?client_id=319545839951544320&scope=bot)
+If you want to host it yourself, read the [Installation Guide](#installation)
 
-The bot should be online most of the time, but can't guarantee it.
-
-### Self hosted
+## Installation
 
 Make sure, that you have git, node and npm installed
 
