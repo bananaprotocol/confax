@@ -12,7 +12,7 @@ If you want to host it yourself, read the [Installation Guide](#installation)
 
 ## Installation
 
-Make sure, that you have git, node and npm installed
+Make sure, that you have `git`, `node` and `npm` installed
 
 Clone the repo using
 
