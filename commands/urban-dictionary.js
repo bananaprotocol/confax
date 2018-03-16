@@ -31,12 +31,12 @@ function get (url, callback) {
       rawData += buffer
     })
     result.on('end', function () {
-      // try {
+      try {
         callback(null, JSON.parse(rawData))
-      // } catch (error) {
-      //   callback(new Error('Failed to parse retrieved Urban Dictionary JSON.'))
-      //   console.log('rawData is: ' + rawData)
-      // }
+      } catch (error) {
+        callback(new Error('Failed to parse retrieved Urban Dictionary JSON.'))
+        console.log('rawData is: ' + rawData)
+      }
     })
   })
 }
