@@ -3,7 +3,7 @@ const Confax = require('../bot.js')
 
 Confax.registerCommand('cat', 'default', (message) => {
   let options = {
-    host: 'random.cat',
+    host: 'aws.random.cat',
     path: '/meow'
   }
 
