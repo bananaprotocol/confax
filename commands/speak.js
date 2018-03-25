@@ -17,5 +17,6 @@ Confax.registerCommand('speak', 'moderator', (message, bot) => {
   } else { myMention = '' }
 
   if (deleteMessage) message.delete()
+  if (msg === "") return "The message can't be empty!"
   channel.send(myMention + msg)
 }, ['talk', 'say'], 'Make the bot speak to a given channel', '[to channel] <to member> [message]')
