@@ -14,9 +14,10 @@ Confax.registerCommand('speak', 'moderator', (message, bot) => {
 
   if (myMention !== undefined) {
     msg = msg.replace(myMention.id, '').replace('<@>', '')
+    msg = msg.replace('<@!>', '') // If user has a nickname
   } else { myMention = '' }
 
   if (deleteMessage) message.delete()
-  if (msg === "") return "The message can't be empty!"
+  if (msg === '') return "The message can't be empty!"
   channel.send(myMention + msg)
 }, ['talk', 'say'], 'Make the bot speak to a given channel', '[to channel] <to member> [message]')
