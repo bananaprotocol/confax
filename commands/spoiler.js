@@ -11,4 +11,5 @@ Confax.registerCommand('spoiler', 'default', (message, bot) => {
   if (message.content === '') return "Do you want me not to spoil silence? :thinking: The message can't be empty!"
   spoilerMsg.spoilerMsgAuthor = message.author.tag
   spoilerMsg.spoilerMsgContent = message.content
+  message.reply("oof, lets not spoil this to everyone ;)")
 }, ['hidemsg', 'spoileralert'], 'Hide specific message content from all users. Message can be read with !readspoiler command', '[message]')
