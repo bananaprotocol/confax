@@ -2,9 +2,9 @@ const Confax = require('../bot.js')
 
 module.exports = 
   spoilerMsg = {
-    spoilerMsgContent: "*PSST* long form of bike is bikael",
-    spoilerMsgAuthor: "Yours truly",
-    spoilerMsgAttachment: "none"
+    spoilerMsgContent: '*PSST* long form of bike is bikael',
+    spoilerMsgAuthor: 'Yours truly',
+    spoilerMsgAttachment: 'none'
 }
 
 Confax.registerCommand('spoiler', 'default', (message, bot) => {
