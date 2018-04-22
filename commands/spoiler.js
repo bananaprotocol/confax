@@ -8,7 +8,6 @@ module.exports =
 }
 
 Confax.registerCommand('spoiler', 'default', (message, bot) => {
-  message.delete()
   if (message.content !== '' || message.attachments.size > 0){
     spoilerMsg.spoilerMsgAuthor = message.author.tag
     spoilerMsg.spoilerMsgContent = message.content
@@ -22,6 +21,21 @@ Confax.registerCommand('spoiler', 'default', (message, bot) => {
     message.reply('oof, lets not spoil this to everyone ;)')
   }
   else {
+    message.delete()
     return "Do you want me not to spoil silence? :thinking: The message can't be empty!"
   }
+  SendMessageToAuthor(message.author)
+  setTimeout(() => message.delete(), 1000)
 }, ['hidemsg', 'spoileralert'], 'Hide specific message content from all users. Message can be read with !readspoiler command', '[message]')
+
+
+function SendMessageToAuthor(author){
+  let combinedMessage = '**Here is the last spoiler u saved:** ' + spoilerMsg.spoilerMsgContent
+  if(spoilerMsg.spoilerMsgAttachment !== 'none'){
+    combinedMessage += '\n**Attachment:** ' + spoilerMsg.spoilerMsgAttachment
+  }
+  author.send(combinedMessage)
+    .catch((error) => {
+      message.reply('Please enable DMs to receive the message!')
+    })
+}
