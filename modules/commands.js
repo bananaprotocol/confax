@@ -5,18 +5,18 @@ const commands = Confax.commands
 
 bot.on('message', (message) => {
   let hasArgs
-  let cmd
-  let cmdType
+  let cmd = null
+  let cmdType = null
   if (message.author.id === config.botID) {
   //  This is the bot speaking
   } else if (message.author.bot) {
   //  This is the bot speaking
-  } else {
+  } else if (message.content.lastIndexOf(config.prefix, 0) === 0) {
     let commandUsed = message.content.split(' ')[0].replace('!', '')
     let testCommand = '!' + commandUsed.toLowerCase()
     for (let loopCmdType in commands) {
       for (let loopCmd in commands[loopCmdType]) {
-        if (testCommand.lastIndexOf(config.prefix + loopCmd, 0) === 0 || testCommand.lastIndexOf(loopCmd + config.suffix, 0) === 0) {
+        if (testCommand.valueOf() === (config.prefix + loopCmd).valueOf()) {
           message.content = message.content.replace(config.prefix + commandUsed, '')
           message.content = message.content.replace(commandUsed + config.suffix, '')
           cmd = loopCmd
@@ -26,7 +26,7 @@ bot.on('message', (message) => {
           let aliases = commands[loopCmdType][loopCmd].aliases
           for (let i = 0; i < aliases.length; i++) {
             let alias = aliases[i]
-            if (testCommand.lastIndexOf(config.prefix + alias, 0) === 0 || testCommand.lastIndexOf(alias + config.suffix, 0) === 0) {
+            if (testCommand.valueOf() === (config.prefix + alias, 0).valueOf() || testCommand.lastIndexOf(alias + config.suffix, 0) === 0) {
               message.content = message.content.replace(config.prefix + commandUsed, '')
               message.content = message.content.replace(commandUsed + config.suffix, '')
               cmd = loopCmd
@@ -67,7 +67,9 @@ bot.on('message', (message) => {
         }
       }
       try {
-        if (hasArgs || !message.content.length > 0) { var result = commands[cmdType][cmd].process(message, bot) }
+        if (hasArgs || !message.content.length > 0) {
+          var result = commands[cmdType][cmd].process(message, bot)
+        }
       } catch (error) {
         console.log('An Error occured: ' + error.stack)
       }
