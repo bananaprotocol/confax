@@ -201,7 +201,7 @@ function PostNewMessage (message, newMessage) {
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
   if (managePerms) {
-    // message.delete()
+    message.delete()
   } else {
     message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
   }
