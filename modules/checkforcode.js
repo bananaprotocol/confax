@@ -88,7 +88,7 @@ var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
-  if (message.content.length > 1975) return
+  if (message.content.length > 1950) return
   if (message.author.bot) {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
@@ -107,18 +107,18 @@ bot.on('message', message => {
  * Loop through each line in message and check for
  * code-like characters. If code formatting is found
  * return, else keep checking.
- * @param  {string[]} lines
  * @param  {string[]} message
  */
 function ParseMessage (message) {
   InitVariables()
   let lines = message.content.split('\n')
   for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].replace('`', '').trim()
     if (lines[i].search(formatBlock) >= 0) {
       isFormatted = true
       return
     } else {
-      FindCodeElements(i, lines[i], lines)
+      FindCodeElements(i, line, lines)
     }
   }
   CheckMessage(lines, message)
@@ -127,7 +127,7 @@ function ParseMessage (message) {
 /**
  * Check if this is unformatted code, if so Create New Message
  * @param  {string[]} lines
- * @param  {string[]} message
+ * @param  {string} message
  */
 function CheckMessage (lines, message) {
   if (IsBadCode() && !isFormatted) {
@@ -177,7 +177,6 @@ function CreateNewMessage (lines, message) {
  * @param  {string} newMessage
  */
 function PostNewMessage (message, newMessage) {
-  // TODO: Add channel name to config.
   let channel = message.guild.channels.find('name', 'programming_help')
   let isHelp = message.channel.name.indexOf('help') > 0
     // Move to new channel
@@ -197,12 +196,12 @@ function PostNewMessage (message, newMessage) {
 
 /**
  * Deletes the old unformatted message if bot has permission
- * @param  {string[]} message
+ * @param  {string} message
  */
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
   if (managePerms) {
-    message.delete()
+    // message.delete()
   } else {
     message.channel.send('**`Tell the server\'s owner to grant me permission to delete your old message, thank\'s`** :wink:')
   }
@@ -228,7 +227,7 @@ function FormatFirstLine (firstLine) {
  * @param  {string} lastLine
  */
 function FormatLastLine (lastLine) {
-  return lastLine + '\n' + formatBlock
+  return lastLine.replace('`', '') + '\n' + formatBlock
 }
 
 /**
