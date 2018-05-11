@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('cmdhelp', 'default', (message, bot) => {
@@ -19,7 +18,7 @@ Confax.registerCommand('cmdhelp', 'default', (message, bot) => {
   }
 
   if (realCmd) {
-    helpInfo += 'Info on `' + '`:\n```' +
+    helpInfo += 'Info on **' + realCmd + '**: ```' +
     '\nCommand: ' + realCmd
     helpInfo += '\nCommand Type: ' + cmdType
 
