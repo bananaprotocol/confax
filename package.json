@@ -4,7 +4,7 @@
   "version": "0.11.0",
   "author": "bananaprotocol",
   "bugs": {
-    "url": "https://github.com/bananaprotocol/Confax/issues"
+    "url": "https://github.com/bananaprotocol/confax/issues"
   },
   "dependencies": {
     "discord.js": "^11.3.2",
@@ -20,12 +20,12 @@
   "devDependencies": {
     "standard": "^11.0.1"
   },
-  "homepage": "https://github.com/bananaprotocol/Confax#readme",
+  "homepage": "https://github.com/bananaprotocol/confax#readme",
   "license": "MIT",
   "main": "bot.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bananaprotocol/Confax.git"
+    "url": "git+https://github.com/bananaprotocol/confax.git"
   },
   "scripts": {
     "start": "node bot.js"
