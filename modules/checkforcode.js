@@ -227,7 +227,7 @@ function FormatFirstLine (firstLine) {
  * @param  {string} lastLine
  */
 function FormatLastLine (lastLine) {
-  return lastLine.replace('`', '') + '\n' + formatBlock
+  return lastLine.replace(/`/g, '') + '\n' + formatBlock
 }
 
 /**
