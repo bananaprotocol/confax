@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    20 July, 2017
+    26 May, 2018
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -38,7 +38,6 @@
 
     This is not code so it is not in the code block.
 
-    ```csharp
     [System.Serializable]
     using UnityEngine;
 
@@ -59,7 +58,6 @@
             this.myOtherFLoat = _myOtherFLoat;
         }
     }
-    ```
 
     This is not code so it is not in the code block.
 
@@ -69,9 +67,9 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
-const GlassBot = require('../bot.js')
-const bot = GlassBot.bot
-const config = GlassBot.config
+const Confax = require('../bot.js')
+const bot = Confax.bot
+const config = Confax.config
 
 // Salt to taste
 const codeElements = config.codeElements
@@ -113,15 +111,17 @@ function ParseMessage (message) {
   InitVariables()
   let lines = message.content.split('\n')
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i].replace('`', '').trim()
     if (lines[i].search(formatBlock) >= 0) {
       isFormatted = true
       return
     } else {
+      let line = lines[i].replace(/`/g, '')
+      lines[i] = line
+      line = line.trim()
       FindCodeElements(i, line, lines)
     }
   }
-  CheckMessage(lines, message)
+  if (!isFormatted) CheckMessage(lines, message)
 }
 
 /**
@@ -145,9 +145,9 @@ function CheckMessage (lines, message) {
 function FindCodeElements (index, line, lines) {
   let lineLength = line.length - 1
   for (let i = 0; i < codeElements.length; i++) {
-    if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf()) {
+    if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf() || line.includes('public') || line.includes('class')) {
       if (!hasFirstLine) {
-        lines[index] = FormatFirstLine(line)
+        lines[index] = FormatFirstLine(lines[index])
         return
       } else {
         lastLine = index
