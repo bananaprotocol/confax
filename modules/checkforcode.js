@@ -1,6 +1,6 @@
 /*  checkforcode.js by David Jerome @GlassToeStudio - GlassToeStudio@gmail.com
 
-    20 July, 2017
+    26 May, 2018
     https://github.com/GlassToeStudio
     http://glasstoestudio.weebly.com/
     https://twitter.com/GlassToeStudio
@@ -38,7 +38,6 @@
 
     This is not code so it is not in the code block.
 
-    ```csharp
     [System.Serializable]
     using UnityEngine;
 
@@ -59,7 +58,6 @@
             this.myOtherFLoat = _myOtherFLoat;
         }
     }
-    ```
 
     This is not code so it is not in the code block.
 
@@ -69,9 +67,9 @@
     https://support.discordapp.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-?page=4
 */
 
-const GlassBot = require('../bot.js')
-const bot = GlassBot.bot
-const config = GlassBot.config
+const Confax = require('../bot.js')
+const bot = Confax.bot
+const config = Confax.config
 
 // Salt to taste
 const codeElements = config.codeElements
@@ -88,7 +86,7 @@ var lastLine = 0
 
 // Lets begin
 bot.on('message', message => {
-  if (message.content.length > 1975) return
+  if (message.content.length > 1950) return
   if (message.author.bot) {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
@@ -107,7 +105,6 @@ bot.on('message', message => {
  * Loop through each line in message and check for
  * code-like characters. If code formatting is found
  * return, else keep checking.
- * @param  {string[]} lines
  * @param  {string[]} message
  */
 function ParseMessage (message) {
@@ -118,16 +115,19 @@ function ParseMessage (message) {
       isFormatted = true
       return
     } else {
-      FindCodeElements(i, lines[i], lines)
+      let line = lines[i].replace(/`/g, '')
+      lines[i] = line
+      line = line.trim()
+      FindCodeElements(i, line, lines)
     }
   }
-  CheckMessage(lines, message)
+  if (!isFormatted) CheckMessage(lines, message)
 }
 
 /**
  * Check if this is unformatted code, if so Create New Message
  * @param  {string[]} lines
- * @param  {string[]} message
+ * @param  {string} message
  */
 function CheckMessage (lines, message) {
   if (IsBadCode() && !isFormatted) {
@@ -145,9 +145,9 @@ function CheckMessage (lines, message) {
 function FindCodeElements (index, line, lines) {
   let lineLength = line.length - 1
   for (let i = 0; i < codeElements.length; i++) {
-    if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf()) {
+    if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf() || line.includes('public') || line.includes('class')) {
       if (!hasFirstLine) {
-        lines[index] = FormatFirstLine(line)
+        lines[index] = FormatFirstLine(lines[index])
         return
       } else {
         lastLine = index
@@ -177,7 +177,6 @@ function CreateNewMessage (lines, message) {
  * @param  {string} newMessage
  */
 function PostNewMessage (message, newMessage) {
-  // TODO: Add channel name to config.
   let channel = message.guild.channels.find('name', 'programming_help')
   let isHelp = message.channel.name.indexOf('help') > 0
     // Move to new channel
@@ -197,7 +196,7 @@ function PostNewMessage (message, newMessage) {
 
 /**
  * Deletes the old unformatted message if bot has permission
- * @param  {string[]} message
+ * @param  {string} message
  */
 function DeleteOldMessage (message) {
   let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
@@ -228,7 +227,7 @@ function FormatFirstLine (firstLine) {
  * @param  {string} lastLine
  */
 function FormatLastLine (lastLine) {
-  return lastLine + '\n' + formatBlock
+  return lastLine.replace(/`/g, '') + '\n' + formatBlock
 }
 
 /**
