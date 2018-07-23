@@ -133,7 +133,7 @@ function term (word, callback) {
       return
     }
 
-    if (!result || result.result_type !== 'exact') {
+    if (!result) {
       callback(new Error(word + ' is undefined.'))
       return
     }
