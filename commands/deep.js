@@ -1,12 +1,11 @@
 /*
-	!deep or !funny command by Klendi Gocci :)
+    !deep or !funny command by Klendi Gocci :)
 */
 
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
-const deep_quotes = [
-  "How can mirrors be real if our eyes aren\'t real?",
+const deepQuotes = [
+  "How can mirrors be real if our eyes aren't real?",
   "It's true that we don't know what we've got until we lose it, but it's also true that we don't know what we've been missing until it arrives.",
   'Tomorrow is the first day of the rest of your life',
   "The ballparks have gotten too crowded. That's why nobody goes to see the game anymore.\"",
@@ -72,6 +71,6 @@ const deep_quotes = [
 ]
 
 Confax.registerCommand('deep', 'default', (message) => {
-  let index = Math.floor(Math.random() * (deep_quotes.length)) // Math.random() returns a float from 0 - 1.
-  message.channel.send(deep_quotes[index])
+  let index = Math.floor(Math.random() * (deepQuotes.length))
+  message.channel.send(deepQuotes[index])
 }, ['deep', 'funny', 'quote'], 'Get a random funny quote!', '[]')
