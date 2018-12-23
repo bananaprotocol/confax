@@ -8,7 +8,8 @@
   "codeLang": "csharp",
   "selfDestructIn": 5,
   "formatBlock": "```",
-  "autoPost": true,
-  "emojiName": "FormatMe"
+  "autoPost": false,
+  "emojiName": "FormatMe",
+  "backupEmojiName": "💻"
 }
 

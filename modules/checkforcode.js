@@ -78,7 +78,9 @@ const repostThreshold = config.repostThreshold
 const selfDestructIn = config.selfDestructIn
 const formatBlock = config.formatBlock
 const autoPost = config.autoPost
-const emojiName = config.emojiName
+var emojiName = config.emojiName
+const backupEmojiName = config.backupEmojiName
+const timeToReact = 5000
 
 // Messages
 const hereIsYourCode = ' **Here is your formatted code, I hope I did this right.** '
@@ -90,6 +92,9 @@ var isFormatted = false
 var totalLinesOfCode = 0
 var hasFirstLine = false
 var lastLine = 0
+var firstReply
+var reactEmoji
+
 
 // Lets begin
 bot.on('message', message => {
@@ -101,7 +106,7 @@ bot.on('message', message => {
       let chnl = (message.guild.channels.find('name', helpChannelname) != null)
         ? message.guild.channels.find('name', helpChannelname)
         : message.channel
-      callNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
+      CallNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
     }
     return
   }
@@ -140,18 +145,28 @@ function CheckMessage(lines, message) {
   if (IsBadCode() && !isFormatted) {
     lines[lastLine] = FormatLastLine(lines[lastLine])
     if (!autoPost) { // Either listen for a react or just post the new message
-      message.react('525316924389851137')
-        .then(() => message.react('⬅')) // ⬅ ➡
-        .then(() => message.react('🇫'))
-        .then(() => message.react('🇴'))
-        .then(() => message.react('🇷'))
-        .then(() => message.react('🇲'))
-        .then(() => message.react('🇦'))
-        .then(() => message.react('🇹'))
-        .then(() => message.react('❓'))
-        .catch(() =>
-          console.error('One of the emojis failed to react. Or message formatted before all reacts completed'))
-      ListenForReacts(lines, message)
+      reactEmoji = message.guild.emojis.find(emoji => emoji.name === emojiName)
+      try {
+        message.react(reactEmoji)
+      } catch (error) {
+        reactEmoji = backupEmojiName
+        emojiName = reactEmoji
+        message.react(reactEmoji)
+      }
+      message.reply(' ⬆ *If this is a block of code, please click the emoji on the message to auto format it, thanks.*')
+        .then(msg => {
+          firstReply = msg
+          msg.delete(timeToReact)
+            .catch(() => {
+              console.log("Message is already deleted")
+            })
+        })
+        .then(() => {
+          ListenForReacts(lines, message)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
     else {
       CreateNewMessage(lines, message)
@@ -190,15 +205,19 @@ function ListenForReacts(lines, message) {
   const filter = (reaction, user) => {
     return [emojiName].includes(reaction.emoji.name) && reaction.count > 1;
   }
-  message.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+  message.awaitReactions(filter, { max: 1, time: timeToReact, errors: ['time'] })
     .then(collected => {
       const reaction = collected.first()
       if (reaction.emoji.name === emojiName) {
+        firstReply.delete()
+          .catch(() => {
+            console.log("Message is already deleted")
+          })
         CreateNewMessage(lines, message)
       }
     })
-    .catch(collected => {
-      console.log(`After a minute, ${collected.size} reacted.`);
+    .catch(() => {
+      message.clearReactions()
     })
 }
 
@@ -288,6 +307,8 @@ function InitVariables() {
   hasFirstLine = false
   lastLine = 0
   totalLinesOfCode = 0
+  firstReply = undefined
+  reactEmoji = ''
 }
 
 /**
@@ -311,7 +332,7 @@ function EditBotMessage(usr, message, channel, t) {
  * @param  {string} chnl
  * @param  {string} usr
  */
-function callNTimes(n, time, fn, msg, chnl, usr) {
+function CallNTimes(n, time, fn, msg, chnl, usr) {
   function callFn() {
     if (--n < 1) {
       usr = null
