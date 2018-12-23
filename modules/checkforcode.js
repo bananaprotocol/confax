@@ -80,7 +80,7 @@ const formatBlock = config.formatBlock
 const autoPost = config.autoPost
 var emojiName = config.emojiName
 const backupEmojiName = config.backupEmojiName
-const timeToReact = 5000
+const timeToReact = 60000 // could be in config
 
 // Messages
 const hereIsYourCode = ' **Here is your formatted code, I hope I did this right.** '
