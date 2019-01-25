@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  confax:
+    build: .
+    restart: always
+    environment:
+      - BOT_TOKEN=
