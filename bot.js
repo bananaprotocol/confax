@@ -5,8 +5,12 @@ const yaml = require('js-yaml')
 const config = require('./config')
 const http = require('http')
 const dotenv = require('dotenv')
+const endb = require('endb')
 dotenv.load()
-
+bot.prefixes = new Endb.Database({
+  fileName: 'prefixes',
+  path: './data'
+});
 exports.bot = bot
 exports.config = config
 exports.commands = {
