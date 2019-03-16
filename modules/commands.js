@@ -4,20 +4,24 @@ const config = Confax.config
 const commands = Confax.commands
 
 bot.on('message', (message) => {
+  bot.prefix = config.prefix;
+  let fetched = bot.prefixes.get(message.guild.id);
+  if (bot.prefixes.has(message.guild.id)) bot.prefix = fetched;
+  else bot.prefix = config.prefix;
   let cmd = null
   let cmdType = null
   if (message.author.id === config.botID) {
   //  This is the bot speaking
   } else if (message.author.bot) {
   //  This is the bot speaking
-  } else if (message.content.indexOf(config.prefix, 0) !== 0) {
+  } else if (message.content.indexOf(bot.prefix, 0) !== 0) {
   // This is not a command (no prefix)
   } else {
     let userCommand = message.content.split(' ')[0].replace('!', '').toLowerCase()
     for (let loopCmdType in commands) {
       for (let loopCmd in commands[loopCmdType]) {
         if (userCommand.valueOf() === (loopCmd).valueOf()) {
-          message.content = message.content.replace(config.prefix + userCommand, '')
+          message.content = message.content.replace(bot.prefix + userCommand, '')
           cmd = loopCmd
           cmdType = loopCmdType
           break
@@ -26,7 +30,7 @@ bot.on('message', (message) => {
           for (let i = 0; i < aliases.length; i++) {
             let alias = aliases[i]
             if (userCommand.valueOf() === alias.valueOf()) {
-              message.content = message.content.replace(config.prefix + userCommand, '')
+              message.content = message.content.replace(bot.prefix + userCommand, '')
               cmd = loopCmd
               cmdType = loopCmdType
               break
