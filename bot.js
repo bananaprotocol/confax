@@ -17,11 +17,7 @@ exports.commands = {
 }
 
 registerCommand = function (name, type, callback, aliases, description, usage) {
-  exports.commands[type][name] = {}
-  exports.commands[type][name]['aliases'] = aliases
-  exports.commands[type][name]['description'] = description
-  exports.commands[type][name]['usage'] = usage
-  exports.commands[type][name]['process'] = callback
+  exports.commands[type][name] = { aliases, description, usage, process: callback }
 }
 
 var loadScript = (path, reload) => {
