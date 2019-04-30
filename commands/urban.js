@@ -1,143 +1,49 @@
-/*  Copyright (c) 2018, Klendi Gocci.
-
-    17 March, 2018
-    https://github.com/klendi
-    https://twitter.com/klendigocci
-
-    ------------------------------------------------------------------------
-    Explains a word or a sentence from urban-dictionary API
-
-    The following command is uisng a free API from http://urbandictionary.com/
-    The API request can be found here: http://api.urbandictionary.com/v0/
-
-    Usage:
-      !urban <Any Word Or Sentence Here>
-
-    Example:
-      !urban gtg
-
-    GTG
-      ------ Definition ------
-      Internet shorthand for "got to go". Also it can mean "good to go" depending on contex
-      ------ Second Definition ------
-      got to go
-
-      ------ First Example ------
-      Good to go:
-      "Say im heading out. You coming?"
-      "gtg"
-
-      Got to go:
-      "Shoot, it's almost midnight gtg."
-      ------ Second Example ------
-      Rachel I gtg
-    ------------------------------------------------------------------------
-
-*/
+const Discord = require('discord.js')
 const Confax = require('../bot.js')
-const http = require('http')
+
+function checkLength (string, length) {
+  if (string.length > length) {
+    string = string.substring(0, length - 3) + '...'
+  }
+  return string
+}
 
 Confax.registerCommand('urban', 'default', (message) => {
-  let msg = message.content + ''
+  let options = {
+    host: 'api.urbandictionary.com',
+    path: '/v0/define?term=' + encodeURIComponent(message.content),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
 
-  term(msg, function (error, entries) {
-    if (error) {
-      console.error(error.message)
-      message.channel.send(error.message)
+  Confax.getHTTP(options).then(body => {
+    body = JSON.parse(body)
+    if (body.list.length < 1) {
+      message.reply('sorry, but there are no definitions for: **' + message.content + '**')
     } else {
-      if (entries.length === 1) {
-        message.channel.send({
-          embed: {
-            color: 9384170,
-            title: '**' + entries[0].word + '**',
-            fields: [{
-              name: 'Definition',
-              value: entries[0].definition
-            },
-            {
-              name: '**Example**',
-              value: entries[0].example
-            }
-            ]
-          }
-        })
-      } else if (entries.length > 1) {
-        message.channel.send({
-          embed: {
-            color: 9384170,
-            title: '**' + entries[0].word + '**',
-            fields: [{
-              name: 'Definition',
-              value: entries[0].definition
-            },
-            {
-              name: 'Second Definition',
-              value: entries[1].definition
-            },
-            {
-              name: '**First Example**',
-              value: entries[0].example
-            },
-            {
-              name: '**Second Example**',
-              value: entries[1].example
-            }
-            ]
-          }
-        })
+      let embed = new Discord.RichEmbed()
+      embed.setTitle('**' + body.list[0].word + '**')
+      embed.setURL(body.list[0].permalink)
+      let firstDefinition = body.list[0].definition
+      let firstExample = body.list[0].example
+      let secondDefinition
+      let secondExample
+
+      if (body.list.length > 1) {
+        secondDefinition = body.list[1].definition
+        secondExample = body.list[1].example
       }
-    }
-  })
-}, ['urban', 'urban', 'urban-dict'], 'Get urban dictionary word explanation!', '[]')
 
-function get (url, callback) {
-  http.get(url, function (result) {
-    const contentType = result.headers['content-type']
-    const statusCode = result.statusCode
-
-    let error
-    if (statusCode !== 200) {
-      error = new Error('Unable to send request for definitions. Status code: ' + statusCode)
-    } else if (contentType.indexOf('application/json') === -1) {
-      error = new Error("Content retrieved isn't JSON. Content type: '" + contentType + "'")
-    }
-
-    if (error) {
-      // Removes response data to clear up memory.
-      result.resume()
-      callback(error)
-      return
-    }
-
-    result.setEncoding('utf8')
-
-    let rawData = ''
-    result.on('data', function (buffer) {
-      rawData += buffer
-    })
-    result.on('end', function () {
-      try {
-        callback(null, JSON.parse(rawData))
-      } catch (error) {
-        callback(new Error('Failed to parse retrieved Urban Dictionary JSON.'))
-        console.log('rawData is: ' + rawData)
+      embed.addField('Definition', checkLength(firstDefinition, 1024))
+      if (body.list.length > 1) {
+        embed.addField('Second Definition', checkLength(secondDefinition, 1024))
       }
-    })
-  })
-}
-
-function term (word, callback) {
-  get('http://api.urbandictionary.com/v0/define?term=' + encodeURIComponent(word), function (error, result) {
-    if (error) {
-      callback(error)
-      return
+      embed.addField('**Example**', checkLength(firstExample, 1024))
+      if (body.list.length > 1) {
+        embed.addField('**Second Example**', checkLength(secondExample, 1024))
+      }
+      message.channel.send(embed)
     }
-
-    if (!result) {
-      callback(new Error(word + ' is undefined.'))
-      return
-    }
-
-    callback(null, result.list)
   })
-}
+}, ['urban-dictionary', 'urban-dict', 'ud'], 'Get a definition of a word from Urban Dictionary', '<word>')
