@@ -5,8 +5,10 @@ const yaml = require('js-yaml')
 const config = require('./config')
 const http = require('http')
 const dotenv = require('dotenv')
+const warnedUserIds = require('./warneduserids')
 dotenv.load()
 
+exports.warnedUserIds = warnedUserIds
 exports.bot = bot
 exports.config = config
 exports.commands = {
@@ -16,7 +18,7 @@ exports.commands = {
   dm: {}
 }
 
-registerCommand = function (name, type, callback, aliases, description, usage) {
+var registerCommand = function (name, type, callback, aliases, description, usage) {
   exports.commands[type][name] = { aliases, description, usage, process: callback }
 }
 

@@ -10,6 +10,9 @@
   "formatBlock": "```",
   "autoPost": false,
   "emojiName": "FormatMe",
-  "backupEmojiName": "💻"
+  "backupEmojiName": "💻",
+  "roleMuted": "muted_vampire",
+  "muteWarningMessage": "You used a naughty word: {bannedWord} don't do this!",
+  "bannedWords": []
 }
 
