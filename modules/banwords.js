@@ -33,7 +33,7 @@ function addMutedRole (message) {
     return
   }
 
-  message.member.addRole(Confax.config.roleMuted)
+  message.member.addRole(role)
 }
 
 function persistWarnedUsers () {
