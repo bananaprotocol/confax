@@ -1,16 +1,26 @@
 const Confax = require('../bot.js')
 const fs = require('fs')
 const bot = Confax.bot
-const bannedWords = Confax.config.bannedWords
+let bannedWords = Confax.config.bannedWords
 let warnedUserIds = Confax.warnedUserIds
 
 bot.on('message', (message) => {
   if (message.author.bot) return
 
   let lowercaseMessage = message.content.toLowerCase()
-
+  bannedWords = Confax.config.bannedWords
   for (var word in bannedWords) {
     if (lowercaseMessage.includes(bannedWords[word])) {
+      let apiCommands = ['addbannedword', 'abw', 'removebannedword', 'rbw']
+      if (apiCommands.some(x => { return lowercaseMessage.indexOf(x) >= 0 })) {
+        let roles = message.guild.member(message.author.id).roles.array()
+        let accepted = ['Bot Commander', 'Moderator']
+        for (let i = 0; i < roles.length; i++) {
+          if (accepted.includes(roles[i].name)) {
+            return
+          }
+        }
+      }
       message.reply(Confax.config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
       checkUser(message)
     }

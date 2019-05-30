@@ -12,7 +12,7 @@
   "emojiName": "FormatMe",
   "backupEmojiName": "💻",
   "roleMuted": "muted_vampire",
-  "muteWarningMessage": "You used a naughty word: {bannedWord} don't do this!",
+  "muteWarningMessage": "The word: `{bannedWord}` is not allowed in this server!",
   "bannedWords": []
 }
 
