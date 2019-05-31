@@ -6,3 +6,5 @@ services:
     restart: always
     environment:
       - BOT_TOKEN=
+    volumes:
+      './guilds:/usr/share/app/guilds'
