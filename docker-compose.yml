@@ -5,4 +5,6 @@ services:
     build: .
     restart: always
     environment:
-      - BOT_TOKEN=
+      - BOT_TOKEN=MzIwNjY3NDUyNTgzMzEzNDA4.XPFnfg.ICDPfmZahljiSR_8pul9V41R9uA
+    volumes:
+      - './guilds:/usr/share/app/guilds'
