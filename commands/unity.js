@@ -20,8 +20,6 @@
     ------------------------------------------------------------------------
 */
 const Confax = require('../bot.js')
-const config = Confax.config
-const DevID = config.GlassToeID
 const request = require('request')
 const docAddress = 'https://docs.unity3d.com/ScriptReference/'
 const TOCAddress = 'https://docs.unity3d.com/ScriptReference/docdata/toc.js'
@@ -30,6 +28,8 @@ const notFound = ' was not found. Either it does not exist or it is mispelled.'
 var isFound = false
 
 Confax.registerCommand('unity', 'default', (message, bot) => {
+  const config = Confax.getConfig(message.guild.id)
+  const DevID = config.GlassToeID
   //    let channel = message.guild.channels.find('name', 'vip_members')
   //    if (channel === null || channel !== message.channel) { return }
   isFound = false
