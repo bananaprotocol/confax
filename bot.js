@@ -22,7 +22,7 @@ var registerCommand = function (name, type, callback, aliases, description, usag
 }
 
 var loadScript = (path, reload) => {
-  // var req = require(path)
+  require(path)
   if (reload) {
     console.log('Reloaded script at ' + path)
   } else {
