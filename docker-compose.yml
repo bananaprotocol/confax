@@ -7,4 +7,4 @@ services:
     environment:
       - BOT_TOKEN=
     volumes:
-      './guilds:/usr/share/app/guilds'
+      - './guilds:/usr/share/app/guilds'
