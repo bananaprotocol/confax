@@ -1,14 +1,15 @@
 const Confax = require('../bot.js')
 const fs = require('fs')
 const bot = Confax.bot
-let bannedWords = Confax.config.bannedWords
 let warnedUserIds = Confax.warnedUserIds
 
 bot.on('message', (message) => {
+  const config = Confax.getConfig(message.guild.id)
+  const bannedWords = config.bannedWords
+
   if (message.author.bot) return
 
   let lowercaseMessage = message.content.toLowerCase()
-  bannedWords = Confax.config.bannedWords
   for (var word in bannedWords) {
     if (lowercaseMessage.includes(bannedWords[word])) {
       let apiCommands = ['addbannedword', 'abw', 'removebannedword', 'rbw']
@@ -21,7 +22,7 @@ bot.on('message', (message) => {
           }
         }
       }
-      message.reply(Confax.config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
+      message.reply(config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
       checkUser(message)
     }
   }
@@ -36,10 +37,10 @@ function checkUser (message) {
 }
 
 function addMutedRole (message) {
-  let role = message.guild.roles.find(role => role.name === Confax.config.roleMuted)
+  let role = message.guild.roles.find(role => role.name === config.roleMuted)
 
   if (!role) {
-    console.log('The role ' + Confax.config.roleMuted + ' does not exists on this server')
+    console.log('The role ' + config.roleMuted + ' does not exists on this server')
     return
   }
 
