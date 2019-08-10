@@ -23,20 +23,20 @@ bot.on('message', (message) => {
         }
       }
       message.reply(config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
-      checkUser(message)
+      checkUser(message, config)
     }
   }
 })
 
-function checkUser (message) {
+function checkUser (message, config) {
   if (warnedUserIds.includes(message.member.user.id)) {
-    addMutedRole(message)
+    addMutedRole(message, config)
   } else {
     warnedUserIds.push(message.member.user.id)
   }
 }
 
-function addMutedRole (message) {
+function addMutedRole (message, config) {
   let role = message.guild.roles.find(role => role.name === config.roleMuted)
 
   if (!role) {
