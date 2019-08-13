@@ -11,7 +11,7 @@ bot.on('message', (message) => {
 
   let lowercaseMessage = message.content.toLowerCase()
   for (var word in bannedWords) {
-    if (lowercaseMessage.includes(bannedWords[word])) {
+    if (lowercaseMessage.split(' ').indexOf(bannedWords[word]) > -1) {
       let apiCommands = ['addbannedword', 'abw', 'removebannedword', 'rbw']
       if (apiCommands.some(x => { return lowercaseMessage.indexOf(x) >= 0 })) {
         let roles = message.guild.member(message.author.id).roles.array()
