@@ -3,9 +3,8 @@ const bot = new Discord.Client()
 const fs = require('fs')
 const config = require('./config')
 const http = require('http')
-const dotenv = require('dotenv')
+const dotenv = require('dotenv').config()
 const warnedUserIds = require('./warneduserids')
-dotenv.load()
 
 exports.warnedUserIds = warnedUserIds
 exports.bot = bot
