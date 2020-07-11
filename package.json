@@ -9,7 +9,6 @@
   "dependencies": {
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "js-yaml": "^3.14.0",
     "mathjs": "^7.0.2",
     "request": "^2.88.2"
   },
