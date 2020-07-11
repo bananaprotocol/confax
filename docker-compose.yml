@@ -3,7 +3,8 @@ version: '3'
 services:
   confax:
     build: .
-    restart: always
+    container_name: confax
+    restart: unless-stopped
     environment:
       - BOT_TOKEN=
     volumes:
