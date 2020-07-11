@@ -7,14 +7,14 @@
     "url": "https://github.com/bananaprotocol/confax/issues"
   },
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "dotenv": "^8.1.0",
-    "js-yaml": "^3.13.1",
-    "mathjs": "^6.1.0",
-    "request": "^2.88.0"
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "js-yaml": "^3.14.0",
+    "mathjs": "^7.0.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "standard": "^14.0.2"
+    "standard": "^14.3.4"
   },
   "homepage": "https://github.com/bananaprotocol/confax#readme",
   "license": "MIT",
