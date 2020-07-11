@@ -18,7 +18,7 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
       let link = 'https://www.reddit.com' + index.permalink
       let text = index.selftext
       if (index.post_hint !== 'image') {
-        const textEmbed = new Discord.RichEmbed()
+        const textEmbed = new Discord.MessageEmbed()
           .setTitle(subRedditName)
           .setColor(9384170)
           .setDescription(`[${title}](${link})\n\n${text}`)
@@ -28,7 +28,7 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
       }
       let image = index.preview.images[0].source.url
       if (index.post_hint !== 'image') {
-        const textEmbed = new Discord.RichEmbed()
+        const textEmbed = new Discord.MessageEmbed()
           .setTitle(subRedditName)
           .setColor(9384170)
           .setDescription(`[${title}](${link})\n\n${text}`)
@@ -36,7 +36,7 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
 
         message.channel.send(textEmbed)
       }
-      const imageEmbed = new Discord.RichEmbed()
+      const imageEmbed = new Discord.MessageEmbed()
         .setTitle(subRedditName)
         .setImage(image)
         .setColor(9384170)

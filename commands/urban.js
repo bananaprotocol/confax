@@ -22,7 +22,7 @@ Confax.registerCommand('urban', 'default', (message) => {
     if (body.list.length < 1) {
       message.reply('sorry, but there are no definitions for: **' + message.content + '**')
     } else {
-      let embed = new Discord.RichEmbed()
+      let embed = new Discord.MessageEmbed()
       embed.setTitle('**' + body.list[0].word + '**')
       embed.setURL(body.list[0].permalink)
       let firstDefinition = body.list[0].definition
