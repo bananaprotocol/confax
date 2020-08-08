@@ -39,7 +39,13 @@ function changeConfig (guildID, callback) {
 
 function getConfig (guildID) {
   var path = './guilds/' + guildID + '.json'
-  var data = JSON.parse(fs.readFileSync(path))
+  var data
+  try {
+    data = JSON.parse(fs.readFileSync(path))
+  } catch (err) {
+    setConfig(guildID, config)
+    data = JSON.parse(fs.readFileSync(path))
+  }
   try { return data } catch (error) { console.log('An error occured: ' + error.stack) }
 }
 
