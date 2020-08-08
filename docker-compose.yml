@@ -3,8 +3,9 @@ version: '3'
 services:
   confax:
     build: .
-    restart: always
+    container_name: confax
+    restart: unless-stopped
     environment:
-      - BOT_TOKEN=MzIwNjY3NDUyNTgzMzEzNDA4.XPFnfg.ICDPfmZahljiSR_8pul9V41R9uA
+      - BOT_TOKEN=
     volumes:
       - './guilds:/usr/share/app/guilds'

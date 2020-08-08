@@ -1,16 +1,17 @@
 const Confax = require('../bot.js')
 const fs = require('fs')
 const bot = Confax.bot
-let bannedWords = Confax.config.bannedWords
 let warnedUserIds = Confax.warnedUserIds
 
 bot.on('message', (message) => {
+  const config = Confax.getConfig(message.guild.id)
+  const bannedWords = config.bannedWords
+
   if (message.author.bot) return
 
   let lowercaseMessage = message.content.toLowerCase()
-  bannedWords = Confax.config.bannedWords
   for (var word in bannedWords) {
-    if (lowercaseMessage.includes(bannedWords[word])) {
+    if (lowercaseMessage.split(' ').indexOf(bannedWords[word]) > -1) {
       let apiCommands = ['addbannedword', 'abw', 'removebannedword', 'rbw']
       if (apiCommands.some(x => { return lowercaseMessage.indexOf(x) >= 0 })) {
         let roles = message.guild.member(message.author.id).roles.array()
@@ -21,25 +22,25 @@ bot.on('message', (message) => {
           }
         }
       }
-      message.reply(Confax.config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
-      checkUser(message)
+      message.reply(config.muteWarningMessage.replace('{bannedWord}', bannedWords[word]))
+      checkUser(message, config)
     }
   }
 })
 
-function checkUser (message) {
+function checkUser (message, config) {
   if (warnedUserIds.includes(message.member.user.id)) {
-    addMutedRole(message)
+    addMutedRole(message, config)
   } else {
     warnedUserIds.push(message.member.user.id)
   }
 }
 
-function addMutedRole (message) {
-  let role = message.guild.roles.find(role => role.name === Confax.config.roleMuted)
+function addMutedRole (message, config) {
+  let role = message.guild.roles.find(role => role.name === config.roleMuted)
 
   if (!role) {
-    console.log('The role ' + Confax.config.roleMuted + ' does not exists on this server')
+    console.log('The role ' + config.roleMuted + ' does not exists on this server')
     return
   }
 

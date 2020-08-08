@@ -1,7 +1,7 @@
 const Confax = require('../bot.js')
-const config = require('../config.json')
 
 Confax.registerCommand('advancedhelp', 'default', (message, bot) => {
+  const config = Confax.getConfig(message.guild.id) 
   let helpMsg = '**Advanced Help**\n\n' +
   'All commands are prefixed with: `' + config.prefix + '`\n\n'
 

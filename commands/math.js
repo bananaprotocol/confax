@@ -5,7 +5,7 @@ const math = require('mathjs')
 Confax.registerCommand('math', 'default', (message, bot) => {
   let result
   try {
-    result = math.eval(message.content)
+    result = math.evaluate(message.content)
   } catch (error) {
     console.log('Failed math calculation ' + message.content + '\nError: ' + e.stack)
     return 'Error while evaluating the math expression.'

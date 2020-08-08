@@ -48,7 +48,7 @@ function CryptoComparePrice (fsym, tsyms, message) {
 
   request(cryptoComparePrice, function (error, response, body) {
     if (error) message.channel.send('Not a valid crypto currency, try BTC or ETH.')
-    let embed = new Discord.RichEmbed().setTitle('cryptocompare.com')
+    let embed = new Discord.MessageEmbed().setTitle('cryptocompare.com')
       .setDescription('```MarkDown\n#_Exchange rates for 1 ' + fsym + '```')
       .setURL('https://www.cryptocompare.com/api/')
       .setColor(586901)

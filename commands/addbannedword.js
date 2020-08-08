@@ -1,8 +1,8 @@
 const Confax = require('../bot.js')
 const fs = require('fs')
-let config = Confax.config
 
 Confax.registerCommand('addbannedword', 'moderator', (message, bot) => {
+  let config = Confax.getConfig(message.guild.id)
   let word = message.content.toLowerCase()
   if (word.length <= 0) {
     return
@@ -14,10 +14,7 @@ Confax.registerCommand('addbannedword', 'moderator', (message, bot) => {
   }
 
   config.bannedWords.push(word)
-  writeConfig(config)
+  Confax.setConfig(message.guild.id, config)
   message.reply('**' + word + '**' + ' has been added to the banned words list.')
 }, ['abw'], 'Add a word to the banned words list', '[word to add]')
 
-function writeConfig (config) {
-  fs.writeFileSync('config.json', JSON.stringify(config, null, 4))
-}

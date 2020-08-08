@@ -145,7 +145,7 @@ function CheckMessage(lines, message) {
   if (IsBadCode() && !isFormatted) {
     lines[lastLine] = FormatLastLine(lines[lastLine])
     if (!autoPost) { // Either listen for a react or just post the new message
-      reactEmoji = message.guild.emojis.find(emoji => emoji.name === emojiName)
+      reactEmoji = message.guild.emojis.cache.find(emoji => emoji.name === emojiName)
       try {
         message.react(reactEmoji)
       } catch (error) {
