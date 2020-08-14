@@ -13,18 +13,18 @@ bot.on('message', (message) => {
   } else if (message.content.indexOf(config.prefix, 0) !== 0) {
   // This is not a command (no prefix)
   } else {
-    let userCommand = message.content.split(' ')[0].replace('!', '').toLowerCase()
-    for (let loopCmdType in commands) {
-      for (let loopCmd in commands[loopCmdType]) {
+    const userCommand = message.content.split(' ')[0].replace('!', '').toLowerCase()
+    for (const loopCmdType in commands) {
+      for (const loopCmd in commands[loopCmdType]) {
         if (userCommand.valueOf() === (loopCmd).valueOf()) {
           message.content = message.content.replace(config.prefix + userCommand, '')
           cmd = loopCmd
           cmdType = loopCmdType
           break
         } else {
-          let aliases = commands[loopCmdType][loopCmd].aliases
+          const aliases = commands[loopCmdType][loopCmd].aliases
           for (let i = 0; i < aliases.length; i++) {
-            let alias = aliases[i]
+            const alias = aliases[i]
             if (userCommand.valueOf() === alias.valueOf()) {
               message.content = message.content.replace(config.prefix + userCommand, '')
               cmd = loopCmd
@@ -43,9 +43,9 @@ bot.on('message', (message) => {
           return
         }
       } else if (cmdType === 'moderator') {
-        let accepted = ['Bot Commander', 'Moderator']
+        const accepted = ['Bot Commander', 'Moderator']
         let isMod
-        let roles = message.guild.member(message.author.id).roles.cache.array()
+        const roles = message.guild.member(message.author.id).roles.cache.array()
         for (let i = 0; i < roles.length; i++) {
           if (accepted.includes(roles[i].name)) {
             isMod = true

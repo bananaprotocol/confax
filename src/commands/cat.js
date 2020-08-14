@@ -1,8 +1,7 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('cat', 'default', (message) => {
-  let options = {
+  const options = {
     host: 'aws.random.cat',
     path: '/meow'
   }

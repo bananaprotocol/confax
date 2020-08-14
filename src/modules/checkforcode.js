@@ -78,7 +78,7 @@ const repostThreshold = config.repostThreshold
 const selfDestructIn = config.selfDestructIn
 const formatBlock = config.formatBlock
 const autoPost = config.autoPost
-var emojiName = config.emojiName
+let emojiName = config.emojiName
 const backupEmojiName = config.backupEmojiName
 const timeToReact = 60000 // could be in config
 
@@ -88,12 +88,12 @@ const helpChannelname = 'programming_help'
 const yourUnformattedCode = '`Your unformatted code has been formatted and moved to` '
 
 // Variables
-var isFormatted = false
-var totalLinesOfCode = 0
-var hasFirstLine = false
-var lastLine = 0
-var firstReply
-var reactEmoji
+let isFormatted = false
+let totalLinesOfCode = 0
+let hasFirstLine = false
+let lastLine = 0
+let firstReply
+let reactEmoji
 
 // Lets begin
 bot.on('message', message => {
@@ -101,8 +101,8 @@ bot.on('message', message => {
   if (message.author.bot) {
     // Self-destruct message
     if (message.content.includes('Your unformatted code')) {
-      let usr = message.mentions.users.array()[0]
-      let chnl = (message.guild.channels.find('name', helpChannelname) != null)
+      const usr = message.mentions.users.array()[0]
+      const chnl = (message.guild.channels.find('name', helpChannelname) != null)
         ? message.guild.channels.find('name', helpChannelname)
         : message.channel
       CallNTimes(selfDestructIn, 1000, EditBotMessage, message, chnl, usr)
@@ -118,9 +118,9 @@ bot.on('message', message => {
  * return, else keep checking.
  * @param  {string[]} message
  */
-function ParseMessage (message) {
+const ParseMessage = (message) => {
   InitVariables()
-  let lines = message.content.split('\n')
+  const lines = message.content.split('\n')
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].search(formatBlock) >= 0) {
       isFormatted = true
@@ -140,7 +140,7 @@ function ParseMessage (message) {
  * @param  {string[]} lines
  * @param  {string} message
  */
-function CheckMessage (lines, message) {
+const CheckMessage = (lines, message) => {
   if (IsBadCode() && !isFormatted) {
     lines[lastLine] = FormatLastLine(lines[lastLine])
     if (!autoPost) { // Either listen for a react or just post the new message
@@ -178,8 +178,8 @@ function CheckMessage (lines, message) {
  * @param  {string} line
  * @param  {string[]} lines
  */
-function FindCodeElements (index, line, lines) {
-  let lineLength = line.length - 1
+const FindCodeElements = (index, line, lines) => {
+  const lineLength = line.length - 1
   for (let i = 0; i < codeElements.length; i++) {
     if (line.charAt(lineLength).valueOf() === codeElements[i].valueOf() || line.includes('public') || line.includes('class')) {
       if (!hasFirstLine) {
@@ -199,7 +199,7 @@ function FindCodeElements (index, line, lines) {
  * @param  {string[]} lines
  * @param  {string[]} message
  */
-function ListenForReacts (lines, message) {
+const ListenForReacts = (lines, message) => {
   const filter = (reaction, user) => {
     return [emojiName].includes(reaction.emoji.name) && reaction.count > 1
   }
@@ -224,7 +224,7 @@ function ListenForReacts (lines, message) {
  * @param  {string[]} lines
  * @param  {string[]} message
  */
-function CreateNewMessage (lines, message) {
+const CreateNewMessage = (lines, message) => {
   let newMessage = ''
   for (let j = 0; j < lines.length; j++) {
     newMessage += lines[j] + '\n'
@@ -237,9 +237,9 @@ function CreateNewMessage (lines, message) {
  * @param  {string[]} message
  * @param  {string} newMessage
  */
-function PostNewMessage (message, newMessage) {
-  let channel = message.guild.channels.cache.find(channel => channel.name === helpChannelname)
-  let isHelp = message.channel.name.indexOf('help') > 0
+const PostNewMessage = (message, newMessage) => {
+  const channel = message.guild.channels.cache.find(channel => channel.name === helpChannelname)
+  const isHelp = message.channel.name.indexOf('help') > 0
   // Move to new channel
   if (channel != null && channel !== message.channel && !isHelp) {
     message.reply(yourUnformattedCode + channel + '.' +
@@ -258,8 +258,8 @@ function PostNewMessage (message, newMessage) {
  * Deletes the old unformatted message if bot has permission
  * @param  {string} message
  */
-function DeleteOldMessage (message) {
-  let managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
+const DeleteOldMessage = (message) => {
+  const managePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
   if (managePerms) {
     message.delete()
   } else {
@@ -271,7 +271,7 @@ function DeleteOldMessage (message) {
  *  Adds code formatting block start to the first line of code
  * @param  {string} firstLine
  */
-function FormatFirstLine (firstLine) {
+const FormatFirstLine = (firstLine) => {
   /* TODO:
   What if the first line of code has some regular text at the beginning?
       "Here is my code: public int myInt = 0;"
@@ -286,21 +286,21 @@ function FormatFirstLine (firstLine) {
  * Add formatting code bock end to the last line of code
  * @param  {string} lastLine
  */
-function FormatLastLine (lastLine) {
+const FormatLastLine = (lastLine) => {
   return lastLine.replace(/`/g, '') + '\n' + formatBlock
 }
 
 /**
  * If total line of code is greater than repostThreshold return true
  */
-function IsBadCode () {
+const IsBadCode = () => {
   return (totalLinesOfCode >= repostThreshold)
 }
 
 /**
  * Initialize variables
  */
-function InitVariables () {
+const InitVariables = () => {
   isFormatted = false
   hasFirstLine = false
   lastLine = 0
@@ -316,7 +316,7 @@ function InitVariables () {
  * @param  {string} channel
  * @param  {number} t
  */
-function EditBotMessage (usr, message, channel, t) {
+const EditBotMessage = (usr, message, channel, t) => {
   message.edit(usr + ', ' + yourUnformattedCode + channel + '.' +
     '\n\tThis message will self-destruct in *' + t + '* seconds')
 }
@@ -330,7 +330,7 @@ function EditBotMessage (usr, message, channel, t) {
  * @param  {string} chnl
  * @param  {string} usr
  */
-function CallNTimes (n, time, fn, msg, chnl, usr) {
+const CallNTimes = (n, time, fn, msg, chnl, usr) => {
   function callFn () {
     if (--n < 1) {
       usr = null

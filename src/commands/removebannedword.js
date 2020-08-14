@@ -1,9 +1,8 @@
 const Confax = require('../bot.js')
-const fs = require('fs')
 
 Confax.registerCommand('removebannedword', 'moderator', (message, bot) => {
-  let config = Confax.getConfig(message.guild.id)
-  let word = message.content.toLowerCase()
+  const config = Confax.getConfig(message.guild.id)
+  const word = message.content.toLowerCase()
   if (word.length <= 0) {
     return
   }
@@ -16,4 +15,3 @@ Confax.registerCommand('removebannedword', 'moderator', (message, bot) => {
   message.reply('**' + word + '**' + ' does not exist in the banned words list.')
   console.log('The banned words list does not contain: ' + word)
 }, ['rbw'], 'Remove a word from the banned words list', '[word to remove]')
-

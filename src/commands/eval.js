@@ -1,9 +1,8 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('eval', 'master', (message, bot) => {
   try {
-    let output = eval(message.content)
+    const output = eval(message.content)
     if (!message.content.includes('bot.token') || !output.includes(bot.token)) {
       return '**Output:** ' + output
     } else {

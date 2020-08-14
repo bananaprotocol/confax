@@ -25,20 +25,18 @@ const docAddress = 'https://docs.unity3d.com/ScriptReference/'
 const TOCAddress = 'https://docs.unity3d.com/ScriptReference/docdata/toc.js'
 const notFound = ' was not found. Either it does not exist or it is mispelled.'
 
-var isFound = false
+let isFound = false
 
 Confax.registerCommand('unity', 'default', (message, bot) => {
-  const config = Confax.getConfig(message.guild.id)
-  const DevID = config.GlassToeID
   //    let channel = message.guild.channels.find('name', 'vip_members')
   //    if (channel === null || channel !== message.channel) { return }
   isFound = false
-  let name = message.content.toString()
+  const name = message.content.toString()
   //  Start the request to get the toc js object
-  request(TOCAddress, function (error, response, body) {
+  request(TOCAddress, (error, response, body) => {
     if (error) { return }
     //  remove var toc =
-    let tableOfContents = JSON.parse(body.slice(9))
+    const tableOfContents = JSON.parse(body.slice(9))
     SearchAll(tableOfContents.children, name, message)
     if (!isFound) {
       message.channel.send('__**' + name + '**__' + notFound)
@@ -50,11 +48,11 @@ Confax.registerCommand('unity', 'default', (message, bot) => {
 /**
  * Recursive search through each child node of the toc object
  * return if search item is found.
- * @param  {} tocLevel
- * @param  {} name
- * @param  {} message
+ * @param {string} tocLevel
+ * @param {string} name
+ * @param {string} message
  */
-function SearchAll (tocLevel, name, message) {
+const SearchAll = (tocLevel, name, message) => {
   for (let child = 0; child < tocLevel.length; child++) {
     if (tocLevel[child].title.toLowerCase() === name.toLowerCase()) {
       isFound = true
@@ -64,12 +62,12 @@ function SearchAll (tocLevel, name, message) {
 }
 
 /**
- * @param  {string} address
- * @param  {string} name
- * @param  {string} message
+ * @param {string} address
+ * @param {string} name
+ * @param {string} message
  */
-function CheckLink (address, name, message) {
-  request(address, function (error, response, body) {
+const CheckLink = (address, name, message) => {
+  request(address, (error, response, body) => {
     if (error) { return false }
     console.log('Status code:', response && response.statusCode)
     if (response.statusCode.toString() === '404') {
@@ -86,8 +84,8 @@ function CheckLink (address, name, message) {
  * @param  {string} name
  * @param  {string} message
  */
-function TellDevThisFailed (name, message) {
+const TellDevThisFailed = (name, message) => {
   console.log(message.author.username + ' Tried to search **' + name + '** But it failed.')
-  let GlassToe = message.client.users.get(DevID)
+  const GlassToe = message.client.users.get(DevID)
   GlassToe.send(message.author + ' Tried to search __**' + name + '**__ But it failed.')
 }

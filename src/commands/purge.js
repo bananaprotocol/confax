@@ -1,11 +1,10 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('purge', 'moderator', (message, bot) => {
-  let deletePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
-  let args = message.content.split(' ')
-  let amount = parseInt(args[0])
-  let mentions = message.mentions.users.array()
+  const deletePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')
+  const args = message.content.split(' ')
+  const amount = parseInt(args[0])
+  const mentions = message.mentions.users.array()
 
   if (!deletePerms) {
     return "Confax doesn't have enough permissions to delete messages."
@@ -18,8 +17,8 @@ Confax.registerCommand('purge', 'moderator', (message, bot) => {
     message.channel.fetchMessages({ limit: amount }).then(deleteMsgs => message.channel.bulkDelete(deleteMsgs))
   } else {
     message.delete()
-    let deleteMsgs = []
-    message.channel.fetchMessages({ limit: amount }).then(function (value) {
+    const deleteMsgs = []
+    message.channel.fetchMessages({ limit: amount }).then((value) => {
       value = value.array()
       for (let i = 0; i < value.length; i++) {
         if (mentions.includes(value[i].author)) {

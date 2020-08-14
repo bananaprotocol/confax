@@ -31,7 +31,7 @@ const { queryFinnhub } = require('../services/finnhub')
 
 Confax.registerCommand('crypto', 'default', (message, bot) => {
   //  Init variables
-  const symbols = (message.content.split(' ')).map(function (x) { return x.toUpperCase() })
+  const symbols = (message.content.split(' ')).map((x) => x.toUpperCase())
   const fromSymbol = (symbols.shift()).replace(/`/ig, '')
   if (symbols.length === 0) symbols.push('USD')
   CryptoComparePrice(fromSymbol, symbols, message)
@@ -41,13 +41,13 @@ Confax.registerCommand('crypto', 'default', (message, bot) => {
  * Return the exchange rate for one crypto currency in terms of other currencies.
  * @param  {string} fsym
  * @param  {string[]} tsyms
- * @param  {string} messge
+ * @param  {string} message
  */
-function CryptoComparePrice (fsym, tsyms, message) {
+const CryptoComparePrice = (fsym, tsyms, message) => {
   //  The API call string.
   const cryptoComparePrice = 'https://min-api.cryptocompare.com/data/price?fsym=' + fsym + '&tsyms=' + tsyms
 
-  request(cryptoComparePrice, function (error, response, body) {
+  request(cryptoComparePrice, (error, response, body) => {
     if (error) {
       return queryFinnhub(message, fsym)
     }

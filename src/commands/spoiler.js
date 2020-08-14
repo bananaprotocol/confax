@@ -1,11 +1,12 @@
 const Confax = require('../bot.js')
 
-module.exports =
-  spoilerMsg = {
+const spoilerMsg = {
+  spoilerMsg: {
     spoilerMsgContent: '*PSST* long form of bike is bichael',
     spoilerMsgAuthor: 'Yours truly',
     spoilerMsgAttachment: 'none'
   }
+}
 
 Confax.registerCommand('spoiler', 'default', (message, bot) => {
   if (message.content !== '' || message.attachments.size > 0) {
@@ -17,16 +18,16 @@ Confax.registerCommand('spoiler', 'default', (message, bot) => {
     } else {
       spoilerMsg.spoilerMsgAttachment = 'none'
     }
-    message.reply("Oof, let's not spoil this to everyone \:wink:")
+    message.reply("Oof, let's not spoil this to everyone :wink:")
   } else {
     message.delete()
-    return "Do you want me not to spoil silence? \:thinking: The message can't be empty!"
+    return "Do you want me not to spoil silence? :thinking: The message can't be empty!"
   }
   sendMessageToAuthor(message)
   setTimeout(() => message.delete(), 1000)
 }, ['hidemsg', 'spoileralert'], 'Hide specific message content from all users. Message can be read with !readspoiler command', '[message]')
 
-function sendMessageToAuthor (message) {
+const sendMessageToAuthor = (message) => {
   let combinedMessage = '**Here is the last spoiler you saved:** ' + spoilerMsg.spoilerMsgContent
   if (spoilerMsg.spoilerMsgAttachment !== 'none') {
     combinedMessage += '\n**Attachment:** ' + spoilerMsg.spoilerMsgAttachment

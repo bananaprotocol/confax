@@ -1,9 +1,9 @@
 const Confax = require('../bot.js')
 
 Confax.registerCommand('emptyquestion', 'default', (message, bot) => {
-  let chnl = (message.guild.channels.find('name', 'unity') != null)
-  ? message.guild.channels.find('name', 'unity')
-  : '#unity'
+  const chnl = (message.guild.channels.find('name', 'unity') != null)
+    ? message.guild.channels.find('name', 'unity')
+    : '#unity'
   return ('\n**1.** If you need programming related help, use ' + chnl + '\n' +
          '**2.** You should ask help for very specific isolated problems. Your "problem" is too broad.\n' +
          '__**Example:**__```Hey, I have this character controller, and I implemented a "move" method ' +

@@ -9,7 +9,7 @@ const checkLength = (string, length) => {
 }
 
 Confax.registerCommand('urban', 'default', (message) => {
-  let options = {
+  const options = {
     host: 'api.urbandictionary.com',
     path: '/v0/define?term=' + encodeURIComponent(message.content),
     headers: {
@@ -22,11 +22,11 @@ Confax.registerCommand('urban', 'default', (message) => {
     if (body.list.length < 1) {
       message.reply('sorry, but there are no definitions for: **' + message.content + '**')
     } else {
-      let embed = new Discord.MessageEmbed()
+      const embed = new Discord.MessageEmbed()
       embed.setTitle('**' + body.list[0].word + '**')
       embed.setURL(body.list[0].permalink)
-      let firstDefinition = body.list[0].definition
-      let firstExample = body.list[0].example
+      const firstDefinition = body.list[0].definition
+      const firstExample = body.list[0].example
       let secondDefinition
       let secondExample
 

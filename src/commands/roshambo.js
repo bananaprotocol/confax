@@ -32,7 +32,7 @@ const allMoves = [
 const mojiMoves = [' 👊', ' ✋', ' ✌']
 
 Confax.registerCommand('roshambo', 'default', (message) => {
-  let channel = message.guild.channels.find('name', 'chill')
+  const channel = message.guild.channels.find('name', 'chill')
   //  Command only works in #chill
   if (channel != null && channel === message.channel) {
     let userMove = message.content.toLowerCase()

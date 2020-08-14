@@ -47,7 +47,7 @@ const addMutedRole = (message, config) => {
   message.member.addRole(role)
 }
 
-function persistWarnedUsers () {
+const persistWarnedUsers = () => {
   fs.writeFileSync(`${__dirname}/../core/warneduserids.json`, JSON.stringify(warnedUserIds))
 }
 

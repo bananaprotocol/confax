@@ -11,12 +11,12 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
     })
 
     result.on('end', () => {
-      let response = JSON.parse(body)
-      let index = response.data.children[Math.floor(Math.random() * 99) + 1].data
-      let subRedditName = index.subreddit_name_prefixed
-      let title = index.title
-      let link = 'https://www.reddit.com' + index.permalink
-      let text = index.selftext
+      const response = JSON.parse(body)
+      const index = response.data.children[Math.floor(Math.random() * 99) + 1].data
+      const subRedditName = index.subreddit_name_prefixed
+      const title = index.title
+      const link = 'https://www.reddit.com' + index.permalink
+      const text = index.selftext
       if (index.post_hint !== 'image') {
         const textEmbed = new Discord.MessageEmbed()
           .setTitle(subRedditName)
@@ -26,7 +26,7 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
 
         message.channel.send(textEmbed)
       }
-      let image = index.preview.images[0].source.url
+      const image = index.preview.images[0].source.url
       if (index.post_hint !== 'image') {
         const textEmbed = new Discord.MessageEmbed()
           .setTitle(subRedditName)
@@ -43,7 +43,7 @@ Confax.registerCommand('dankmeme', 'default', (message, bot) => {
         .setDescription(`[${title}](${link})`)
         .setURL(`https://www.reddit.com/${subRedditName}`)
       message.channel.send(imageEmbed)
-    }).on('error', function (e) {
+    }).on('error', (e) => {
       console.log('Got an error: ', e)
     })
   })

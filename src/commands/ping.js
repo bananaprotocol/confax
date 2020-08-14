@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const Confax = require('../bot.js')
 
 Confax.registerCommand('ping', 'default', (message, bot) => {
