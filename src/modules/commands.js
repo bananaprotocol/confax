@@ -64,16 +64,16 @@ bot.on('message', (message) => {
         }
       }
       try {
-        var result = commands[cmdType][cmd].process(message, bot)
+        const result = commands[cmdType][cmd].process(message, bot)
+        if (result) {
+          if (cmdType === 'dm') {
+            message.author.send(result)
+          } else {
+            message.reply(result)
+          }
+        }
       } catch (error) {
         console.log('An Error occured: ' + error.stack)
-      }
-      if (result) {
-        if (cmdType === 'dm') {
-          message.author.send(result)
-        } else {
-          message.reply(result)
-        }
       }
     }
   }

@@ -4,7 +4,7 @@ const bot = Confax.bot
 const warnedUserIds = Confax.warnedUserIds
 
 bot.on('message', (message) => {
-  if (message.guild.id === null) {
+  if (message.guild === null) {
     return message
   }
   const config = Confax.getConfig(message.guild.id)
