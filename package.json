@@ -17,12 +17,12 @@
   },
   "homepage": "https://github.com/bananaprotocol/confax#readme",
   "license": "MIT",
-  "main": "bot.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bananaprotocol/confax.git"
   },
   "scripts": {
-    "start": "node bot.js"
+    "start": "node src/index.js"
   }
 }

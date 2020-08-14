@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/)
 
 ## [0.4.1]
 ### Changed
-- Fixed typo in the Code Formatter ([checkforcode.js](./modules/checkforcode.js))
+- Fixed typo in the Code Formatter ([checkforcode.js](src/modules/checkforcode.js))
 
 ## [0.4.0]
 ### Added
