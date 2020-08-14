@@ -7,5 +7,6 @@ services:
     restart: unless-stopped
     environment:
       - BOT_TOKEN=
+      - FINNHUB_API_KEY=
     volumes:
       - './guilds:/usr/share/app/guilds'

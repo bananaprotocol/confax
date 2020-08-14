@@ -11,5 +11,6 @@ RUN npm install
 COPY . .
 
 ENV BOT_TOKEN=
+ENV FINNHUB_API_KEY=
 
 CMD ["node", "bot.js"]
