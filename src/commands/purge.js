@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('purge', 'moderator', (message, bot) => {
   let deletePerms = message.guild.member(bot.user).hasPermission('MANAGE_MESSAGES')

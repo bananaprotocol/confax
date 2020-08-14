@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('kick', 'moderator', (message, bot) => {
   let mention = message.mentions.users.array()[0]

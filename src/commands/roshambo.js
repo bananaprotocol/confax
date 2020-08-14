@@ -23,7 +23,7 @@
     // 🖖 for later use :D
 */
 
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const allMoves = [
   'rock', '✊', '🤜', '🤜', '👊',
   'paper', '✋', '🖐', '📄', '📃', '🗒',

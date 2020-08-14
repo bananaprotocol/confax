@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('ban', 'moderator', (message, bot) => {
   const mention = message.mentions.users.first()

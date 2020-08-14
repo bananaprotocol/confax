@@ -3,7 +3,7 @@
 */
 
 const Discord = require('discord.js')
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 const deep_quotes = [
   "How can mirrors be real if our eyes aren\'t real?",

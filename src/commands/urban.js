@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 const checkLength = (string, length) => {
   if (string.length > length) {

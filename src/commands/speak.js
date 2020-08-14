@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('speak', 'moderator', (message, bot) => {
   let myMention = message.mentions.users.array()[0]

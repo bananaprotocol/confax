@@ -2,11 +2,11 @@
 
 # Confax &middot; [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
-Advanced and modular discord index written in Discord.js
+Advanced and modular discord bot written in Discord.js
 
 ## Getting started
 
-You can invite Confax to your Server by using this [Discord Invite Link](https://discordapp.com/oauth2/authorize?client_id=319545839951544320&permissions=519174&scope=index)
+You can invite Confax to your Server by using this [Discord Invite Link](https://discordapp.com/oauth2/authorize?client_id=319545839951544320&permissions=519174&scope=bot)
 
 If you want to host it yourself, read the [Installation Guide](#installation)
 
@@ -22,11 +22,11 @@ Install all dependencies using
 
     npm install
 
-Start the index using
+Start the bot using
 
     npm start
 
-You can keep your index up to date by using
+You can keep your bot up to date by using
 
     git pull && npm install
 

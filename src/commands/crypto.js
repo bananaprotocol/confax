@@ -23,7 +23,7 @@
     ------------------------------------------------------------------------
 
 */
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const request = require('request')
 const Discord = require('discord.js')
 const getSymbolFromCurrency = require('../services/currency')

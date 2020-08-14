@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const fs = require('fs')
 const bot = Confax.bot
 const warnedUserIds = Confax.warnedUserIds
@@ -48,7 +48,7 @@ const addMutedRole = (message, config) => {
 }
 
 function persistWarnedUsers () {
-  fs.writeFileSync('warneduserids.json', JSON.stringify(warnedUserIds))
+  fs.writeFileSync(`${__dirname}/../core/warneduserids.json`, JSON.stringify(warnedUserIds))
 }
 
 setInterval(persistWarnedUsers, 10000)

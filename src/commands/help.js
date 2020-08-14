@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('help', 'default', (message, bot) => {
   let commands = Confax.commands

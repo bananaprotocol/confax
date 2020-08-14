@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const spoilerMsg = require('./spoiler.js')
 
 Confax.registerCommand('readspoiler', 'default', (message, bot) => {

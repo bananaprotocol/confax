@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const fs = require('fs')
 
 Confax.bot.on('guildCreate', (guild) => {

@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('emptyquestion', 'default', (message, bot) => {
   let chnl = (message.guild.channels.find('name', 'unity') != null)

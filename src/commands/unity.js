@@ -19,7 +19,7 @@
 
     ------------------------------------------------------------------------
 */
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const request = require('request')
 const docAddress = 'https://docs.unity3d.com/ScriptReference/'
 const TOCAddress = 'https://docs.unity3d.com/ScriptReference/docdata/toc.js'

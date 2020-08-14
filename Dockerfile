@@ -13,4 +13,4 @@ COPY . .
 ENV BOT_TOKEN=
 ENV FINNHUB_API_KEY=
 
-CMD ["node", "index.js"]
+CMD ["node", "bot.js"]

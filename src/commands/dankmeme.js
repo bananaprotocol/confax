@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const Discord = require('discord.js')
 const https = require('https')
 const url = 'https://www.reddit.com/r/dankmemes.json?limit=100'

@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 
 Confax.registerCommand('addbannedword', 'moderator', (message, bot) => {
   const config = Confax.getConfig(message.guild.id)

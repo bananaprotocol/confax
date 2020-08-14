@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const { queryFinnhub } = require('../services/finnhub')
 
 Confax.registerCommand('stock', 'default', (message) => {

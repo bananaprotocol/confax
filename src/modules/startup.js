@@ -1,4 +1,4 @@
-const Confax = require('../index.js')
+const Confax = require('../bot.js')
 const bot = Confax.bot
 
 bot.on('ready', () => {
