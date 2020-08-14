@@ -105,6 +105,6 @@ bh_unicode_properties.cache
 GitHub.sublime-settings
 .vscode/settings.json
 
-# Ide settings
+# JetBrains user settings
 .idea/
 
