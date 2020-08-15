@@ -27,9 +27,14 @@ const Confax = require('../bot.js')
 const CryptoComparePrice = require('../services/cryptocompare')
 
 Confax.registerCommand('crypto', 'default', (message, bot) => {
-  //  Init variables
   const symbols = (message.content.split(' ')).map((x) => x.toUpperCase())
   const fromSymbol = (symbols.shift()).replace(/`/ig, '')
+  //  Init variables
+  if (message.content === '') {
+    message.channel.send('Please provide a search term')
+    return
+  }
+
   if (symbols.length === 0) symbols.push('USD')
   CryptoComparePrice(fromSymbol, symbols, message)
 }, ['crypt', 'price'], 'Get latest crypto exchange price in USD, or in other cryptos.', '<crypto-currency ticker>')
