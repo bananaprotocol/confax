@@ -27,11 +27,13 @@ module.exports = {
 }
 
 const makeUpMessage = (data, stock, currency = 'USD') => {
-  let valueLine = ''
+  let line = ''
+  let suggestion = ''
   if (data.c) {
-    valueLine = `${getSymbolFromCurrency(currency)}` + ` ${data.c}`
+    line = `${getSymbolFromCurrency(currency)}` + ` ${data.c}`
   } else {
-    valueLine = '¯\\_(ツ)_/¯'
+    line = '¯\\_(ツ)_/¯'
+    suggestion = 'try !price ' + stock
   }
   const embed = new Discord.MessageEmbed({
     title: 'finnhub.io',
@@ -40,6 +42,9 @@ const makeUpMessage = (data, stock, currency = 'USD') => {
   embed.setTimestamp()
   embed.setURL('https://www.finnhub.io')
   embed.setColor(586901)
-  embed.addField(`*** ${currency} **`, '```js\n' + valueLine + '```', true)
+  embed.addField(`*** ${currency} **`, '```js\n' + line + '```', true)
+  if (suggestion.length > 0) {
+    embed.setFooter(suggestion)
+  }
   return embed
 }
