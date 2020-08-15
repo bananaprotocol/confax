@@ -4,13 +4,11 @@ const bot = Confax.bot
 const warnedUserIds = Confax.warnedUserIds
 
 bot.on('message', (message) => {
-  if (message.guild === null) {
-    return message
-  }
+  if (message.author.bot) return
+
   const config = Confax.getConfig(message.guild.id)
   const bannedWords = config.bannedWords
 
-  if (message.author.bot) return
   const lowercaseMessage = message.content.toLowerCase()
   for (const word in bannedWords) {
     if (lowercaseMessage.split(' ').indexOf(bannedWords[word]) > -1) {
