@@ -9,4 +9,4 @@ services:
       - BOT_TOKEN=
       - FINNHUB_API_KEY=
     volumes:
-      - './guilds:/usr/share/app/guilds'
+      - './src/guilds:/usr/share/app/src/guilds'
