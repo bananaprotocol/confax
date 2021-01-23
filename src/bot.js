@@ -46,7 +46,7 @@ const getConfig = (guildID) => {
     setConfig(guildID, config)
     data = JSON.parse(readFileSync(path))
   }
-  try { return data } catch (error) { console.log('An error occured: ' + error.stack) }
+  try { return data } catch (error) { console.log('An error occurred: ' + error.stack) }
 }
 
 const setConfig = (guildID, config) => {
@@ -57,7 +57,7 @@ const setConfig = (guildID, config) => {
 const getConfigValue = (guildID, name) => {
   const path = `${__dirname}/guilds/` + guildID + '.json'
   const data = JSON.parse(readFileSync(path))
-  try { return data[name] } catch (error) { console.log('An error occured: ' + error.stack) }
+  try { return data[name] } catch (error) { console.log('An error occurred: ' + error.stack) }
 }
 
 exports.registerCommand = registerCommand
